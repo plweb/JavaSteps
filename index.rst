@@ -7,7 +7,7 @@ Java Steps
 **********
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    java_intro
    java_basis

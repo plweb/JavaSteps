@@ -180,13 +180,12 @@ latex_font_size = '11pt'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'JavaSteps.tex', u'Java Steps',
+  ('index', 'JavaSteps.tex', u'Java Steps: Learning Java Step by Step',
    u'董少桓', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.
-#latex_logo = None
 latex_logo = 'img/logo.eps'
 
 # For "manual" documents, if this is true, then toplevel headings are parts,
@@ -200,7 +199,6 @@ latex_logo = 'img/logo.eps'
 #latex_show_urls = False
 
 # Additional stuff for the LaTeX preamble.
-#latex_preamble = ''
 latex_preamble = '''\\usepackage[cm-default]{fontspec}
 \\usepackage{xunicode}
 \\usepackage{fontspec}
