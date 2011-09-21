@@ -12,3 +12,6 @@ Java Steps
    java_intro
    java_basis
    java_vartype
+   java_stdio
+   java_expr
+   java_static

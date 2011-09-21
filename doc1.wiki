@@ -1,381 +1,3 @@
-
-
-=螢幕輸出及鍵盤輸入=
-
-螢幕輸出有幾種方式。第一種是前面章節已經使用過的 System.out.print 及 System.out.println。這兩種方法的的差別是前者沒有換行，而後者有換行。如果有數個資料需要一起印出時，則可以使用 + 進行串接。例如：
-
- public class Show {                      
-   public static void main(String argv[]) {
-     int design, acting;    
- 
-     design = 3;
-     acting = 5;
-     System.out.println(<span style="color:red">"Design is " + design + "and acting is " + acting</span>);
-   }
- }
-
-第二種方式是在 J2SDK5 之後才支援的 [http://www.java2s.com/Code/JavaAPI/java.lang/System.out.printf.htm System.out.printf]。這個方式與 C 語言的 printf 功能類似。例如：
-
- System.out.printf("Today is %s, %d.\n", "January", 18);
- // %s 的位置替換成 January 這個 String
- // %d 的位置替換成 18 這個整數 
- // \n 表示換行符號
-顯示：
- Today is January, 18
-
- double score = 92.345
- System.out.printf("My score is %.2f.\n", score);
- // %.2f 的意義是小數點以下取兩位，並四捨五入。
- System.out.printf("My score is %6.2f.%n", score);
- // %6.2f 的意義是：包括小數點共6位，小數點以下取兩位，
- // 並四捨五入。所以9的左邊多空一格。
-顯示：
- My score is 92.35.
- My score is  92.35.
-
-鍵盤輸入則可以透過 [http://www.java2s.com/Code/JavaAPI/java.util/Scanner.htm java.util.Scanner]。例如：
-<code java>
-// 使用時先載入 Scanner 所屬的 package
-import java.util.*;  // * 的意義是 java.util 內所有的類別
- 
-// 定義物件：
-Scanner scanner = new Scanner(System.in);
-
-// 輸入字串：
-String name = scanner.nextLine();
-
-// 輸入整數：
-int score = scanner.nextInt();
-
-// 輸入double
-double height = scanner.nextDouble();
-
-// 輸入float
-float weight = scanner.nextFloat();
-</code>
-以下是一個完整的範例：
-<code java>
-import java.util.*;  
-
-public class EnglishExam {                      
-  public static void main(String argv[]) {
-    int vocab, grammar, listen, score;
-    
-    Scanner scanner = new Scanner(System.in);
-    String name = scanner.nextLine();
-    vocab = scanner.nextInt();
-    grammar = scanner.nextInt();
-    listen = scanner.nextInt();
-    score = vocab + grammar + listen;
-    System.out.printf("The total score of %s is %d.%n", name, score);
-  }
-}
-</code>
-
-=算術運算式=
-
-使用算術運算式要注意的是運算的優先次序。例如：先乘除、後加減。如果不記得運算的優先次序，那麼最簡便的方法是使用（）也就是指定內層的刮號先執行。以下是算術運算式的幾個範例：
-<code java>
-2 + 3         // 傳回 5
-4 - 1         // 傳回 3
-(4 + 5) * -3  // 傳回 -27
-x * y         // 傳回 x 的值與 y 的值相乘的結果
-y / z         // 傳回 y 的值與 z 的值相除的結果
-7 % 4         // 傳回兩數相除的餘數 3
-</code>
-
-使用算術運算式另一項要注意的是型態的轉換，也就是在一個算術式中同時有整數與浮點數時，Java會將整數先轉換成浮點數然後再進行運算。
-
-例如：
- int i = (3 + 4) / <span style="color:red">3</span> // 兩個整數相除，結果仍是整數，小數部分捨棄。傳回 2
- double f;
- f = (3 + 4) / <span style="color:red">3.0</span>   // 7 轉型成浮點數，然後與浮點數 3.0 相除。傳回 2.333...
- System.out.println(i);
- System.out.println(f);
-印出：
- 2
- 2.3333333333333335
-
-如果需要指定轉換的型態，則可以使用以下的方式：
-<code java>
-(double) i    // 得到 i 的 double 的值
-(int) f       // 得到 f 的 int 的值
-</code>
-至於 i、f 的原來的值還是不變。
-
-如同一般的算術運算式，設值運算式（=）也會傳回值。例如：
-<code java>
-x = 3         // 傳回 3
-y = (x = 3)   // 因為 x = 3 傳回3, 所以 y 的值也設成 3
-</code>
-
-自動將資料範圍較小的型態轉為資料範圍較大的型態，稱為自動轉型(promotion)。
-Java資料型態範圍之大小次序為：
-<code>
-byte < short < int < long < float < double
-</code>
-以下的例子會出現 possible loss of precision 的錯誤：
-<code java>
-short a = 1;
-long b = 2;
-int c = a + b;
-</code>
-這個錯誤是因為a會自動轉型成較大的 long 再跟 b 相加，但是 int 型態的 c 放不下 long 的資料。此時就要透過強制轉型(casting)，將 a 轉型成 int：
-<code java>
-int c = (int)(a + b);
-</code>
-當資料型態由小轉為大時，會自動轉型；
-當資料型態由大轉為小時，則需強迫轉型。
-
-=類別變數與類別方法=
-
-非物件導向程式語言（例如：C），程式設計師主要是使用函式（function）、全域變數與區域變數將一個大的程式分割成幾個小的部份，以簡化程式的撰寫。這些觀念在 Java 中仍然可以使用，而使用的方式是透過類別變數與類別方法。
-
-舉例而言，如果要為英文檢定考試寫一個計算成績的程式，那麼這個程式應該有一個計算成績的方法。例如：
-
- public class EnglishExam {
-  
-   <span style="color:red">public static int englishScore(int v, int g, int l) {
-     return v + g + l;
-   }</span>
- 
-   public static void main(String argv[]) {
-     System.out.print("The score of the exam is ");
-     System.out.println(<span style="color:red">englishScore(24, 27, 32)</span>);
-   }
- }
- 
-執行結果：
-
- The score of the exam is 83
-
-public static int englishScore(int v, int g, int l) 定義了 englishScore 這個類別方法，這個方法有三個命名為 v, g, l 的輸入參數，它們的型態都是 int。這個方法的輸出型態也是 int，也就是會使用 return 傳出一個 int 的值 (v + g + l)。Java 使用 static 這個保留字來定義類別方法。因為這種方法是靜態的，也就是在程式執行時，呼叫這個方法的程式碼，一定都會執行相同的方法。
-
-在 main 中的 System.out.println(englishScore(24, 27, 32)) 將 24, 27, 32 傳入 englishScore 中，並依序成為 v, g, l 三個輸入參數的值，而這三個數相加的結果 83 會繼續的傳入 System.out.println，然後顯示在螢幕上。一個方法的輸入參數也是那個方法的區域變數。所以 v, g, l 三個輸入參數也是 englishScore 的區域變數。
-
-除了直接將數值傳入方法中以外，還可以將變數或其他也有傳回值的式子，寫在方法呼叫中傳入的位置。例如：
-
- public class EnglishExam {
-    
-   public static int englishScore(int v, int g, int l) {
-     return v + g + l;
-   }
- 
-   public static void main(String argv[]) {
-     int a = 3, b = 4;
-     System.out.print("The score of the exam is ");
-     System.out.println(englishScore(<span style="color:red">a, b, a + b</span>));
-   }
- }
- 
-執行結果：
-
- The score of the exam is 14
-
-Java 會在得到 a, b, a + b 的數值後，才將 3, 4, 7 傳入 englishScore 中。也就是先得到數值再傳入，然後 v, g, l 便使用傳入的數值生成三個區域變數。這個特性稱為 <span style="color:red">call-by-value 或傳值呼叫</span>。v, g, l 三個參數之所以也是區域變數，因為這三個變數的可見範圍（scope）只包含 englishScore 的區塊。
-
-如果一個方法沒有傳回值，那麼這個方法的輸出型態便是 void。例如：
-
- public class EnglishExam {
-   public static <span style="color:red">void displayScore</span>(int v, int g, int l) {
-     System.out.print("The score of the exam is ");    
-     System.out.println(v + g + l);
-   }
- 
-   public static void main(String argv[]) {
-     displayScore(24, 27, 32);
-   }
- }
- 
-執行結果：
-
- The score of the exam is 83
-
-displayScore 這個方法將字串顯示在螢幕上，不需要傳回值，因此它的輸出型態是宣告成 void，而 main 的輸出型態也是 void。
-
-不同的類別中也可以定義同名的方法。這個功能稱做 <span style="color:red">overloading</span>。而Java 是以<pre>類別名稱.方法名稱(0或多個參數);</pre>呼叫宣告在不同類別的類別方法。例如：
-
- public class Exam {
-   public static void main(String argv[]) {
-     int voc = 3, grammar = 7, listen = 8;
-     System.out.print("The score of the english exam is ");    
-     System.out.println(<span style="color:red">EnglishExam.displayScore(voc, grammar, listen)</span>);
-     System.out.print("The score of simple english exam is ");    
-     System.out.println(<span style="color:red">SimpleEnglishExam.displayScore(voc, grammar, listen)</span>);
-   }
- }
- 
- class <span style="color:red">EnglishExam</span> {  
-   public static int <span style="color:red">displayScore(int v, int g, int l)</span> {  
-     return v + g + l;
-   }
- }
- 
- class <span style="color:red">SimpleEnglishExam</span> {
-   public static int <span style="color:red">displayScore(int v, int g, int l)</span> {  
-     return v + g + 0;
-   }
- }
- 
-
-執行結果：
-
- The score of the english exam is 18
- The score of simple english exam is 10
-
-一個類別中也可以有同名的方法，但是他們必須有不同的輸出入型態。例如：
-
- public class Exam {
-   public static void main(String argv[]) {
-     int voc = 3, grammar = 7, listen = 8;
-     System.out.print("The int score of the exam is ");   
-     System.out.println(<span style="color:red">EnglishExam.displayScore(3, 7, 8)</span>);
-     System.out.print("The double score of the exam is ");    
-     System.out.println(<span style="color:red">EnglishExam.displayScore(3.0, 8.0, 7.0)</span>);
-   }
- }
- 
- class EnglishExam {  
-   public static int <span style="color:red">displayScore(int v, int g, int l)</span> {  
-     return v + g + l;
-   }
-   public static double <span style="color:red">displayScore(double v, double g, double l)</span> {  
-     return v + g + l;
-   }
- }
- 
-執行結果：
-
- The int score of the exam is 18
- The double score of the exam is 18.0
-
-另一個 overloading 的例子是：＋。＋可以用來將數字相加，也可以將字串合併。例如：
-
- int a = 4, b = 5;
- System.out.print(<span style="color:red">3 + a + b</span>);
- 
- 執行結果：
- 12
- 
- String a = "xy", b = "Z";
- System.out.print(<span style="color:red">"3" + a + b</span>);
- 
- 執行結果：
- 3xyz
-
-使用類別方法在程式中有許多好處：
-# 增加程式碼的再用性：同樣的計算步驟，只需要透過呼叫類別方法便可以重複使用。
-# 讓程式碼的細節，被隱藏在類別方法中：程式設計師在完成類別方法的撰寫後，便只需要知道那個類別方法的輸入、輸出與功用即可，而不用擔心執行的細節。
-# 容易除錯：除錯的過程可以一個類別方法、一個類別方法的進行，容易找出錯誤的根源。
-# 容易擴充類別方法內程式碼的功能：只要在類別方法內擴充其功能，而不用在每次呼叫時都重複的擴充。例如以下的程式碼擴充了成績的計算方式，所有 displayScore 的呼叫的計算結果都同步改變：
-
- class SimpleEnglishExam {
-   public static int displayScore(int v, int g, int l) {  
-     return <span style="color:red">v * 0.3 + g * 0.3 + l * 0.4</span>;
-   }
- }
-
-除了使用 static 宣告類別方法外，還有也是使用 static 宣告的類別變數。以下是一個在程式中內建三筆考試成績的資料，呼叫 displayScore 計算成績後，將三筆資料加總並存入 total 這個類別變數中的範例：
-
- public class Exam {
-   <span style="color:red">public static int total = 0;</span>
- 
-   public static void main(String argv[]) {
-     <span style="color:red">total = displayScore(3, 4, 5); // total = 12
-     total = total + displayScore(4, 5, 6);                 // total = 27
-     total = total + displayScore(1, 2, 3);</span>          // total = 33
-     System.out.print("The total score is ");    
-     System.out.println(total);
-   }
- 
-   public static int displayScore(int v, int g, int l) {  
-     return v + g + l;
-   }
- }
- 
-執行結果：
-
- The total score is 33
-
-程式設計師也可以使用不是定義在自己類別中的類別變數，而 Java 是以<pre>類別名稱.變數名稱</pre>使用定義在其他類別中的類別變數。以下便是一種將 total 宣告在另一個類別 EnglishExam 中的寫法是：
-
- public class Exam {
-   public static void main(String argv[]) {
-     EnglishExam.computeScore(3, 4, 5);
-     EnglishExam.computeScore(4, 5, 6);
-     EnglishExam.computeScore(1, 2, 3);
-     System.out.print("The total score is ");    
-     System.out.println(<span style="color:red">EnglishExam.total</span>);
-   }
- }
- 
- class EnglishExam { 
-   <span style="color:red">public static int total = 0;</span>
- 
-   public static void computeScore(int v, int g, int l) { 
-     <span style="color:red">total = total + (v + g + l);</span>
-   }
- }
- 
-執行結果：
-
- The total score is 33
-
-以下則是一個為考試成績的計算，加入權重的範例。在這個範例中是以 Exam.wV, Exam.wG, Exam.wL 來使用這三個類別變數：
-
- public class Exam {
- 
-   <span style="color:red">public static double wV = 0.3, wG = 0.3, wL = 0.4;</span>
- 
-   public static void main(String argv[]) {
-     int voc = 3, grammar = 7, listen = 8;
-     System.out.print("The score of the english exam is ");    
-     System.out.println(EnglishExam.displayScore(voc, grammar, listen));
-     System.out.print("The score of simple english exam is ");    
-     System.out.println(SimpleEnglishExam.displayScore(voc, grammar, listen));
-   }
- }
- 
- class EnglishExam {  
-   public static double displayScore(int v, int g, int l) {  
-     return <span style="color:red">v * Exam.wV + g * Exam.wG + l * Exam.wL;</span>
-   }
- }
- 
- class SimpleEnglishExam {
-   public static double displayScore(int v, int g, int l) {  
-     return <span style="color:red">v * Exam.wV + g * Exam.wG + 0;</span>
-   }
- }
- 
-執行結果：
-
- The score of the english exam is 6.2
- The score of simple english exam is 3.0
-
-類別變數與區域變數，在變數的可用「區域」與存在的「時間」上都不相同。類別變數若是定義為 public，則它的可用區域便包括整個程式，而且在整個程式執行時都存在。區域變數則是在程式執行到一個區塊或方法內時，那個區塊或方法的區域變數才存在，一旦離開那個區塊或方法，便消失了。因此區域變數的可用區域，只在定義該區域變數的區塊或方法內。
-
-以下是一個「計算蛋與水果總價」的程式及其執行過程的動畫：
- class Market {
-     static int sEgg = 5, sFruit = 20;
-     <span style="color:red">static int getMoney(int nEgg, int nFruit) {
-         return sEgg * nEgg + sFruit * nFruit;
-     }</span>
- } 
- public class Ex1 {
-     public static void main(String argv[]) {
-         int egg = 20, fruit = 30;
-         System.out.print("Money:");
-         System.out.println(<span style="color:red">Market.getMoney(egg, fruit)</span>);
-     }
- }
-
-執行結果：
-
- Money:700
-
-<span class="dangerousLink">[[Media:Ex1new.swf|觀看執行過程]]</span>‎
-
 =運算式、句子與條件判斷句=
 
 運算式（expression）執行完畢會後傳回一個值；句子（statement）在執行之後，則不回傳值。一個運算式與句子在執行時都可能會改變電腦的狀態，例如：更改變數、陣列或檔案的內容。算術運算式已經介紹了，而最簡單的句子，包括：
@@ -429,7 +51,7 @@ displayScore 這個方法將字串顯示在螢幕上，不需要傳回值，因�
     <td align="center">6 &gt;= 4</td>
   </tr>
 </table>
-*需注意關係運算式使用的 <span style="color:red">"=="</span> ，和寫設值運算式（assignment expression）的 "=" 是不一樣的。
+*需注意關係運算式使用的  **"=="**  ，和寫設值運算式（assignment expression）的 "=" 是不一樣的。
 <br>
 
 ==邏輯運算式==
@@ -576,13 +198,13 @@ Java 的條件判斷句（statement）可以分成以下 3 種：
 Java 語言 if (...) {...} 條件判斷句的流程圖及語法如下：
 <br>
 [[Image:If-1.png]]
-<code java>
+.. code-block:: java
 1 if (條件判斷)
 2 {
 2  　條件判斷成立時執行的程式碼;
 3  　....
 4 }
-</code>
+
 說明：
 *如果第 1 行的條件判斷成立（值 == true），則會執行第 2 ~ 4 行的程式碼（圖形藍色的路徑）。而如果條件判斷不成立（值 == false），則會跳過第 2 ~ 4 行程式碼不執行（圖形黑色 False 的路徑）。
 *如果第 1 行的條件判斷成立時，執行的程式碼只有一行，則區塊符號可以省略不寫。如果超過一行，其區塊符號 { } 不可以省略。
@@ -603,7 +225,7 @@ Example 1：請設計一個 Java 程式，讓使用者自行輸入一個成績�
   　　 　int grade = scanner.nextInt();
  
    　　　<span style="color:blue">if (grade >= 60)
-  　 　　　　System.out.println("成績及格!");</span>
+  　 　　　　System.out.println("成績及格!");** 
   　 }
   }
 
@@ -623,7 +245,7 @@ Example 1：請設計一個 Java 程式，讓使用者自行輸入一個成績�
 Java 語言 if (...) {...} else {...} 條件判斷句的語法如下：
 <br>
 [[Image:If-else-1.png]]
-<code java>
+.. code-block:: java
 1  if (條件判斷) 
 2  {
 3      條件判斷成立時執行的程式碼;
@@ -634,7 +256,7 @@ Java 語言 if (...) {...} else {...} 條件判斷句的語法如下：
 8 　    條件判斷不成立時執行的程式碼;
 9 　    ....
 10 }
-</code>
+
 說明：
 *如果第 1 行的條件判斷成立（值 == true），則執行第 2 ~ 5 行區塊符號內的程式碼（圖形藍色的路徑）。
 *如果第 1 行的條件判斷不成立（值 ==false），則跳過第 2 ~ 5 行的程式碼，而執行第 7 ~ 10 行區塊符號內的程式碼（圖形紅色的路徑）。
@@ -658,9 +280,9 @@ Example 2：請設計一個 Java 程式，讓使用者輸入一個成績，判�
  　　　　int grade = scanner.nextInt(); 
  
  　　　　if (grade >= 60)
- 　　　　　　<span style="color:blue">System.out.println("成績及格!");</span>
+ 　　　　　　<span style="color:blue">System.out.println("成績及格!");** 
  　　　　else
- 　　　　　　<span style="color:red">System.out.println("成績不及格!");</span>
+ 　　　　　　 **System.out.println("成績不及格!");** 
  　　}
  }
 
@@ -681,7 +303,7 @@ Example 2：請設計一個 Java 程式，讓使用者輸入一個成績，判�
 幾個接續在一起的 if 句子，可以寫成： if (...) {...} else if (...) {...} else {...}：
 <br>
 [[Image:If-elseif-else-1.png]]
-<code java>
+.. code-block:: java
 1  if (條件判斷1)
 2  {
 3      條件判斷1成立時執行的程式碼;
@@ -699,7 +321,7 @@ Example 2：請設計一個 Java 程式，讓使用者輸入一個成績，判�
 15     上述條件判斷都不成立時執行的程式碼;
 16     ....
 17 }
-</code>
+
 說明：
 *如果在第 1 行的條件判斷1 成立（值 == true），則執行第 2 ~ 5 行區塊符號內的程式碼（圖形藍色的路徑），並略過其餘的程式碼。
 *如果在第 6 行的條件判斷2 成立（值 == true），則執行第 7 ~ 10 行區塊符號內的程式碼（圖形綠色的路徑），並略過其餘的程式碼。 
@@ -709,7 +331,7 @@ Example 2：請設計一個 Java 程式，讓使用者輸入一個成績，判�
 Example 3：請設計一個 Java 程式，讓使用者自行輸入一個成績，判斷該輸入的成績是屬於 A, B, C, D 或 E 。
 <br>
 [[Image:If-elseif-else-2.png]]
-<code java>
+.. code-block:: java
 import java.util.Scanner;
 class if_elseif_else_loop {
 　　public static void main(String[] args) {
@@ -737,7 +359,7 @@ class if_elseif_else_loop {
 　　　　　　System.out.println("成績為E");
 　　}
 }
-</code>
+
 執行結果：
 <code>
 請輸入成績:90
@@ -750,7 +372,7 @@ class if_elseif_else_loop {
 成績為D
 請輸入成績:59
 成績為E
-</code>
+
 說明：
 *第一次輸入的 grade 為 90 ，符合條件判斷 1，輸出 "成績為A" (圖形藍色的路徑) 。
 *第二次輸入的 grade 為 89 ，符合條件判斷 2，輸出 "成績為B" (圖形綠色的路徑) 。
@@ -772,7 +394,7 @@ class if_elseif_else_loop {
 當需要對一個 int、short、char、byte 或是 enum 型態值做多種不同的判斷時，可以使用 switch ，以下是 switch 的語法：
 <br>
 [[Image:Switch-1.png]]
-<code java>
+.. code-block:: java
 1  switch (變數或運算式) {
 2      case 值1:
 3          符合值1執行的程式碼;
@@ -792,19 +414,19 @@ class if_elseif_else_loop {
 17         都不符合上述值執行的程式碼;
 18         ....
 19 }
-</code>
+
 說明：
 *第 1 行： Switch 後面括號內的程式碼，可以是變數（例如：grade）或是運算式，然而其型態必需是 int、short、char、byte 或是 enum 型態（圖形藍色菱形的部份）。
 *第 2 、 6 、 12 行：用以判斷 switch 後面括號內的變數或運算式的值是否符合值1（第2行；圖形藍色的路徑）、值2（第6行；圖形綠色的路徑）、值n（第12行；圖形粉紅色的路徑）的條件判斷。值1、值2、值n必須是常數（compile-time constant）。
 *第 (3~4) 、 (7~8) 、 (13~14) 行：如果符合值1（圖形藍色的路徑）、值2（圖形綠色的路徑）、值n（圖形粉紅色的路徑）時會執行的程式碼。
 *第 16 行：如果都不符合 case 值1 到 case 值n 的情況下，則會去執行 default 區塊內（第17、18行；圖形紅色的路徑）的程式碼，然後離開整個 swtich 的條件判斷。
-*第 5 、 9 、 15 行：<span style="color:red">當程式執行遇到 break 敘述，會結束 swtich 的執行</span>。
-*在 Java 語言中，<span style="color:red">switch 條件判斷的 case 的值只能是單一的常數值（compile-time constant），不可以是範圍值（例如：>=90）</span>。
+*第 5 、 9 、 15 行： **當程式執行遇到 break 敘述，會結束 swtich 的執行** 。
+*在 Java 語言中， **switch 條件判斷的 case 的值只能是單一的常數值（compile-time constant），不可以是範圍值（例如：>=90）** 。
 <br>
 Example 4：請使用 switch 來設計一個 Java 程式，讓使用者自行輸入一個成績，判斷該輸入的成績是介於哪一個區間之內。
 <br>
 [[Image:Switch-2.png]]
-<code java>
+.. code-block:: java
 import java.util.Scanner;
 class Switch_Statement {
 　　public static void main(String[] args) {
@@ -841,7 +463,7 @@ class Switch_Statement {
        }
     }
 }
-</code>
+
 執行結果：
 <code>
 請輸入成績:100
@@ -856,7 +478,7 @@ class Switch_Statement {
 60~69
 請輸入成績:59
 0~59
-</code>
+
 說明：
 *第一次輸入的 grade 為 100，符合 case 10 的條件判斷，但 case 10 區塊內沒有 break 敘述（圖形藍色的路徑）會繼續往下執行到 case 9 區塊內的程式碼，輸出 "90~100"（圖形綠色的路徑），之後遇到 break 敘述跳離開整個 swtich。 
 *第二次輸入的 grade 為 90，符合 case 9 的條件判斷，會執行 case 9 區塊內的程式碼，輸出 "90~100"（圖形綠色的路徑），之後遇到 break 敘述跳離開整個 swtich 。 
@@ -874,7 +496,7 @@ class Switch_Statement {
 Example 5：請寫一個判斷使用者輸入的數是否是2或3或6的倍數，或者都不是他們倍數的java程式。
 <br>
 [[Image:nested_if.png|link=]]
-<code java>
+.. code-block:: java
 import java.util.Scanner;
 public class Times {
     public static Scanner keyboard = new Scanner(System.in);
@@ -908,7 +530,7 @@ public class Times {
         }
     }
 }
-</code>
+
 輸出結果：
 <code>
 請輸入一個整數：12
@@ -919,7 +541,7 @@ public class Times {
 9是3的倍數。
 請輸入一個整數：11
 11都不是2、3、6的倍數。
-</code>
+
 說明：
 *當輸入的 num 為 12 時，第一層（外層）可被 2 整除（執行 if 區塊），再往第二層（內層）可被 3 整除（執行 if 區塊），輸出 "12是2、3、6的倍數。"（圖形藍色的路徑）。
 *當輸入的 num 為 4 時，第一層（外層）可被 2 整除（執行 if 區塊），再往第二層（內層）不可被 3 整除（執行 else 區塊），輸出 "4是2的倍數。"（圖形粉紅色的路徑）。
@@ -929,22 +551,22 @@ public class Times {
 
 ===? : 條件判斷式===
 
-<code java>
+.. code-block:: java
 條件判斷 ? 條件判斷成立時執行的程式碼 : 條件判斷不成立時執行的程式碼 ;
-</code>
+
 if 與 ? : 的差別在於 if 不傳回值；而 ? : 可以傳回值（見以下範例）
 
 Example 6：請設計一個 Java 程式，可以判斷成績是否及格。
-<code java>
+.. code-block:: java
 if (grade >= 60)
     message = "成績及格!";
 else
     message = "成績不及格!";
-</code>
+
 上面 Example 6 可以改寫成下面只有一行的 ? : 條件判斷式。
-<code java>
+.. code-block:: java
 message = (grade >=60) ? "成績及格!" : "成績不及格!";
-</code>
+
 message 的值是上例執行 ? : 運算式之後傳回的結果。
 <br>
 
@@ -964,13 +586,13 @@ Java 用來寫迴圈的句子有以下三個：
 ===for-loop===
 <hr>
 for-loop 的語法如下：
-<code java>
+.. code-block:: java
 1  for (控制變數的初始值設定; 控制變數的條件判斷; 控制變數值的改變)
 2  {
 3　　   符合控制變數的條件判斷時，執行的程式碼區塊;
 4　　   ....
 5  }
-</code>
+
 說明：
 *for-loop 主要由四個部份所組成，分別是「控制變數的初始值設定」、「控制變數的條件判斷」、「控制變數值的改變」與「符合控制變數的條件判斷時，執行的程式碼區塊」。
 *「控制變數的初始值設定」：只有在迴圈第一次執行時才會執行，其目的是用來設定控制迴圈變數（loop control variable）初始值的設定。例如：int i = 0; 表示 for 迴圈一開始執行時，宣告一個 int 的控制變數，其值為0。
@@ -981,8 +603,8 @@ for-loop 的語法如下：
 Example 1：請利用 for-loop 來設計一個程式，讓迴圈執行5次，每次執行時都輸出迴圈執行到第幾次。
  public class for_loop {
  　　public static void main(String[] args) {
-        <span style="color:red">for (int i=1; i<=5; i++)
-            System.out.println("for迴圈執行第" + i + "次。");</span>
+         **for (int i=1; i<=5; i++)
+            System.out.println("for迴圈執行第" + i + "次。");** 
  　　}
  }
 執行結果：
@@ -992,16 +614,16 @@ for迴圈執行第2次。
 for迴圈執行第3次。
 for迴圈執行第4次。
 for迴圈執行第5次。
-</code>
+
 *由於區塊內的程式碼只有一個句子，所以 { } 可以省略不寫。
 <br>
 
 Example 2：請利用 for-loop 搭配 if 條件判斷來設計一個 Java 程式，將 1 到 10 中的偶數輸出。
  public class for_loop2 {
  　　public static void main(String[] args) {
-        <span style="color:red">for (int i=1; i<=10; i++)
+         **for (int i=1; i<=10; i++)
             if (i % 2 == 0)
-                System.out.println("1到10的偶數有：" + i);</span>
+                System.out.println("1到10的偶數有：" + i);** 
  　　}
  }
 輸出結果：
@@ -1011,13 +633,13 @@ Example 2：請利用 for-loop 搭配 if 條件判斷來設計一個 Java 程式
 1到10的偶數有：6
 1到10的偶數有：8
 1到10的偶數有：10
-</code>
+
 <br>
 
 ===while-loop===
 <hr>
 while-loop 是前測式的迴圈，其語法如下：
-<code java>
+.. code-block:: java
 1 控制變數的初始值設定;
 2 while (控制變數的條件判斷)
 3 {
@@ -1025,7 +647,7 @@ while-loop 是前測式的迴圈，其語法如下：
 5     ....
 6     控制變數值的改變;
 7 }
-</code>
+
 說明：
 *while-loop 和 for-loop 同樣由四個部分所組成，分別是「控制變數的初始值設定」、「控制變數的條件判斷」、「符合控制變數的條件判斷時，執行的程式碼區塊」與「控制變數值的改變」。
 *while-loop 是「前測式迴圈」，因為控制變數的條件判斷位於迴圈一開始的地方，因此 while-loop 執行次數可以為0次，也就是控制變數的條件判斷在一開始便不符合。
@@ -1035,11 +657,11 @@ Example 3：請利用 while-loop 設計一個 Java 程式，讓迴圈執行5次�
 
  public class while_loop {
  　　public static void main(String[] args) {
-        <span style="color:red">int i = 1;
+         **int i = 1;
         while (i <= 5) {
             System.out.println("while迴圈執行第" + i + "次。");
             i++;
-        }</span>
+        }** 
  　　}
  }
 執行結果：
@@ -1049,7 +671,7 @@ while迴圈執行第2次。
 while迴圈執行第3次。
 while迴圈執行第4次。
 while迴圈執行第5次。
-</code>
+
 <br>
 Example 4：請利用 while-loop 設計一個 Java 程式，這個程式一直讓使用者從鍵盤輸入數字，直到輸入 -1 時為止。這個程式輸出這些數字的和。
 
@@ -1062,12 +684,12 @@ Example 4：請利用 while-loop 設計一個 Java 程式，這個程式一直�
          int total = 0;
          int s = 0;
          
-         <span style="color:red">System.out.print("Please enter score or enter -1 to stop: ");
-         s = keyboard.nextInt();</span>
+          **System.out.print("Please enter score or enter -1 to stop: ");
+         s = keyboard.nextInt();** 
          while (s != i) {
              total = total + s;
-             <span style="color:red">System.out.print("Please enter score or enter -1 to stop: ");
-             s = keyboard.nextInt();</span>
+              **System.out.print("Please enter score or enter -1 to stop: ");
+             s = keyboard.nextInt();** 
          }
          System.out.println("The sum of scores: "+ total);
      }
@@ -1081,7 +703,7 @@ Please enter score or enter -1 to stop: 7
 Please enter score or enter -1 to stop: 9
 Please enter score or enter -1 to stop: -1
 The sum of scores: 24
-</code>
+
 *這個程式的特性是輸入數字的程式碼，在進入迴圈前及迴圈尾各出現一次。
 *這種迴圈叫旗標控制迴圈（sentinel-controlled loop）。
 <br>
@@ -1089,7 +711,7 @@ The sum of scores: 24
 ===do-while===
 <hr>
 do-while loop 是一種後測式迴圈，其語法如下：
-<code java>
+.. code-block:: java
 1 控制變數的初始值設定;
 2 do
 3 {
@@ -1097,7 +719,7 @@ do-while loop 是一種後測式迴圈，其語法如下：
 5 　　  ....
 6      控制變數值的改變;
 7 } while (控制變數的條件判斷);
-</code>
+
 說明：
 *do-while loop 和 for-loop、while-loop 同樣由四個部分所組成，分別是「控制變數的初始值設定」、「控制變數的條件判斷」、「符合控制變數的條件判斷時，執行的程式碼區塊」與「控制變數值的改變」。
 *do-while loop 是「後測式迴圈」，因為控制變數的條件判斷位於最後面。
@@ -1108,11 +730,11 @@ Example 5：請利用 do-while loop 設計一個 Java 程式，讓迴圈執行5�
 
  public class do_while_loop {
  　　public static void main(String[] args) {
-        <span style="color:red">int i = 1;
+         **int i = 1;
         do {
             System.out.println("do while迴圈執行第" + i + "次。");
             i++;
-        } while (i <= 5);</span>
+        } while (i <= 5);** 
  　　}
  }
 執行結果：
@@ -1122,18 +744,18 @@ do while迴圈執行第2次。
 do while迴圈執行第3次。
 do while迴圈執行第4次。
 do while迴圈執行第5次。
-</code>
+
 <br>
 Example 6：請利用 do-while loop 搭配 if 條件判斷來設計一個 Java 程式，將 1 到 10 中間的偶數輸出。 
 
  public class do_while_loop2 {
  　　public static void main(String[] args) {
-        <span style="color:red">int i = 1;
+         **int i = 1;
         do {
             if (i % 2 == 0)
                 System.out.println("1到10的偶數有：" + i);
             i++;
-        } while (i <= 10);</span>
+        } while (i <= 10);** 
  　　}
  }
 執行結果：
@@ -1143,7 +765,7 @@ Example 6：請利用 do-while loop 搭配 if 條件判斷來設計一個 Java �
 1到10的偶數有：6
 1到10的偶數有：8
 1到10的偶數有：10
-</code>
+
 <br>
 
 ===breake & continue===
@@ -1153,7 +775,7 @@ Example 6：請利用 do-while loop 搭配 if 條件判斷來設計一個 Java �
 *break：可以離開目前的 switch、for、while、do while 的區塊，並跳離至區塊後的下一行程式碼。在 switch 中主要用來離開；而在 for、while 與 do while 迴圈中，主要用於中斷目前迴圈的執行。
 <br>
 Example 7：下面是一個使用 break 敘述的 Java 程式，觀察程式碼及程式執行的過程。
-<code java>
+.. code-block:: java
 public class break1 {
 　　public static void main(String[] args) {
        for (int i=1; i<=10; i++) {
@@ -1163,14 +785,14 @@ public class break1 {
        }
 　　}
 }
-</code>
+
 執行結果：
 <code>
 迴圈執行第1次。
 迴圈執行第2次。
 迴圈執行第3次。
 迴圈執行第4次。
-</code>
+
 *此迴圈只會執行 4 次，因為當 i==5 時就會執行 break; 述敘而離開迴圈。
 <br>
 
@@ -1179,7 +801,7 @@ public class break1 {
 *continue：作用與 break 敘述類似，主要使用於 for、while、do while 迴圈，所不同的是 break 敘述會結束迴圈區塊的執行，而continue 只會結束目前執行中區塊的程式碼，並跳回迴圈區塊的開頭繼續下一迴圈，而不是離開迴圈。
 <br>
 Example 8：下面是一個使用 continue 敘述的 Java 程式，觀察程式碼及程式執行的過程。
-<code java>
+.. code-block:: java
 public class continue1 {
 　　public static void main(String[] args) {
        for (int i=1; i<=10; i++) {
@@ -1189,7 +811,7 @@ public class continue1 {
        }
 　　}
 }
-</code>
+
 執行結果：
 <code>
 迴圈執行第1次。
@@ -1201,7 +823,7 @@ public class continue1 {
 迴圈執行第8次。
 迴圈執行第9次。
 迴圈執行第10次。
-</code>
+
 *此迴圈會執行 1 ~ 4 加 6 ~ 9 次，當 i==5 時，會執行 continue; 述敘而跳離此次迴圈，然後從區塊開頭執行下一次迴圈，所以 i==5 並沒有被執行。
 <br>
 
@@ -1212,7 +834,7 @@ public class continue1 {
 *巢狀迴圈裡面的每一個迴圈都不可以與其它迴圈重疊，只能是彼此包含的關係。
 <br>
 Example 9：請使用巢狀迴圈設計一個輸出九九乘法表的程式，並計算巢狀迴圈總共執行了幾次。
-<code java>
+.. code-block:: java
 public class NineNineTable {
 　　public static void main(String[] args) {
        int count = 0;
@@ -1226,7 +848,7 @@ public class NineNineTable {
        System.out.printf("巢狀迴圈總共執行了%d次\n", count);
 　　}
 }
-</code>
+
 執行結果：
 <code>
 2*1= 2 2*2= 4 2*3= 6 2*4= 8 2*5=10 2*6=12 2*7=14 2*8=16 2*9=18
@@ -1238,11 +860,11 @@ public class NineNineTable {
 8*1= 8 8*2=16 8*3=24 8*4=32 8*5=40 8*6=48 8*7=56 8*8=64 8*9=72
 9*1= 9 9*2=18 9*3=27 9*4=36 9*5=45 9*6=54 9*7=63 9*8=72 9*9=81
 巢狀迴圈總共執行了72次
-</code>
+
 
 <br>
 Example 10：請使用巢狀迴圈設計一個 Java 程式，這個程式持續輸入兩個整數 m, n，利用 while-loop 計算 m 的 n 次方，直到輸入 999 為止。 
-<code java>
+.. code-block:: java
 import java.util.Scanner;
 public class PowerOf {
     public static Scanner input = new Scanner(System.in);
@@ -1288,7 +910,7 @@ Input:
 5^6=15625
 Input:
 999
-</code>
+
 說明：
 *外層的 while 迴圈控制程式執行到輸入 999 才結束。
 *內層的 while 迴圈計算 m 的 n 次方。
@@ -1305,7 +927,7 @@ Input:
 #將 while-loop 的「控制變數的條件判斷」拉到 do-while-loop 最後一行的「「控制變數的條件判斷」」內即可完成。
 <br>
 Example 11：請分別利用 for 、 while 與 do-while 設計計算 1 加到 100 的程式。
-<code java>
+.. code-block:: java
 public class Loop_Transfer1 {
     public static void main(String[] args) {
         // for-loop
@@ -1345,17 +967,17 @@ public class Loop_Transfer1 {
         return sum;
     }
 }
-</code>
+
 執行結果：
 <code>
 for迴圈1加到100為5050
 while迴圈1加到100為5050
 do-while迴圈1加到100為5050
-</code>
+
 <br>
 
 Example 12：請分別利用 for、while 與 do-while 設計計算 1 到 100 中間 3 的倍數的總合。 
-<code java>
+.. code-block:: java
 public class Loop_Transfer2 {
     public static void main(String[] args) {
         // for-loop
@@ -1404,7 +1026,7 @@ public class Loop_Transfer2 {
 for迴圈1到100間3的倍數總合為1683
 while迴圈1到100間3的倍數總合為1683
 do-while迴圈1到100間3的倍數總合為1683
-</code>
+
 <br>
 
 ==遞迴==
@@ -1417,25 +1039,25 @@ do-while迴圈1到100間3的倍數總合為1683
 <hr>
 
 以下是呼叫 and2 的範例：
-<code java>
+.. code-block:: java
 System.out.println(and2("11")); => true 
 System.out.println(and2("10")); => false 
 System.out.println(and2("01")); => false
 System.out.println(and2("00")); => false
-</code>
+
 and2 的特性是，它的參數中的兩個資料值都要是 1 結果才是 true，要不然結果就是 false。
 <br>
 <br>
 現在我們試著將 and2 的功能擴充，並將擴充後的方法命名為 allTrue。而 allTrue 可以判斷一個 string 中的值是否都是 true，這個 string 可以有不止兩個資料值。以下是呼叫 allTrue 的範例：
-<code java>
+.. code-block:: java
 System.out.println(allTrue(""));      => true  輸入參數中沒有一個false，所以結果是true。
 System.out.println(allTrue("111"));   => true
 System.out.println(allTrue("1111"));  => true
 System.out.println(allTrue("11010")); => false
-</code>
+
 <br>
 以下是 allTrue 的寫法：
-<code java>
+.. code-block:: java
 public class Recursive {
     public static void main(String args[]) {
         System.out.println(allTrue(""));       // => true  輸入參數中沒有一個false的值，所以結果是true。
@@ -1453,27 +1075,27 @@ public class Recursive {
             return false;
     }
 }
-</code>
+
 *Integer.parseInt()：將 () 裡的 string 由 String 型態轉換為 int 型態，以提供 if 來判斷其為 true(== 1) 或 false(!= 1)。
 *str.substring(0, 1)：取出 str 字串變數中的第 0 個位置（index）至第 1 個位置（index）間的資料。（例如："1234"  =>  "1"）
 *str.substring(1)：取出 str 字串變數中第 1 個位置以後的資料。（例如："1234"  =>  "234"）
 <br>
 allTrue("111") ; 的執行過程可 trace 如下：
-<code java>
+.. code-block:: java
    allTrue("111")
 => allTrue("11")
 => allTrue("1")
 => allTrue("")
 => true
-</code>
+
 <br>
 allTrue("1101") ; 的執行過程可 trace 如下：
-<code java>
+.. code-block:: java
    allTrue("1101")
 => allTrue("101")
 => allTrue("01")
 => false
-</code>
+
 <br>
 觀察 allTrue 這個程序以及它的執行過程，我們發現： 
 <br>
@@ -1496,7 +1118,7 @@ allTrue("1101") ; 的執行過程可 trace 如下：
      }
      
      public static boolean allTrue(String str) {
-         <span style="color:red">System.out.println("str=" + str);</span>
+          **System.out.println("str=" + str);** 
  
          if (str.equals(""))
              return true;
@@ -1509,13 +1131,13 @@ allTrue("1101") ; 的執行過程可 trace 如下：
 
 <br>
 執行以上的程式碼會列印與傳回以下的內容： 
-<code java>
+.. code-block:: java
 str=111
 str=11
 str=1
 str=
 true
-</code>
+
 前面 4 行與最後 1 行分別顯示了每次呼叫 allTrue 的輸入參數的值與最後的執行結果。
 <br>
 <br>
@@ -1526,13 +1148,13 @@ true
 <br>
 <br>
 假設我們需要撰寫一個能夠計算一個 string 中有幾個 true 的程序。我們將這個程序命名為 countTrue：
-<code java>
+.. code-block:: java
 countTrue("");     => 0 
 countTrue("1101"); => 3
-</code>
+
 <br>
 很顯然的，在程序執行的過程中如果遇到 1(true) 則需要將 1 加入結果之中。寫法如下：
-<code java>
+.. code-block:: java
 public class Recursive {
     public static void main(String args[]) {
         System.out.println(countTrue(""));       // => 0  輸入參數中沒有一個false的值，所以結果是0。
@@ -1551,10 +1173,10 @@ public class Recursive {
             return countTrue(str.substring(1));
     }
 }
-</code>
+
 <br>
 我們可以追蹤這個程式是怎麼執行的：
-<code java>
+.. code-block:: java
 　 countTrue("");         ""使str.equals("")成立因此傳回0
 => 0
 
@@ -1571,10 +1193,10 @@ public class Recursive {
 => (1 + countTrue("01"); 
 => (1 + 1) 
 => 2
-</code>
+
 <br>
 接下來，我們可以追蹤將一個有四個資料值的 string 傳入 countTrue 的執行狀況：
-<code java>
+.. code-block:: java
    countTrue("1101"); 
 => (1 + countTrue("101");)
 => (1 + (1 + countTrue("01");)) 
@@ -1582,7 +1204,7 @@ public class Recursive {
 => (1 + (1 + (1 + countTrue("");))) 
 => (1 + (1 + (1 + 0)))
 => 3
-</code>
+
 <br>
 另外，countTrue 的型態是： String -> int 。
 <br>
@@ -1602,7 +1224,7 @@ public class Recursive {
 ====內涵式遞迴====
 <hr>
 階乘函數可以用 Java 寫成如下的程式碼，我們將之命名為 factorial：
-<code java>
+.. code-block:: java
 public class  Recursive {
     public static void main(String args[]) {
         System.out.println(factorial(3));
@@ -1626,12 +1248,12 @@ public class  Recursive {
 => return 3 * (2 * (1 * 1));   // n=0
 => return 3 * (2 * (1 * 1));
 => 6
-</code>
+
 觀察以上的執行狀況，呼叫 factorial 的遞迴呼叫是內涵(embedded)在乘法算式 (n * ...) 之內。而程式的執行結果是在最後一個遞迴呼叫 factorial(0) 完成後才依序累乘 (3 * (2 * (1 * 1))) 而得的。這種類型的遞迴程序稱為內涵式遞迴（embedded recursion）。
 <br>
 <br>
 加總涵式 sum 的寫法如下：
-<code java>
+.. code-block:: java
 public class Recursive {
     public static void main(String args[]) {
         System.out.println(sum("1234"));
@@ -1657,13 +1279,13 @@ public class Recursive {
 => return 1 + (2 + (3 + (4 + (Integer.parseInt(str.substring(0, 1)) + sum(str.substring(1)))));   // str=""
 => return 1 + (2 + (3 + (4 + 0)));
 => 10
-</code>
+
 觀察以上的執行狀況，呼叫 sum 的遞迴呼叫也是內涵(embedded)在加總算式(Integer.parseInt(str.substring(0, 1)) + ...)之內。而程式的執行結果是在最後一個遞迴呼叫 sum("") 完成後才依序累加 (1 + (2 + (3 + (4 + 0)))) 而得的。這是內涵式遞迴的另一個例子。
 
 ====尾端式遞迴====
 <hr>
 第二種形式的遞迴程序是尾端遞迴（tail recursion）。尾端遞迴的特色是遞迴呼叫沒有內涵在任何一個尚未執行完成的式子內。以下面的例子而言，呼叫 tail-fac 的遞迴呼叫雖然是在 if 之內，但是該 if 的條件判斷式已經執行完畢，所以是尾端遞迴。
-<code java>
+.. code-block:: java
 public class  Recursive {
     public static void main(String args[]) {
         System.out.println(tail-fac(3, 1));
@@ -1682,13 +1304,13 @@ public class  Recursive {
 => tail-fac(1, 6)
 => tail-fac(0, 6)
 => 6
-</code>
+
 以上程序的執行狀況是「平的」。尾端遞迴在執行的過程中不會像內涵式遞迴累積一層又一層如同樓梯般的式子，原因是前面遞迴呼叫時所產生的區域變數區內的變數值，並不需要被保留，因此下一次遞迴呼叫的區域變數區可以直接的覆蓋上一次遞迴呼叫時所使用的區域變數區。
 
 將內涵式遞迴程序轉換成尾端遞迴程序的技巧是增加傳入的參數。以 fac2 來說我們增加了一個能夠儲存累乘值的參數 m。增加這個參數後便不需要以累積乘法算式的方式來計算階乘的值了。
 <br><br>
 而尾端遞迴的加總函式 sum，也可以經由增加一個參數及改變遞迴的回傳值得到：
-<code java>
+.. code-block:: java
 public class  Recursive {
     public static void main(String args[]) {
         System.out.println(tail-sum("1234", 0));
@@ -1708,7 +1330,7 @@ public class  Recursive {
 => tail-sum("4", 6)
 => tail-sum("", 10)
 => 10
-</code>
+
 
 ====迴圈====
 <hr>
@@ -1720,7 +1342,7 @@ public class  Recursive {
 #將尾端式遞迴的終止條件成立時的回傳值拉到迴圈的後面，讓程序結束後將結果值回傳回去。
 <br>
 使用 whlile-loop 將尾端式遞迴轉換成一般的程式語言常常使用的「迴圈」。
-<code java>
+.. code-block:: java
 public class Recursive {  
     public static void main(String args[]){
         System.out.println(fac3(3, 1));
@@ -1738,9 +1360,9 @@ public class Recursive {
 
    fac3(3, 1) 
 => 6
-</code>
 
-<code java>
+
+.. code-block:: java
 public class Recursive {  
     public static void main(String args[]){
         System.out.println(sum3("1234", 0));
@@ -1758,10 +1380,10 @@ public class Recursive {
 
    sum3("1234", 0) 
 => 10
-</code>
+
 <br>
 同樣也可以使用 Java 語言的 for Loop 來將尾端式遞迴轉換成一般的程式語言常常使用的「迴圈」。
-<code java>
+.. code-block:: java
 public class Recursive {  
     public static void main(String args[]){
         System.out.println(fac3(3, 1));
@@ -1776,9 +1398,9 @@ public class Recursive {
 
    fac(3, 1) 
 => 6
-</code>
 
-<code java>
+
+.. code-block:: java
 public class Recursive {  
     public static void main(String args[]){
         System.out.println(sum3("1234", 0));
@@ -1793,7 +1415,7 @@ public class Recursive {
 
    sum3("1234", 0) 
 => 10
-</code>
+
 <br>
 
 =陣列=
@@ -1818,7 +1440,7 @@ public class Recursive {
  aDoubleArray[2] = 4.0;
  aDoubleArray[3] = 1.3;
 以下是另一種寫法：
- <span style="color:red">double[] aDoubleArray = new double[4];</span> 
+  **double[] aDoubleArray = new double[4];**  
  aDoubleArray[0] = 2.4;
  aDoubleArray[1] = 3.9;
  aDoubleArray[2] = 4.0;
