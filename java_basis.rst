@@ -43,7 +43,7 @@ Java如何分區呢？主要是使用大刮號，例如：
 Java 為這些字詞命名的規定是一個字詞可以包含一個或多個英文字母、數字、_ 及 $ 所組成的字元，而第一個字元不可以是數字。
 
 Java 語言有 public, class, void, if, while, for 等
-`保留字 <http://download-llnw.oracle.com/javase/tutorial/java/nutsandbolts/_keywords.html>`_。
+`保留字 <http://download-llnw.oracle.com/javase/tutorial/java/nutsandbolts/_keywords.html>`_ 。
 除了開始認識這些保留字的意義與用法之外，程式設計師所要學習的第一件事，
 就是為儲存資料的 **變數** 與執行處理的 **方法** 命名。
 

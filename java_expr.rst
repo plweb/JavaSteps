@@ -26,7 +26,7 @@ Java 會將整數先轉換成浮點數然後再進行運算。
 	System.out.println(i);
 	System.out.println(f);
 
-印出：::
+印出： ::
 
 	2
 	2.3333333333333335
@@ -47,7 +47,7 @@ Java 會將整數先轉換成浮點數然後再進行運算。
 	y = (x = 3)   // 因為 x = 3 傳回3, 所以 y 的值也設成 3
 
 自動將資料範圍較小的型態轉為資料範圍較大的型態，稱為自動轉型 (promotion)。
-Java 資料型態範圍之大小次序為：::
+Java 資料型態範圍之大小次序為： ::
 
 	byte < short < int < long < float < double
 

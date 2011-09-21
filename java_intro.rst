@@ -47,10 +47,10 @@ Java 還支援多執行緒、例外狀態處理與自動記憶體回收的功能
 
 * 可以從這裡下載新版的JDK `<http://java.sun.com/javase/downloads/index.jsp>`_
 
-在安裝完成後，也需要完成 path 及 classpath 的設定：
+在安裝完成後，也需要完成 path 及 classpath 的設定： ::
 
-* path=C:\Program Files\Java\jdk1.6.0\bin;....
-* classpath=.;C:\Program Files\Java\jdk1.6.0\lib;....
+	path=C:\Program Files\Java\jdk1.6.0\bin;....
+	classpath=.;C:\Program Files\Java\jdk1.6.0\lib;....
 
 請注意：以上路徑中的 jdk1.6.0 會因版本的不同而異。
 此外，在設定 classpath 時要特別注意在 ＝ 號的右邊要輸入這個 **「.」** 。
@@ -61,7 +61,7 @@ Java 還支援多執行緒、例外狀態處理與自動記憶體回收的功能
 
 有兩種方式可以編譯及執行一個 Java 程式。
 第一種是使用程式開發環境（program development environment），
-例如： `Eclipse <http://eclipse.org/>`_；
+例如： `Eclipse <http://eclipse.org/>`_ ；
 另一種則是使用一般的程式編輯器。
 以下是使用「記事本」寫 Java 程式時所需要進行的三個步驟：
 
@@ -77,14 +77,14 @@ Java 還支援多執行緒、例外狀態處理與自動記憶體回收的功能
   		}
   	}
 
-2. 執行「命令提示字元」並將目錄切換至儲存 EnglishExam.java 的目錄，然後執行：::
+2. 執行「命令提示字元」並將目錄切換至儲存 EnglishExam.java 的目錄，然後執行： ::
 
 	javac EnglishExam.java
 
    執行這個 javac 指令就是執行 Java 的編譯器（compiler），
    其結果是在同樣的目錄產生一個 EnglishExam.class 的 byte code 檔。
 
-3. 上面的步驟如果有編譯錯誤則繼續修改程式。如果沒有編譯錯誤則可以執行：::
+3. 上面的步驟如果有編譯錯誤則繼續修改程式。如果沒有編譯錯誤則可以執行： ::
 
     java EnglishExam
 
@@ -117,11 +117,11 @@ Java 還支援多執行緒、例外狀態處理與自動記憶體回收的功能
   		}                               
 	}
 
-以「命令提示字元」執行：::
+以「命令提示字元」執行： ::
 
 	java HelloJava Basic C++
 
-便會呼叫 System.out.println 並輸出：::
+便會呼叫 System.out.println 並輸出： ::
 
 	Hello Basic C++
 

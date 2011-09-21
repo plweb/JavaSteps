@@ -20,7 +20,7 @@
 		}
 	}
  
-執行結果：::
+執行結果： ::
 
 	The score of the exam is 83
 
@@ -50,7 +50,7 @@ Java 使用 static 這個保留字來定義類別方法。因為這種方法是�
 		}
 	}
  
-執行結果：::
+執行結果： ::
 
 	The score of the exam is 14
 
@@ -74,7 +74,7 @@ v, g, l 三個參數之所以也是區域變數，因為這三個變數的可見
 		}
 	}
  
-執行結果：::
+執行結果： ::
 
 	The score of the exam is 83
 
@@ -109,7 +109,7 @@ displayScore 這個方法將字串顯示在螢幕上，不需要傳回值，
 	}
  
 
-執行結果：::
+執行結果： ::
 
 	The score of the english exam is 18
 	The score of simple english exam is 10
@@ -137,7 +137,7 @@ displayScore 這個方法將字串顯示在螢幕上，不需要傳回值，
 		}
 	}
 
-執行結果：::
+執行結果： ::
 
 	The int score of the exam is 18
 	The double score of the exam is 18.0
@@ -149,18 +149,18 @@ displayScore 這個方法將字串顯示在螢幕上，不需要傳回值，
 	int a = 4, b = 5;
 	System.out.print(3 + a + b);
 
-執行結果：::
+執行結果： ::
 
 	12
 
-例如：::
+例如： ::
 
 .. code-block:: java
 
 	String a = "xy", b = "Z";
 	System.out.print("3" + a + b);
  
-執行結果：::
+執行結果： ::
 
 	3xyz
 
@@ -180,7 +180,7 @@ displayScore 這個方法將字串顯示在螢幕上，不需要傳回值，
 
 除了使用 static 宣告類別方法外，還有也是使用 static 宣告的類別變數。
 以下是一個在程式中內建三筆考試成績的資料，呼叫 displayScore 計算成績後，
-將三筆資料加總並存入 total 這個類別變數中的範例：::
+將三筆資料加總並存入 total 這個類別變數中的範例： ::
 
 .. code-block:: java
 
@@ -200,7 +200,7 @@ displayScore 這個方法將字串顯示在螢幕上，不需要傳回值，
 		}
 	}
 
-執行結果：::
+執行結果： ::
 
 	The total score is 33
 
@@ -227,11 +227,12 @@ displayScore 這個方法將字串顯示在螢幕上，不需要傳回值，
 		}
 	}
  
-執行結果：::
+執行結果： ::
 
 	The total score is 33
 
-以下則是一個為考試成績的計算，加入權重的範例。在這個範例中是以 Exam.wV, Exam.wG, Exam.wL 來使用這三個類別變數：
+以下則是一個為考試成績的計算，加入權重的範例。
+在這個範例中是以 Exam.wV, Exam.wG, Exam.wL 來使用這三個類別變數：
 
 .. code-block:: java
 
@@ -260,7 +261,7 @@ displayScore 這個方法將字串顯示在螢幕上，不需要傳回值，
 		}
 	}
  
-執行結果：::
+執行結果： ::
 
 	The score of the english exam is 6.2
 	The score of simple english exam is 3.0
@@ -286,7 +287,7 @@ displayScore 這個方法將字串顯示在螢幕上，不需要傳回值，
 		}
 	}
 
-執行結果：::
+執行結果： ::
 
 	Money:700
 

@@ -19,18 +19,18 @@
 	}
 
 第二種方式是在 J2SDK5 之後才支援 [#JavaSystemOutPrintf]_ 。
-這個方式與 C 語言的 printf 功能類似。例如：::
+這個方式與 C 語言的 printf 功能類似。例如： ::
 
 	System.out.printf("Today is %s, %d.\n", "January", 18);
 	// %s 的位置替換成 January 這個 String
 	// %d 的位置替換成 18 這個整數 
 	// \n 表示換行符號
 
-顯示：::
+顯示： ::
 
 	Today is January, 18
 
-例如：::
+例如： ::
 
 	double score = 92.345
 	System.out.printf("My score is %.2f.\n", score);
@@ -39,7 +39,7 @@
 	// %6.2f 的意義是：包括小數點共6位，小數點以下取兩位，
 	// 並四捨五入。所以9的左邊多空一格。
 
-顯示：::
+顯示： ::
 
 	My score is 92.35.
 	My score is  92.35.
