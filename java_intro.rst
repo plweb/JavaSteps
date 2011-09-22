@@ -49,7 +49,7 @@ Java 還支援多執行緒、例外狀態處理與自動記憶體回收的功能
 安裝JDK
 -------
 
-在編譯與執行 Java 程式前，你的電腦必須先安裝 JDK (Java Development Kit)：
+在編譯與執行 Java 程式前，你的電腦必須先安裝 JDK（Java Development Kit）：
 
 * 可以從這裡下載新版的JDK `<http://java.sun.com/javase/downloads/index.jsp>`_
 
@@ -96,12 +96,12 @@ Java 還支援多執行緒、例外狀態處理與自動記憶體回收的功能
 
    執行後 Your score is 97。便會顯示在螢幕上。
 
-在開發 Java 程式的過程中，有可能發生編譯錯誤 (compile-time error)。
+在開發 Java 程式的過程中，有可能發生編譯錯誤（compile-time error）。
 這時便需要再次的使用編輯器修改錯誤，直到沒有任何的編譯錯誤為止。
 編譯完畢之後，在程式執行時也有可能發生 run-time error。
 同樣的，這時也需要使用編輯器修改、編譯、執行、除錯，直到沒有錯誤為止。
 
-一般的 Java 程式都是由一或多個類別 (class) 所組成，
+一般的 Java 程式都是由一或多個類別（class）所組成，
 **其中的一個類別至少要有一個命名為 public static void main 的方法（method），
 而這個程式就是由 main 開始執行** 。
 （透過網路瀏覽器執行的 Java applet 不適用此規則。）
