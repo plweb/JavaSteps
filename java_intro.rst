@@ -76,7 +76,7 @@ Java 還支援多執行緒、例外狀態處理與自動記憶體回收的功能
    **而這個檔案的主檔名必須與 public class 後面的 EnglishExam 相同** ）：
 
 .. code-block:: java
-	
+
 	public class EnglishExam {                     
 		public static void main(String argv[]) {        
 			System.out.println("Your score is 97.");      
@@ -117,6 +117,7 @@ Java 還支援多執行緒、例外狀態處理與自動記憶體回收的功能
    例如在編譯以下的程式之後：
 
 .. code-block:: java
+
 	public class HelloJava {                     
 		public static void main(String argv[]) {
 			System.out.println("Hello " + argv[0] + argv[1]);      
