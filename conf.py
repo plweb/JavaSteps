@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Java Steps'
-copyright = u'2011, 董少桓'
+copyright = u'2011, 董少桓、林彥宏'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -180,8 +180,8 @@ latex_font_size = '12pt'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'JavaSteps.tex', u'快快樂樂寫程式系列\\\\Java Steps: Learning Java Step by Step',
-   u'董少桓', 'manual'),
+  ('index', 'JavaSteps.tex', u'程式碼實作學習\\\\Java Steps: Learning Java Step by Step',
+   u'董少桓、林彥宏', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -213,7 +213,7 @@ latex_preamble = '''\\usepackage[cm-default]{fontspec}
 \\setromanfont[BoldFont=Apple LiGothic Medium]{Apple LiSung Light}
 \\setmonofont{Monaco}
 \\renewcommand{\\baselinestretch}{1.25}
-\\DefineVerbatimEnvironment{Verbatim}{Verbatim}{numbers=left, fontsize=\\relsize{-2}}
+\\DefineVerbatimEnvironment{Verbatim}{Verbatim}{numbers=left, fontsize=\\relsize{-1}}
 '''
 
 # Documents to append as an appendix to all manuals.
@@ -229,5 +229,5 @@ latex_preamble = '''\\usepackage[cm-default]{fontspec}
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'javasteps', u'Java Steps',
-     [u'董少桓'], 1)
+     [u'董少桓、林彥宏'], 1)
 ]
