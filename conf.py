@@ -171,16 +171,16 @@ htmlhelp_basename = 'JavaStepsdoc'
 
 # The paper size ('letter' or 'a4').
 #latex_paper_size = 'letter'
-latex_paper_size = 'b5'
+latex_paper_size = 'a4'
 
 # The font size ('10pt', '11pt' or '12pt').
 #latex_font_size = '10pt'
-latex_font_size = '11pt'
+latex_font_size = '12pt'
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'JavaSteps.tex', u'Java Steps: Learning Java Step by Step',
+  ('index', 'JavaSteps.tex', u'快快樂樂寫程式系列\\\\Java Steps: Learning Java Step by Step',
    u'董少桓', 'manual'),
 ]
 
@@ -201,14 +201,19 @@ latex_logo = 'img/logo.eps'
 # Additional stuff for the LaTeX preamble.
 latex_preamble = '''\\usepackage[cm-default]{fontspec}
 \\usepackage{xunicode}
+\\usepackage{xcolor}
 \\usepackage{fontspec}
+\\usepackage{titlesec}
+\\usepackage{fancyvrb,relsize}
 \\usepackage[slantfont,boldfont]{xeCJK}
 \\XeTeXlinebreaklocale "zh"
 \\XeTeXlinebreakskip = 0pt plus 1pt
-\\setCJKmainfont{Apple LiSung Light}
-\\setromanfont{Apple LiSung Light}
-\\setmonofont{Courier New}
+\\setmainfont[BoldFont=Apple LiGothic Medium]{Apple LiSung Light}
+\\setCJKmainfont[BoldFont=Apple LiGothic Medium]{Apple LiSung Light}
+\\setromanfont[BoldFont=Apple LiGothic Medium]{Apple LiSung Light}
+\\setmonofont{Monaco}
 \\renewcommand{\\baselinestretch}{1.25}
+\\DefineVerbatimEnvironment{Verbatim}{Verbatim}{numbers=left, fontsize=\\relsize{-2}}
 '''
 
 # Documents to append as an appendix to all manuals.
