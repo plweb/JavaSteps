@@ -27,3 +27,4 @@ Java Steps
    java_expr
    java_static
    java_cond
+   java_loop
