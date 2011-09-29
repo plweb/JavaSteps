@@ -28,3 +28,5 @@ Java Steps
    java_static
    java_cond
    java_loop
+   java_object
+   java_encap
