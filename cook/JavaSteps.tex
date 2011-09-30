@@ -27,7 +27,7 @@
 
 
 \title{程式碼實作學習\\Java Steps: Learning Java Step by Step}
-\date{September 28, 2011}
+\date{September 30, 2011}
 \release{1.0}
 \author{董少桓、林彥宏}
 \newcommand{\sphinxlogo}{\includegraphics{logo.eps}\par}
@@ -909,7 +909,7 @@ public static int total = 0;
 total = displayScore(3, 4, 5); // total = 12
 total = total + displayScore(4, 5, 6);          // total = 27
 total = total + displayScore(1, 2, 3);          // total = 33
-System.out.print(``The total score is ``);
+System.out.print(``The total score is '');
 System.out.println(total);
 
 \end{description}
@@ -1035,7 +1035,7 @@ Media:Ex1new.swf 觀看執行過程
 運算式（expression）執行完畢會後傳回一個值；句子（statement）在執行之後，則不回傳值。一個運算式與句子在執行時都可能會改變電腦的狀態，例如：更改變數、陣列或檔案的內容。算術運算式已經介紹了，而最簡單的句子，包括：
 \begin{enumerate}
 \item {} 
-expression statement：在運算式後加一個 ``;'' 。
+expression statement：在運算式後加一個 '';'' 。
 
 \item {} 
 block statement：在 \{ \} 內可以有 0 或多個變數宣告或句子。
@@ -1149,7 +1149,7 @@ Java 常用的邏輯運算子（logical operators）有三個，分別是 \&\& (
 \end{tabulary}
 
 
-上表雖然不易記憶，然而，由於 ``('' 與 ``)'' 的優先順序是最優先，
+上表雖然不易記憶，然而，由於 ``('' 與 '')'' 的優先順序是最優先，
 所以在程式的設計過程中，我們可以藉由使用左、右括號來指定運算式的優先順序。
 
 立即練習：
@@ -2745,6 +2745,2056 @@ Trace
 \begin{Verbatim}[commandchars=@\[\]]
    sum3("1234", 0)
 =@textgreater[] 10
+\end{Verbatim}
+
+
+\chapter{實例、實例變數與實例方法}
+\label{java_object::doc}\label{java_object:id1}
+Java 是一個物件導向程式語言。
+物件導向的基本觀念是讓程式可以描述、
+建構及處理真實世界中所看到的物件並設計它們之間的層次關係。
+例如：Exam 可以有 EnglishExam、ChineseExam 兩個副屬的種類。
+而一次 EnglishExam 又可以有任意數量的考生應考，
+其中每一份考卷中都可以有考生姓名與成績的資料。
+這時 Exam、EnglishExam 及 ChineseExam 便很適合設計成類別，
+而一份英文考試的考卷便可以用 EnglishExam 這個類別所生成的實例（instance or object）來代表。
+
+一個類別可以使用 \textbf{new} 指令來產生實例。
+一個 Java 的程式可以由許多個有層次關係的類別構成，
+這個層次關係描述這些類別間的 \textbf{繼承關係} 。
+這一類的例子在真實世界中不勝枚舉，
+舉例來說：如果「哺乳類」是一個類別，
+那麼「人類」則可以是「哺乳類」的一個 \textbf{「子類別」} （subclass or subtype），
+相對的「哺乳類」也可以是「人類」的 \textbf{「父類別」} （superclass or supertype）。
+而某一個人「張三」便是「人類」的一個 \textbf{「實例」} 。
+
+以「張三」這個實例來說，
+他的身高、體重、性別等資料都可以存放在這個實例的「實例變數」中，
+而「張三」能「跑」能「跳」，則可以是它的「實例方法」。
+簡單的說：「類別（class）」可以用 new 來產生「實例（instance）」，
+而「實例」可以包含「實例變數」與「實例方法」。其中「實例變數」負責資料的儲存，而「實例方法」則負責資料的處理：
+
+Image:image001.jpg
+
+註：Java 原文將「實例變數」稱為 non-static field；而將「實例方法」稱為 non-static method。為了與中文的譯名一致，這份講義將以 instance variable 與 instance method 稱之。同樣的，這份講義亦將以 class method 代替原文的 static method，以 class variable 代替原文的 static variable。
+
+
+\section{何謂實例（Instance）}
+\label{java_object:instance}
+實例（instance）是由 new 所產生的某個類別的實作，
+也稱為物件（object）。
+一個 class 可以生成多個實例，
+而且每個實例都擁有一份自己的實例變數。
+以下圖為例：class A 宣告了三個實例變數 x，y 與 z，
+而每個實例都為這三個實例變數配置了記憶體以儲存他們的值。
+
+Image:newImage005.jpg
+
+「實例變數」及「實例方法」與用於設計結構化程式的「類別變數」及「類別方法」的主要差異是：
+\begin{enumerate}
+\item {} 
+類別變數或類別方法以 static 起始，他們在程式開始執行時即實質的存在，所以不需要產生實例，即可使用。
+
+\item {} 
+實例變數或實例方法沒有 static 起始，他們一定要等到實例產生之後才有實質的存在，因此需要實例，才可以使用。
+
+\end{enumerate}
+
+在後續的圖例中，我們將使用「淡的顏色」來表示「沒有記憶體、沒有實質存在的變數或方法」，並以「鮮明的顏色」來表示「有記憶體、有實質存在的變數或方法」以區別它們的差異：
+
+Image:Picture.jpg
+
+以下是一個藉由呼叫實例方法將實例變數的值傳回並輸出的範例：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{Book} \PYG{o}{\PYGZob{}}
+  \PYG{n}{String} \PYG{n}{name} \PYG{o}{=} \PYG{l+s}{"Sun"}\PYG{o}{;}
+  \PYG{n}{String} \PYG{n+nf}{getName}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{name}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Ex2} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{argv}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{Book} \PYG{n}{b1} \PYG{o}{=} \PYG{k}{new} \PYG{n}{Book}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{Book} \PYG{n}{b2} \PYG{o}{=} \PYG{k}{new} \PYG{n}{Book}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"Name of b1:"} \PYG{o}{+} \PYG{n}{b1}\PYG{o}{.}\PYG{n+na}{getName}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"Name of b2:"} \PYG{o}{+} \PYG{n}{b2}\PYG{o}{.}\PYG{n+na}{getName}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+執行結果：
+
+\begin{Verbatim}[commandchars=@\[\]]
+Name of b1:Sun
+Name of b2:Sun
+\end{Verbatim}
+
+Media:Ex2.swf\textbar{}觀看執行過程及詳細解說{]}{]}
+
+
+\section{Class Method 與 Instance Method 的差異}
+\label{java_object:class-method-instance-method}
+接下來的這個範例，說明了類別方法與實例方法的差異：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{A} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{static} \PYG{n}{String} \PYG{n+nf}{c1}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{k}{return} \PYG{l+s}{"class method不需new就可使用"}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{n}{String} \PYG{n+nf}{c2}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{k}{return} \PYG{l+s}{"instance method需new才可使用"}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Ex3} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{argv}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"=呼叫class method="}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{n}{A}\PYG{o}{.}\PYG{n+na}{c1}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"=呼叫instance method="}\PYG{o}{)}\PYG{o}{;}
+    \PYG{c+c1}{//System.out.println(A.c2()); =\textgreater{}error}
+    \PYG{n}{A} \PYG{n}{a} \PYG{o}{=} \PYG{k}{new} \PYG{n}{A}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{n}{a}\PYG{o}{.}\PYG{n+na}{c2}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+執行結果：
+
+\begin{Verbatim}[commandchars=@\[\]]
+=呼叫類別方法=
+class method不需new就可使用
+=呼叫實例方法=
+instance method需new才可使用
+\end{Verbatim}
+
+Media:Ex3.swf\textbar{}觀看執行過程及詳細解說{]}{]}
+
+
+\section{Class Variable 與 Instance Variable 的差異}
+\label{java_object:class-variable-instance-variable}
+這個範例繼續說明了類別變數與實例變數之間的差異:
+\begin{quote}
+\begin{description}
+\item[{class A \{}] \leavevmode
+static int a = 0;
+int b = 5;
+int getA() \{
+\begin{quote}
+
+return a;
+\end{quote}
+
+\}
+void setA(int value) \{
+\begin{quote}
+
+a = value;
+\end{quote}
+
+\}
+int getB() \{
+\begin{quote}
+
+return b;
+\end{quote}
+
+\}
+void setB(int value) \{
+\begin{quote}
+
+b = value;
+\end{quote}
+
+\}
+
+\end{description}
+
+\}
+\begin{description}
+\item[{public class Ex4 \{}] \leavevmode\begin{description}
+\item[{public static void main(String argv{[}{]}) \{}] \leavevmode
+A obj1 = new A();
+A obj2 = new A();
+obj1.setA(1);
+obj1.setB(20);
+obj2.setA(2);
+obj2.setB(30);
+System.out.println(``a of obj1:'' + obj1.getA());
+System.out.println(``a of obj2:'' + obj2.getA());
+System.out.println(``b of obj1:'' + obj1.getB());
+System.out.println(``b of obj2:'' + obj2.getB());
+
+\end{description}
+
+\}
+
+\end{description}
+
+\}
+\end{quote}
+
+執行結果：
+
+\begin{Verbatim}[commandchars=@\[\]]
+a of obj1:2
+a of obj2:2
+b of obj1:20
+b of obj2:30
+\end{Verbatim}
+
+Media:Ex4.swf\textbar{}觀看執行過程
+
+由於 a 是類別變數，只有一個儲存值，而這個值是共享的；
+b 則是實例變數，所以每個實例都有一個 b 的儲存值，而它們的值也可以不一樣。
+
+類別變數、區域變數與實例變數的不同之處，透過它們在 Java 程式內的 \textbf{可見範圍（scope）} 與佔用記憶體
+的 \textbf{起始時間與釋放時間（extent）} 的不同，可以更明確的區分出來：
+\begin{enumerate}
+\item {} 
+\textbf{類別變數} ：每一個 class 都有一個命名空間（name space），
+因此兩個 class 若有同名的變數、方法也不用擔心彼此衝突。
+這便好像將一個程式的記憶體劃分成好幾個區域，
+而每一個 class 都配屬了一個區域。
+\textbf{隸屬於某一 class 的類別變數} 的有效時間是從程式開始執行，
+一直到程式結束：
+
+\end{enumerate}
+\begin{itemize}
+\item {} 
+extent：從程式開始執行，一直到程式結束；
+
+\item {} 
+scope：以 public、private、protect 宣告類別變數的可見範圍。
+
+\end{itemize}
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item {} 
+\textbf{區域變數} ：於方法執行時才存在，方法執行完畢後便消失。
+這種變數的值是存放在記憶體中稱為堆疊（stack）的一塊區域上。
+
+\end{enumerate}
+\begin{itemize}
+\item {} 
+extent：從方法執行時開始，到方法結束時為止。
+
+\item {} 
+scope：該變數所屬，由 \{ \} 區隔的區塊（block）中。
+
+\end{itemize}
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item {} 
+\textbf{實例變數} ：實例變數是用來的儲存實例中資料的變數，
+實例（instance）的另一個名稱是物件（object）。
+例如在一個處理學生資料的程式中，某一學生的資料，
+可以存放在 name、id、score 等幾個 \textbf{隸屬於這個物件的實例變數} 中。
+實例是存放在記憶體中稱為堆積堆（heap）的一塊區域上。
+
+\end{enumerate}
+\begin{itemize}
+\item {} 
+extent：從一個實例被造（new），直到它的記憶體被回收（garbage collect）時為止。
+
+\item {} 
+scope：以 public、private、protect 宣告實例變數的可見範圍。
+
+\end{itemize}
+
+
+\section{實例方法中的this是什麼？}
+\label{java_object:this}
+這個單元將會以數個範例，將一個類別方法，轉換成作用相同的實例方法，
+以更深入的闡述在實例方法中常常用到的this這個保留字的意義。
+
+在下面的範例中 ee 是一個用 new 生成的 EnglishExam 物件，
+這個物件的三個實例變數分別被設值成 3, 4, 5，然後傳入 englishScore 這個類別方法中：
+\begin{quote}
+\begin{description}
+\item[{class EnglishExam \{}] \leavevmode
+public int vocab, grammar, listen;
+public static int englishScore(int v, int g, int l) \{
+\begin{quote}
+
+return v + g + l;
+\end{quote}
+
+\}
+
+\end{description}
+
+\}
+\begin{description}
+\item[{public class Demo \{}] \leavevmode\begin{description}
+\item[{public static void main(String argv{[}{]}) \{}] \leavevmode
+EnglishExam ee = new EnglishExam();
+ee.vocab = 3;
+ee.grammar = 4;
+ee.listen = 5;
+System.out.print(``The score of the exam is '');
+System.out.println(EnglishExam.englishScore(ee.vocab, ee.grammar, ee.listen));
+
+\end{description}
+
+\}
+
+\end{description}
+
+\}
+\end{quote}
+
+執行結果：
+
+\begin{Verbatim}[commandchars=@\[\]]
+The score of the exam is 12
+\end{Verbatim}
+
+englishScore 雖然是一個類別方方法，然而傳入這個方法的三個參數，
+實際上是 ee 的三個實例變數的值。
+那何必這麼麻煩？直接將 ee 傳入 englishScore 不是更簡潔嗎？以下即是將上例改寫後的版本：
+\begin{quote}
+\begin{description}
+\item[{class EnglishExam \{}] \leavevmode\begin{description}
+\item[{public int vocab, grammar, listen;}] \leavevmode
+public static int score(EnglishExam THIS) \{
+return THIS.vocab + THIS.grammar + THIS.listen;
+
+\end{description}
+
+\}
+
+\end{description}
+
+\}
+\begin{description}
+\item[{public class Demo \{}] \leavevmode\begin{description}
+\item[{public static void main(String argv{[}{]}) \{}] \leavevmode
+EnglishExam ee = new EnglishExam();
+ee.vocab = 3;
+ee.grammar = 4;
+ee.listen = 5;
+System.out.print(``The score of the exam is '');
+System.out.println(EnglishExam.score(ee));
+
+\end{description}
+
+\}
+
+\end{description}
+
+\}
+\end{quote}
+
+這個範例直接將 ee 傳入 score（原名是 englishScoer）中，
+而 score 仍然是一個類別方法。在這個例子中我們使用：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{EnglishExam}\PYG{o}{.}\PYG{n}{score}\PYG{p}{(}\PYG{n}{ee}\PYG{p}{)}\PYG{p}{;}
+\end{Verbatim}
+
+來呼叫score這個方法。如果我們將以上的呼叫改寫成：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{ee}\PYG{o}{.}\PYG{n}{score}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\end{Verbatim}
+
+並將 score 這個類別方法，改寫成實例方法:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{EnglishExam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{vocab}\PYG{o}{,} \PYG{n}{grammar}\PYG{o}{,} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{vocab} \PYG{o}{+} \PYG{n}{grammar} \PYG{o}{+} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Demo} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{argv}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{EnglishExam} \PYG{n}{ee} \PYG{o}{=} \PYG{k}{new} \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{vocab} \PYG{o}{=} \PYG{l+m+mi}{3}\PYG{o}{;} \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{grammar} \PYG{o}{=} \PYG{l+m+mi}{4}\PYG{o}{;} \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{listen} \PYG{o}{=} \PYG{l+m+mi}{5}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{print}\PYG{o}{(}\PYG{l+s}{"The score of the exam is "}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{score}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+那麼執行的結果仍然是：
+
+\begin{Verbatim}[commandchars=@\[\]]
+The score of the exam is 12
+\end{Verbatim}
+
+由此可見，一個 instance method 其實有一個隱藏的參數。
+以上例而言是 ee，而任何在 score 方法中所用到的變數，
+如果不是區域變數或是類別變數，便會被當成是該隱藏性參數（ee）的實例變數。
+
+如果我們需要支援 ChineseExam，那麼上面的程式可以進一步改寫如下：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{EnglishExam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{vocab}\PYG{o}{,} \PYG{n}{grammar}\PYG{o}{,} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{vocab} \PYG{o}{+} \PYG{n}{grammar} \PYG{o}{+} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{class} \PYG{n+nc}{ChineseExam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{word}\PYG{o}{,} \PYG{n}{sentence}\PYG{o}{,} \PYG{n}{composition}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{word} \PYG{o}{+} \PYG{n}{sentence} \PYG{o}{+} \PYG{n}{composition}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Demo} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{argv}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{EnglishExam} \PYG{n}{ee} \PYG{o}{=} \PYG{k}{new} \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{vocab} \PYG{o}{=} \PYG{l+m+mi}{3}\PYG{o}{;} \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{grammar} \PYG{o}{=} \PYG{l+m+mi}{4}\PYG{o}{;} \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{listen} \PYG{o}{=} \PYG{l+m+mi}{5}\PYG{o}{;}
+    \PYG{n}{ChineseExam} \PYG{n}{cc} \PYG{o}{=} \PYG{k}{new} \PYG{n}{ChineseExam}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{cc}\PYG{o}{.}\PYG{n+na}{word} \PYG{o}{=} \PYG{l+m+mi}{2}\PYG{o}{;} \PYG{n}{cc}\PYG{o}{.}\PYG{n+na}{sentence} \PYG{o}{=} \PYG{l+m+mi}{3}\PYG{o}{;} \PYG{n}{cc}\PYG{o}{.}\PYG{n+na}{composition} \PYG{o}{=} \PYG{l+m+mi}{4}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{print}\PYG{o}{(}\PYG{l+s}{"The score of the English exam is "}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{score}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{print}\PYG{o}{(}\PYG{l+s}{"The score of the Chinese exam is "}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{n}{cc}\PYG{o}{.}\PYG{n+na}{score}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+前面所提到的隱藏參數，可以使用 this 這個保留字來抓到。因此，上例也可以改寫成：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{EnglishExam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{vocab}\PYG{o}{,} \PYG{n}{grammar}\PYG{o}{,} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{k}{return} \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{vocab} \PYG{o}{+} \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{grammar} \PYG{o}{+} \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{listen}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{class} \PYG{n+nc}{ChineseExam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{word}\PYG{o}{,} \PYG{n}{sentence}\PYG{o}{,} \PYG{n}{composition}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{k}{return} \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{word} \PYG{o}{+} \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{sentence} \PYG{o}{+} \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{composition}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Demo} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{argv}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{EnglishExam} \PYG{n}{ee} \PYG{o}{=} \PYG{k}{new} \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{vocab} \PYG{o}{=} \PYG{l+m+mi}{3}\PYG{o}{;} \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{grammar} \PYG{o}{=} \PYG{l+m+mi}{4}\PYG{o}{;} \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{listen} \PYG{o}{=} \PYG{l+m+mi}{5}\PYG{o}{;}
+    \PYG{n}{ChineseExam} \PYG{n}{cc} \PYG{o}{=} \PYG{k}{new} \PYG{n}{ChineseExam}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{cc}\PYG{o}{.}\PYG{n+na}{word} \PYG{o}{=} \PYG{l+m+mi}{2}\PYG{o}{;} \PYG{n}{cc}\PYG{o}{.}\PYG{n+na}{sentence} \PYG{o}{=} \PYG{l+m+mi}{3}\PYG{o}{;} \PYG{n}{cc}\PYG{o}{.}\PYG{n+na}{composition} \PYG{o}{=} \PYG{l+m+mi}{4}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{print}\PYG{o}{(}\PYG{l+s}{"The score of the English exam is "}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{score}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{print}\PYG{o}{(}\PYG{l+s}{"The score of the Chinese exam is "}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{n}{cc}\PYG{o}{.}\PYG{n+na}{score}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+this 的值是當使用一個實例呼叫一個實例方法（例如：ee.score()）時所傳入的隱藏性參數，
+而這個隱藏性參數便是那個實例（即：ee）的地址。
+因此，如果你在一個實例方法內更改一個實例變數的值時，那個實例變數的值便永遠被更改。
+
+Java 可以使用 this 也可以不使用 this 來存取實例的變數或方法。
+在後續的單元，我們為了說明的需要，有時會使用 this，有時不使用 this，來存取實例變數或呼叫實例方法。
+
+實例方法也可以有其他參數，例如，以下便是將權重傳入並計算分數的例子：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{EnglishExam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{vocab}\PYG{o}{,} \PYG{n}{grammar}\PYG{o}{,} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{k+kt}{double} \PYG{n+nf}{score}\PYG{o}{(}\PYG{k+kt}{double} \PYG{n}{wb}\PYG{o}{,} \PYG{k+kt}{double} \PYG{n}{wg}\PYG{o}{,} \PYG{k+kt}{double} \PYG{n}{wl}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{wb} \PYG{o}{*} \PYG{n}{vocab} \PYG{o}{+} \PYG{n}{wg} \PYG{o}{*} \PYG{n}{grammar} \PYG{o}{+} \PYG{n}{wl} \PYG{o}{*} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Demo} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{argv}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{EnglishExam} \PYG{n}{ee} \PYG{o}{=} \PYG{k}{new} \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{vocab} \PYG{o}{=} \PYG{l+m+mi}{3}\PYG{o}{;} \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{grammar} \PYG{o}{=} \PYG{l+m+mi}{4}\PYG{o}{;} \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{listen} \PYG{o}{=} \PYG{l+m+mi}{5}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{print}\PYG{o}{(}\PYG{l+s}{"The score of the English exam is "}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{score}\PYG{o}{(}\PYG{l+m+mf}{0.2}\PYG{o}{,} \PYG{l+m+mf}{0.3}\PYG{o}{,} \PYG{l+m+mf}{0.5}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+在前面的單元中我們曾經使用 int, double 等型態的變數，
+這種變數稱為 primitive type。
+而 ee 的型態則是 EnglishExam，這種型態稱為 reference type。
+一個 reference type 變數的初值是 null，代表沒有任何實例的地址被設成它的值。
+Java 的字串屬於 String 類別，而字串也是 reference type 的一種。
+一個變數如果是 primitive type，則它的地址中所存放的是數值本身。
+如果一個變數是 reference type，則這個變數的地址內所存放的是一個指向一個實例的地址。
+這個被指向的實例是放在 Java 自動化記憶體管理區內，
+如果這個實例沒有被任何其他變數直接或間接的透過其他實例指到，
+那麼 Java 的 garbage collector 便會在執行記憶體回收動作時將該實例的記憶體自動回收。
+
+由於 Java 是一個「傳值呼叫」（call-by-value）的程式語言，
+所以當一個方法被呼叫時，是變數的值被傳入方法中。
+由於存放在 reference type 變數中的值，
+實際上是地址，所以是地址被傳入被呼叫的方法內。
+因此便會發生在程式執行中，同時有數個變數指向同一個被 reference 的實例。
+而其中任何一個方法更改了那個實例的實例變數的值時，
+其他使用這個實例的方法也會看到被改變的新值。
+
+
+\chapter{實例的產生與封裝}
+\label{java_encap::doc}\label{java_encap:id1}
+在前面的章節中，我們曾經使用 new 來產生一個 EnglishExam 的實例，
+然後個別的將這個實例的實例變數初始化。例如：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{EnglishExam} \PYG{n}{ee} \PYG{o}{=} \PYG{k}{new} \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+\PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{vocab} \PYG{o}{=} \PYG{l+m+mi}{3}\PYG{o}{;}
+\PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{grammar} \PYG{o}{=} \PYG{l+m+mi}{4}\PYG{o}{;}
+\PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{listen} \PYG{o}{=} \PYG{l+m+mi}{5}\PYG{o}{;}
+\end{Verbatim}
+
+另一個達到同樣目的的方式是在類別內直接的初始化實例變數的值。例如：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{EnglishExam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{vocab} \PYG{o}{=} \PYG{l+m+mi}{6}\PYG{o}{,}
+    \PYG{n}{grammar} \PYG{o}{=} \PYG{l+m+mi}{7}\PYG{o}{,}
+    \PYG{n}{listen} \PYG{o}{=} \PYG{l+m+mi}{8}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{vocab} \PYG{o}{+} \PYG{n}{grammar} \PYG{o}{+} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+如果一個實例變數沒有初始化，那麼它的值是便會根據它的型態，
+而設定成該型態的 default value。
+
+Java 也支援使用一個類別的 \textbf{constructor（建構子）} 將實例變數的值初始化。
+建構子與 class 同名，並且不需要定義 return type。
+呼叫建構子之後會製造一個物件並將那個物件回傳。例如：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{EnglishExam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{vocab}\PYG{o}{,} \PYG{n}{grammar}\PYG{o}{,} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{vocab} \PYG{o}{=} \PYG{l+m+mi}{6}\PYG{o}{;}
+    \PYG{n}{grammar} \PYG{o}{=} \PYG{l+m+mi}{7}\PYG{o}{;}
+    \PYG{n}{listen} \PYG{o}{=} \PYG{l+m+mi}{8}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{vocab} \PYG{o}{+} \PYG{n}{grammar} \PYG{o}{+} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Exem} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{args}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{EnglishExam} \PYG{n}{ee} \PYG{o}{=} \PYG{k}{new} \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"The score of the exam is: "} \PYG{o}{+} \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{score}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+執行結果:
+
+\begin{Verbatim}[commandchars=@\[\]]
+The score of the exam is: 21
+\end{Verbatim}
+
+建構子也可以使用傳入的參數，將實例變數的值初始化。例如：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{EnglishExam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{vocab}\PYG{o}{,} \PYG{n}{grammar}\PYG{o}{,} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{vocab} \PYG{o}{=} \PYG{l+m+mi}{6}\PYG{o}{;} \PYG{n}{grammar} \PYG{o}{=} \PYG{l+m+mi}{7}\PYG{o}{;} \PYG{n}{listen} \PYG{o}{=} \PYG{l+m+mi}{8}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{v}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{g}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{l}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{vocab} \PYG{o}{=} \PYG{n}{v}\PYG{o}{;} \PYG{n}{grammar} \PYG{o}{=} \PYG{n}{g}\PYG{o}{;} \PYG{n}{listen} \PYG{o}{=} \PYG{n}{l}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{vocab} \PYG{o}{+} \PYG{n}{grammar} \PYG{o}{+} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{args}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{EnglishExam} \PYG{n}{ee} \PYG{o}{=} \PYG{k}{new} \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"The score of the first exam is: "} \PYG{o}{+} \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{score}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{ee} \PYG{o}{=} \PYG{k}{new} \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{l+m+mi}{7}\PYG{o}{,} \PYG{l+m+mi}{8}\PYG{o}{,} \PYG{l+m+mi}{9}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"The score of the second exam is: "} \PYG{o}{+} \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{score}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+這時的執行結果是:
+
+The score of the first exam is: 21
+The score of the second exam is: 24
+
+以上的程式有一個沒有參數的建構子，及一個三個參數的建構子。
+如果一個類別內沒有定義建構子，那麼 Java 會自動提供一個沒有參數的建構子給這個類別。
+
+Media:Ex9.swf\textbar{}觀看一個建構子範例的執行與解說
+
+
+\section{Getter, Setter 及 Data Abstraction}
+\label{java_encap:getter-setter-data-abstraction}
+假設有一個 Exam 類別，
+而這個類別有一個 minute 的實例變數，
+而 e 則是一個 Exam 的實例。
+那麼使用 e.minute 便可以直接的取用它的值，
+然而 minute 卻必須宣告成 public。
+另一個存取實例變數的方式是使用 getter 及 setter 方法，
+這時程式設計師可以將 minute 宣告成 private，
+並選擇性的將 getter 及 setter 設定成所需要的存取權限。
+例如：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{private} \PYG{k+kt}{int} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{n+nf}{Exam}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{minutes} \PYG{o}{=} \PYG{l+m+mi}{80}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+這時在其他的類別中若有一個 Exam 的實例 e，
+便可以使用 getMinutes 取出 e.minutes 的值：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{e}\PYG{o}{.}\PYG{n}{getMinutes}\PYG{p}{(}\PYG{p}{)}
+\end{Verbatim}
+
+使用 getter 方法的好處之一是，
+能夠很容易的在取用實例變數的值時，
+增加協助偵錯的程式碼：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{private} \PYG{k+kt}{int} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{n+nf}{Exam}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{minutes} \PYG{o}{=} \PYG{l+m+mi}{80}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"Accessing minutes..."}\PYG{o}{)}\PYG{o}{;}
+    \PYG{k}{return} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+setter 方法的作用也類似：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{private} \PYG{k+kt}{int} \PYG{n}{minutes}\PYG{o}{;}
+    \PYG{k+kd}{public} \PYG{n+nf}{Exam}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{minutes} \PYG{o}{=} \PYG{l+m+mi}{80}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{void} \PYG{n+nf}{setMinutes}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{m}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"Setting minutes..."}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{minutes} \PYG{o}{=} \PYG{n}{m}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+然而 setter 方法不需要傳回值。因此 setMinutes 的傳回值的型態是void。
+
+getter 與 setter 方法的另一個功用是，模擬不必真實的存在，
+但是卻可以透過運算而得到的實例變數。例如：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{private} \PYG{k+kt}{int} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{n+nf}{Exam}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{minutes} \PYG{o}{=} \PYG{l+m+mi}{80}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{void} \PYG{n+nf}{setMinutes}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{m}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{minutes} \PYG{o}{=} \PYG{n}{m}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{getHours}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{minutes}\PYG{o}{/} \PYG{l+m+mf}{60.0}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{void} \PYG{n+nf}{setHours}\PYG{o}{(}\PYG{k+kt}{double} \PYG{n}{h}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{minutes} \PYG{o}{=} \PYG{o}{(}\PYG{k+kt}{int}\PYG{o}{)}\PYG{o}{(}\PYG{n}{h} \PYG{o}{*} \PYG{l+m+mi}{60}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+使用以上的 getHours 及 setHours 使得 Exam 好像多了 hours
+這個其實並不存在的實例變數一般。
+
+使用 getter 及 setter 方法，
+可以在改變實例內資料的儲存方式後，
+不用修改其他使用此資料的程式碼，
+讓程式易於維護。
+例如：hours 比 minutes 更常用時，
+便可以將上面的範例，
+更改成以 hours 來儲存，
+以增加程式的效率：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{private} \PYG{k+kt}{double} \PYG{n}{hours}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{n+nf}{Exam}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{hours} \PYG{o}{=} \PYG{l+m+mf}{1.5}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{k}{return} \PYG{o}{(}\PYG{k+kt}{int}\PYG{o}{)}\PYG{o}{(}\PYG{n}{hours} \PYG{o}{*} \PYG{l+m+mi}{60}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{void} \PYG{n+nf}{setMinutes}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{m}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{hours} \PYG{o}{=} \PYG{n}{m} \PYG{o}{/} \PYG{l+m+mf}{60.0}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{double} \PYG{n+nf}{getHours}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{hours}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{void} \PYG{n+nf}{setHours}\PYG{o}{(}\PYG{k+kt}{double} \PYG{n}{h}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{hours} \PYG{o}{=} \PYG{n}{h}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+這時程式碼雖然做了更改，但是並不影響程式的其他部份。
+如果沒有使用 getter 與 setter，類似的更動，
+便需要將程式碼中所有存取 minutes 的地方全部做修改。例如：
+
+\begin{Verbatim}[commandchars=@\[\]]
+x.minutes           需要更改成     (int)(x.hours * 60)
+(x.minutes / 60.0)  則需要更改成   x.hours
+\end{Verbatim}
+
+使用 getter 及 setter 方法，
+間接的存取實例變數的程式設計方式稱為「資料抽象化」(data abstraction)。
+應用資料抽象化的方式寫程式，有以下的好處：
+\begin{enumerate}
+\item {} 
+程式碼容易再利用
+
+\item {} 
+程式碼容易瞭解
+
+\item {} 
+易於增加類別的功能
+
+\item {} 
+易於改進資料的儲存方式
+
+\end{enumerate}
+
+
+\chapter{繼承、抽象類別}
+\label{java_abstract::doc}\label{java_abstract:id1}
+假設我們要將前面的 EnglishExam 及 ChineseExam 增加一個 minutes 的實例變數。
+那麼一個不好的方式是將這個實例變數分別的放入這兩個類別中：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{EnglishExam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{vocab}\PYG{o}{,} \PYG{n}{grammar}\PYG{o}{,} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{vocab} \PYG{o}{+} \PYG{n}{grammar} \PYG{o}{+} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{class} \PYG{n+nc}{ChineseExam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{word}\PYG{o}{,} \PYG{n}{sentence}\PYG{o}{,} \PYG{n}{composition}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{k}{return} \PYG{n}{word} \PYG{o}{+} \PYG{n}{sentence} \PYG{o}{+} \PYG{n}{composition}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Demo} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{argv}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{EnglishExam} \PYG{n}{ee} \PYG{o}{=} \PYG{k}{new} \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{minutes} \PYG{o}{=} \PYG{l+m+mi}{75}\PYG{o}{;}
+    \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{vocab} \PYG{o}{=} \PYG{l+m+mi}{3}\PYG{o}{;} \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{grammar} \PYG{o}{=} \PYG{l+m+mi}{4}\PYG{o}{;} \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{listen} \PYG{o}{=} \PYG{l+m+mi}{5}\PYG{o}{;}
+    \PYG{n}{ChineseExam} \PYG{n}{cc} \PYG{o}{=} \PYG{k}{new} \PYG{n}{ChineseExam}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{minutes} \PYG{o}{=} \PYG{l+m+mi}{75}\PYG{o}{;}
+    \PYG{n}{cc}\PYG{o}{.}\PYG{n+na}{word} \PYG{o}{=} \PYG{l+m+mi}{2}\PYG{o}{;} \PYG{n}{cc}\PYG{o}{.}\PYG{n+na}{sentence} \PYG{o}{=} \PYG{l+m+mi}{3}\PYG{o}{;} \PYG{n}{cc}\PYG{o}{.}\PYG{n+na}{composition} \PYG{o}{=} \PYG{l+m+mi}{4}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{print}\PYG{o}{(}\PYG{l+s}{"The score of the English exam is "}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{score}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"English exam takes "} \PYG{o}{+} \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{+} \PYG{l+s}{"minutes."}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{print}\PYG{o}{(}\PYG{l+s}{"The score of the Chinese exam is "}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{n}{cc}\PYG{o}{.}\PYG{n+na}{score}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+    \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"Chinese exam takes "} \PYG{o}{+} \PYG{n}{cc}\PYG{o}{.}\PYG{n+na}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{+} \PYG{l+s}{"minutes."}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+不好的原因是 EnglishExam 及 ChineseExam 中有許多 \textbf{重複的程式碼} 。
+而這些重複的程式碼會增加開發的成本及維護的負擔。
+所幸 Java 容許我們將類別設計成階層式的結構，
+而這個階層的結構可以自然的將不同類別間的繼承關係表達出來。
+因此，我們可以設計一個 Exam 類別，並將 minutes 宣告在 Exam 內；
+再由 EnglishExam 及 ChineseExam 繼承 Exam 即可。
+Java 使用 \textbf{extends} 這個保留字讓一個類別繼承另一個類別。
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{n+nf}{Exam}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"Calling Exam()..."}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{minutes} \PYG{o}{=} \PYG{l+m+mi}{75}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{class} \PYG{n+nc}{EnglishExam} \PYG{k+kd}{extends} \PYG{n}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{vocab}\PYG{o}{,} \PYG{n}{grammar}\PYG{o}{,} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{vocab} \PYG{o}{+} \PYG{n}{grammar} \PYG{o}{+} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{class} \PYG{n+nc}{ChineseExam} \PYG{k+kd}{extends} \PYG{n}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{word}\PYG{o}{,} \PYG{n}{sentence}\PYG{o}{,} \PYG{n}{composition}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{word} \PYG{o}{+} \PYG{n}{sentence} \PYG{o}{+} \PYG{n}{composition}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Demo} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{argv}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{EnglishExam} \PYG{n}{ee} \PYG{o}{=} \PYG{k}{new} \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{vocab} \PYG{o}{=} \PYG{l+m+mi}{3}\PYG{o}{;} \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{grammar} \PYG{o}{=} \PYG{l+m+mi}{4}\PYG{o}{;} \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{listen} \PYG{o}{=} \PYG{l+m+mi}{5}\PYG{o}{;}
+        \PYG{n}{ChineseExam} \PYG{n}{cc} \PYG{o}{=} \PYG{k}{new} \PYG{n}{ChineseExam}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{cc}\PYG{o}{.}\PYG{n+na}{word} \PYG{o}{=} \PYG{l+m+mi}{2}\PYG{o}{;} \PYG{n}{cc}\PYG{o}{.}\PYG{n+na}{sentence} \PYG{o}{=} \PYG{l+m+mi}{3}\PYG{o}{;} \PYG{n}{cc}\PYG{o}{.}\PYG{n+na}{composition} \PYG{o}{=} \PYG{l+m+mi}{4}\PYG{o}{;}
+        \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{print}\PYG{o}{(}\PYG{l+s}{"The score of the English exam is "}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{score}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"English exam takes "} \PYG{o}{+} \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{+} \PYG{l+s}{"minutes."}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{print}\PYG{o}{(}\PYG{l+s}{"The score of the Chinese exam is "}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{n}{cc}\PYG{o}{.}\PYG{n+na}{score}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"Chinese exam takes "} \PYG{o}{+} \PYG{n}{cc}\PYG{o}{.}\PYG{n+na}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{+} \PYG{l+s}{"minutes."}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+這時 Exam 是 EnglishExam 及 ChineseExam 的父類別，
+而 EnglishExam 及 ChineseExam 是 Exam 的子類別。
+Exam 也有一個父類別，這個類別是 Java 內建的 Object 類別。
+一個 Java 程式內所有的類別都直接或間接的繼承了 Object 類別。Exam 也可以寫成：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{Exam} \PYG{k+kd}{extends} \PYG{n}{Object} \PYG{o}{\PYGZob{}}
+  \PYG{c+c1}{// ...}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+除了減少重複不必要的程式碼以外，類別的繼承還有以下兩個好處：
+\begin{enumerate}
+\item {} 
+讓父類別的程式碼可以在完全除錯後，才被子類別繼承。這樣可以讓程式的偵錯更為容易。
+
+\item {} 
+可以購買軟體廠商已經開發好的類別，再透過繼承擴充其功能。
+
+\end{enumerate}
+
+一個子類別的實例，含有自己類別的實例變數與方法，以及所有父類別的實例變數與方法。例如：ee 這個實例便有自己定義的 vocab, grammar, listen 及繼承而來的 minutes 四個實例變數及 score 及 getMinutes 兩個方法。
+
+通常將實例變數與實例方法放置於父類別時，需要滿足以下兩個條件：
+\begin{enumerate}
+\item {} 
+可以減少重複的程式碼。
+
+\item {} 
+父類別的實例變數或實例方法對子類別有用處。例如：Exam 內的 minutes 便對 ChineseExam 及 EnglishExam 有用。
+
+\end{enumerate}
+
+當類別間有繼承關係時，建構子的呼叫順序是先執行父類別的建構子。例如：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{n+nf}{Exam}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"Calling Exam()..."}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{minutes} \PYG{o}{=} \PYG{l+m+mi}{75}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{class} \PYG{n+nc}{EnglishExam} \PYG{k+kd}{extends} \PYG{n}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{vocab}\PYG{o}{,} \PYG{n}{grammar}\PYG{o}{,} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{n+nf}{EnglishExam}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"Calling EnglishExam()..."}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{vocab} \PYG{o}{=} \PYG{l+m+mi}{7}\PYG{o}{;} \PYG{n}{grammar} \PYG{o}{=} \PYG{l+m+mi}{7}\PYG{o}{;} \PYG{n}{listen} \PYG{o}{=} \PYG{l+m+mi}{7}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{vocab} \PYG{o}{+} \PYG{n}{grammar} \PYG{o}{+} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{class} \PYG{n+nc}{ChineseExam} \PYG{k+kd}{extends} \PYG{n}{Exam}\PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{word}\PYG{o}{,} \PYG{n}{sentence}\PYG{o}{,} \PYG{n}{composition}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{n+nf}{ChineseExam}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"Calling ChineseExam()..."}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{word} \PYG{o}{=} \PYG{l+m+mi}{7}\PYG{o}{;} \PYG{n}{sentence} \PYG{o}{=} \PYG{l+m+mi}{7}\PYG{o}{;} \PYG{n}{composition} \PYG{o}{=} \PYG{l+m+mi}{7}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{word} \PYG{o}{+} \PYG{n}{sentence} \PYG{o}{+} \PYG{n}{composition}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Demo} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{argv}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{EnglishExam} \PYG{n}{ee} \PYG{o}{=} \PYG{k}{new} \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{ChineseExam} \PYG{n}{cc} \PYG{o}{=} \PYG{k}{new} \PYG{n}{ChineseExam}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+會得到以下的執行結果：
+
+\begin{Verbatim}[commandchars=@\[\]]
+Calling Exam()...
+Calling EnglishExam()...
+Calling Exam()...
+Calling ChineseExam()...
+\end{Verbatim}
+
+如果我們需要將 EnglishExam 更加的細分。
+例如：增加一個 GREEnglishExam 類別，而這個類別的特性是 listen 實例變數的值是 0：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{n+nf}{Exam}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{minutes} \PYG{o}{=} \PYG{l+m+mi}{75}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{class} \PYG{n+nc}{EnglishExam} \PYG{k+kd}{extends} \PYG{n}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{vocab}\PYG{o}{,} \PYG{n}{grammar}\PYG{o}{,} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{n+nf}{EnglishExam}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{vocab} \PYG{o}{=} \PYG{l+m+mi}{7}\PYG{o}{;} \PYG{n}{grammar} \PYG{o}{=} \PYG{l+m+mi}{7}\PYG{o}{;} \PYG{n}{listen} \PYG{o}{=} \PYG{l+m+mi}{7}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{vocab} \PYG{o}{+} \PYG{n}{grammar} \PYG{o}{+} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{class} \PYG{n+nc}{GREEnglishExam} \PYG{k+kd}{extends} \PYG{n}{EnglishExam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{vocab} \PYG{o}{+} \PYG{n}{grammar} \PYG{o}{+} \PYG{l+m+mi}{0}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{class} \PYG{n+nc}{ChineseExam} \PYG{k+kd}{extends} \PYG{n}{Exam}\PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{word}\PYG{o}{,} \PYG{n}{sentence}\PYG{o}{,} \PYG{n}{composition}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{n+nf}{ChineseExam}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{word} \PYG{o}{=} \PYG{l+m+mi}{7}\PYG{o}{;} \PYG{n}{sentence} \PYG{o}{=} \PYG{l+m+mi}{7}\PYG{o}{;} \PYG{n}{composition} \PYG{o}{=} \PYG{l+m+mi}{7}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{word} \PYG{o}{+} \PYG{n}{sentence} \PYG{o}{+} \PYG{n}{composition}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Demo} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{argv}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{EnglishExam} \PYG{n}{ee} \PYG{o}{=} \PYG{k}{new} \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{GREEnglishExam} \PYG{n}{gre} \PYG{o}{=} \PYG{k}{new} \PYG{n}{GREEnglishExam}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"English exam score is "} \PYG{o}{+} \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{score}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"GRE English exam score is "} \PYG{o}{+} \PYG{n}{gre}\PYG{o}{.}\PYG{n+na}{score}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+這時執行的結果會得到：
+
+\begin{Verbatim}[commandchars=@\[\]]
+English exam score is 21
+GRE English exam score is 14
+\end{Verbatim}
+
+呼叫 gre.score() 得到 14 的原因是，
+GREEnglishExam 的 score 方法遮蔽了 EnglishExam 的 score 方法，
+而名稱相同的方法有以下兩種關係：
+\begin{enumerate}
+\item {} 
+Overloading：是指參數輸入的個數或類別不同，但是卻同名的方法。
+
+\item {} 
+Shadowing：這是指數個方法同名，而參數的個數與型態也相同，
+但是卻分別的定義在不同的類別的方法。
+
+\end{enumerate}
+
+以上例而言 gre.score() 會呼叫 GREEnglishExam 的 score 方法，
+而 ee.score() 則會呼叫 EnglishExam 的 score 方法。
+在執行時呼叫幾個同名的方法的哪一個，是根據實例所屬的類別，
+例如：gre 的類別是 GREEnglishExam 所以 gre.score()
+會呼叫 GREEnglishExam 的 score 方法。如果 GREEnglishExam 沒有定義被呼叫的方法，例如：gre.getMinutes()，這時則會呼叫其父類別的方法，如果父類別中也沒有定義，則會呼叫祖父類別的方法，依此類推。所以 gre.getMinutes()會呼叫到 Exam 的 getMinutes 方法。
+
+
+\section{private 與 protected 變數與方法}
+\label{java_abstract:private-protected}
+在討論 getter, setter 方法時，我們談到資料抽象化的好處。
+但是如果那個實例變數本身（例如：minutes）仍然是定義成 public 那麼將失去強制性，
+也就是其他的程式設計師仍然可以繞過 getter 與 setter 方法而直接的存取 minutes。
+
+private 與 protected 兩個保留字可以設定某個變數或方法的存取範圍。
+private 變數或方法的存取範圍為自己的類別內，
+而 protected 變數或方法則包括自己的類別、子類別及所屬的 package 內。
+至於一個 package 則是由數個為了完成某種功能的類別所組合而成。
+例如：一個類別 C 若屬於一個 package p，則 C 的程式碼必須以
+
+\begin{Verbatim}[commandchars=@\[\]]
+package p;
+\end{Verbatim}
+
+起始，而且也必須存放在一個命名為 p 的目錄中。一個 Java 的檔案，
+如果要使用 C 或 p 所提供的功能，則可以用下兩種方式，
+輸入 C 或 p 內所有非 private 的名字：
+
+\begin{Verbatim}[commandchars=@\[\]]
+import p.C;
+import p.*;
+\end{Verbatim}
+
+一個 package 也可以使用
+
+\begin{Verbatim}[commandchars=@\[\]]
+jar vcf p.jar p
+\end{Verbatim}
+
+指令將其中的 .class 檔包裹起來，放在 jdk...jrelibext 的目錄中供其他程式使用。
+
+private 與 protected 的變數與方法可以有許多交替使用的可能。例如：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{n+nf}{Exam}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{minutes} \PYG{o}{=} \PYG{l+m+mi}{75}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{void} \PYG{n+nf}{setMinutes}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{m}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{minutes} \PYG{o}{=} \PYG{n}{m}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{private} \PYG{k+kt}{int} \PYG{n}{minutes}\PYG{o}{;}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+以上的範例將 minutes 宣告為 private 而將 getMinutes, setMinutes 宣告為 public。
+這時只有 Exam 能直接存取 minutes，
+而程式中所有其他的類別都可以透過 getMinutes, setMinutes 間接的存取 minutes。
+Java 的習慣是將 private 的變數或方法宣告在 public 的變數或方法的下方。
+一個類別的 public 變數或方法，
+形成了這個類別對其他類別的 public interface 或公開的介面。
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{n+nf}{Exam}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{minutes} \PYG{o}{=} \PYG{l+m+mi}{75}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{private} \PYG{k+kt}{int} \PYG{n}{minutes}\PYG{o}{;}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+而這個範例，則讓實例在初始化時便將 minutes 設值為75，
+由於沒有 setMinutes 而 minutes 又是 private，
+所以其他類別的程式碼將無法更動 minutes 的值。
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{n+nf}{Exam}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{minutes} \PYG{o}{=} \PYG{l+m+mi}{75}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{protected} \PYG{k+kt}{int} \PYG{n}{minutes}\PYG{o}{;}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+這個範例則容許 Exam 的子類別及與 Exam 位於同樣 package 內的類別直接存取 minutes。
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{n+nf}{Exam}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{minutes} \PYG{o}{=} \PYG{l+m+mi}{75}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{protected} \PYG{k+kt}{int} \PYG{n+nf}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{protected} \PYG{k+kt}{void} \PYG{n+nf}{setMinutes}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{m}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{minutes} \PYG{o}{=} \PYG{n}{m}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{private} \PYG{k+kt}{int} \PYG{n}{minutes}\PYG{o}{;}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+而這個範例則只有 Exam 能直接存取 minutes，
+同時也只有 Exam 的子類別及位於相同 package 中的類別能夠透過 getMinutes 及 setMinutes 間接的存取 minutes。
+
+
+\section{建構子之間的呼叫}
+\label{java_abstract:id2}
+如果在建構一個 EnglishExam 實例時要同時傳入四個參數值給 vocab, grammar, listen, minutes 四個實例變數，並將其初始化。而且也要能夠只傳入三個參數值給 vocab, grammar, listen，
+那麼一種寫這些建構子的方式是：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{EnglishExam} \PYG{k+kd}{extends} \PYG{n}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{vocab}\PYG{o}{,} \PYG{n}{grammar}\PYG{o}{,} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{k+kd}{public} \PYG{n+nf}{EnglishExam}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+       \PYG{n}{vocab} \PYG{o}{=} \PYG{l+m+mi}{6}\PYG{o}{;} \PYG{n}{grammar} \PYG{o}{=} \PYG{l+m+mi}{6}\PYG{o}{;} \PYG{n}{listen} \PYG{o}{=} \PYG{l+m+mi}{6}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{n+nf}{EnglishExam}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{v}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{g}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{l}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{vocab} \PYG{o}{=} \PYG{n}{v}\PYG{o}{;} \PYG{n}{grammar} \PYG{o}{=} \PYG{n}{g}\PYG{o}{;} \PYG{n}{listen} \PYG{o}{=} \PYG{n}{l}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{n+nf}{EnglishExam}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{v}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{g}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{l}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{m}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{vocab} \PYG{o}{=} \PYG{n}{v}\PYG{o}{;} \PYG{n}{grammar} \PYG{o}{=} \PYG{n}{g}\PYG{o}{;}  \PYG{n}{listen} \PYG{o}{=} \PYG{n}{l}\PYG{o}{;}
+        \PYG{n}{minutes} \PYG{o}{=} \PYG{n}{m}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{vocab} \PYG{o}{+} \PYG{n}{grammar} \PYG{o}{+} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+這個寫法有一個缺點就是
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{vocab} \PYG{o}{=} \PYG{n}{v}\PYG{p}{;} \PYG{n}{grammar} \PYG{o}{=} \PYG{n}{g}\PYG{p}{;} \PYG{n}{listen} \PYG{o}{=} \PYG{n}{l}\PYG{p}{;}
+\end{Verbatim}
+
+出現兩次。避免這些重複程式碼的方法是使用 this(v, g, l) 去呼叫那個三個參數的建構子：
+
+\begin{Verbatim}[commandchars=@\[\]]
+.. code-block:: java
+\end{Verbatim}
+\begin{quote}
+\begin{description}
+\item[{class EnglishExam extends Exam \{}] \leavevmode
+public int vocab, grammar, listen;
+public EnglishExam() \{
+\begin{quote}
+
+vocab = 6; grammar = 6; listen = 6;
+\end{quote}
+
+\}
+public EnglishExam(int v, int g, int l) \{
+\begin{quote}
+
+vocab = v; grammar = g; listen = l;
+\end{quote}
+
+\}
+public EnglishExam(int v, int g, int l, int m) \{
+\begin{quote}
+
+this(v, g, l);
+minutes = m;
+\end{quote}
+
+\}
+public int score() \{
+\begin{quote}
+
+return vocab + grammar + listen;
+\end{quote}
+
+\}
+
+\end{description}
+
+\}
+\end{quote}
+
+在建構子中使用 this(...) 指的是呼叫另一個，在相同的類別中，參數的個數與型態皆相同的建構子。要注意的是在建構子中使用 this(...)，一定要寫在建構子的第一行。
+
+另一種可能是當 EnglishExam 與 ChineseExam 都需要呼叫一個參數的建構子將 minutes 初始化。一種不好的寫法是：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{EnglishExam} \PYG{k+kd}{extends} \PYG{n}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{c+c1}{// ...}
+  \PYG{k+kd}{public} \PYG{n+nf}{EnglishExam}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{m}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{minutes} \PYG{o}{=} \PYG{n}{m}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{c+c1}{// ...}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{class} \PYG{n+nc}{ChineseExam} \PYG{k+kd}{extends} \PYG{n}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{c+c1}{// ...}
+  \PYG{k+kd}{public} \PYG{n+nf}{ChineseExam}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{m}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+    \PYG{n}{minutes} \PYG{o}{=} \PYG{n}{m}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{c+c1}{// ...}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+這時的
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{minutes} \PYG{o}{=} \PYG{n}{m}\PYG{p}{;}
+\end{Verbatim}
+
+也是同樣的重複在兩個類別中。改良的寫法是使用 super(m) 去呼叫定義在 Exam 類別內的一個參數的建構子：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{n+nf}{Exam}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{minutes} \PYG{o}{=} \PYG{l+m+mi}{75}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{n+nf}{Exam}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{m}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{minutes} \PYG{o}{=} \PYG{n}{m}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{private} \PYG{k+kt}{int} \PYG{n}{minutes}\PYG{o}{;}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{class} \PYG{n+nc}{EnglishExam} \PYG{k+kd}{extends} \PYG{n}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}
+  \PYG{k+kd}{public} \PYG{n+nf}{EnglishExam}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{m}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k+kd}{super}\PYG{o}{(}\PYG{n}{m}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{class} \PYG{n+nc}{ChineseExam} \PYG{k+kd}{extends} \PYG{n}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}
+  \PYG{k+kd}{public} \PYG{n+nf}{ChineseExam}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{m}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k+kd}{super}\PYG{o}{(}\PYG{n}{m}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{o}{.}\PYG{o}{.}\PYG{o}{.}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+
+\section{實例方法間的呼叫}
+\label{java_abstract:id3}
+如果你需要擴充 Exam、EnglishExam 與 ChineseExam，使它們能夠產出一份，
+包括考試時間、分數的考試資料。例如：
+
+\begin{Verbatim}[commandchars=@\[\]]
+Chinese exam score: 88 Exam time: 75 minutes
+English exam score: 76 Exam time: 60 minutes
+\end{Verbatim}
+
+第一種完成這個程式的寫法是為 EnglishExam 與 ChineseExam 都提供一個 report 方法：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{n}{Exam}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{m}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{minutes} \PYG{o}{=} \PYG{n}{m}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{class} \PYG{n+nc}{EnglishExam} \PYG{k+kd}{extends} \PYG{n}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{vocab}\PYG{o}{,} \PYG{n}{grammar}\PYG{o}{,} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{v}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{g}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{l}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k+kd}{super}\PYG{o}{(}\PYG{l+m+mi}{60}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{vocab} \PYG{o}{=} \PYG{n}{v}\PYG{o}{;}
+        \PYG{n}{grammar} \PYG{o}{=} \PYG{n}{g}\PYG{o}{;}
+        \PYG{n}{listen} \PYG{o}{=} \PYG{n}{l}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{vocab} \PYG{o}{+} \PYG{n}{grammar} \PYG{o}{+} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{void} \PYG{n+nf}{report}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"English exam score: "} \PYG{o}{+} \PYG{n}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{+}
+                               \PYG{l+s}{" Exam time: "} \PYG{o}{+} \PYG{n}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{+} \PYG{l+s}{" minutes"}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{class} \PYG{n+nc}{ChineseExam} \PYG{k+kd}{extends} \PYG{n}{Exam}\PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{word}\PYG{o}{,} \PYG{n}{sentence}\PYG{o}{,} \PYG{n}{composition}\PYG{o}{;}
+  \PYG{n}{ChineseExam}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{w}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{s}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{c}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k+kd}{super}\PYG{o}{(}\PYG{l+m+mi}{75}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{word} \PYG{o}{=} \PYG{n}{w}\PYG{o}{;}
+        \PYG{n}{sentence} \PYG{o}{=} \PYG{n}{s}\PYG{o}{;}
+        \PYG{n}{composition} \PYG{o}{=} \PYG{n}{c}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{word} \PYG{o}{+} \PYG{n}{sentence} \PYG{o}{+} \PYG{n}{composition}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{void} \PYG{n+nf}{report}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"Chinese exam score: "} \PYG{o}{+} \PYG{n}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{+}
+                               \PYG{l+s}{" Exam time: "} \PYG{o}{+} \PYG{n}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{+} \PYG{l+s}{" minutes"}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Demo} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{argv}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{ChineseExam} \PYG{n}{cc} \PYG{o}{=} \PYG{k}{new} \PYG{n}{ChineseExam}\PYG{o}{(}\PYG{l+m+mi}{35}\PYG{o}{,} \PYG{l+m+mi}{35}\PYG{o}{,} \PYG{l+m+mi}{18}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{cc}\PYG{o}{.}\PYG{n+na}{report}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{EnglishExam} \PYG{n}{ee} \PYG{o}{=} \PYG{k}{new} \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{l+m+mi}{30}\PYG{o}{,} \PYG{l+m+mi}{20}\PYG{o}{,} \PYG{l+m+mi}{26}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{report}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+你也可以使用 this 來呼叫方法，所上例中的 report 可以改寫如下:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{public} \PYG{k+kt}{void} \PYG{n+nf}{report}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+  \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"English exam score: "} \PYG{o}{+} \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{+}
+                 \PYG{l+s}{" Exam time: "} \PYG{o}{+} \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{+} \PYG{l+s}{" minutes"}\PYG{o}{)}\PYG{o}{;}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+由於 getMinutes 方法是 Exam 提供給它的子類別的方法。
+所以也可以用 super 來呼叫這個方法：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{public} \PYG{k+kt}{void} \PYG{n+nf}{report}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+  \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"English exam score: "} \PYG{o}{+} \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{+}
+                 \PYG{l+s}{" Exam time: "} \PYG{o}{+} \PYG{k+kd}{super}\PYG{o}{.}\PYG{n+na}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{+} \PYG{l+s}{" minutes"}\PYG{o}{)}\PYG{o}{;}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+super 與 this 這兩個保留字，
+同時用在建構子中與方法的呼叫，但是意義完全不同。
+用於建構子中的呼叫時，super 與 this 是用來呼叫其他的建構子；
+用於方法的呼叫時，super 是指呼叫自己或祖先中同名且參數一致的方法；
+而 this 甚至有可能呼叫到子孫類別中同名且參數一致的方法。
+由於 this 是在方法呼叫時才傳入的隱藏性參數，
+指的是實例本身，並不一定是指 this 這個字所在的類別，
+所以要看 this 呼叫時的實例為何，才能知道是那個方法被呼叫。
+
+另一個寫這個程式的方式是將 report 拆開並分別放在父類別與子類別中：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{n}{Exam}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{m}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{minutes} \PYG{o}{=} \PYG{n}{m}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{void} \PYG{n+nf}{report}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{" Exam time: "} \PYG{o}{+} \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{+} \PYG{l+s}{" minutes"}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{class} \PYG{n+nc}{EnglishExam} \PYG{k+kd}{extends} \PYG{n}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{vocab}\PYG{o}{,} \PYG{n}{grammar}\PYG{o}{,} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{v}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{g}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{l}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k+kd}{super}\PYG{o}{(}\PYG{l+m+mi}{60}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{vocab} \PYG{o}{=} \PYG{n}{v}\PYG{o}{;}
+        \PYG{n}{grammar} \PYG{o}{=} \PYG{n}{g}\PYG{o}{;}
+        \PYG{n}{listen} \PYG{o}{=} \PYG{n}{l}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{vocab} \PYG{o}{+} \PYG{n}{grammar} \PYG{o}{+} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{void} \PYG{n+nf}{report}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"English exam score: "} \PYG{o}{+} \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{score}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+        \PYG{k+kd}{super}\PYG{o}{.}\PYG{n+na}{report}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{class} \PYG{n+nc}{ChineseExam} \PYG{k+kd}{extends} \PYG{n}{Exam}\PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{word}\PYG{o}{,} \PYG{n}{sentence}\PYG{o}{,} \PYG{n}{composition}\PYG{o}{;}
+  \PYG{n}{ChineseExam}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{w}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{s}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{c}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k+kd}{super}\PYG{o}{(}\PYG{l+m+mi}{75}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{word} \PYG{o}{=} \PYG{n}{w}\PYG{o}{;}
+        \PYG{n}{sentence} \PYG{o}{=} \PYG{n}{s}\PYG{o}{;}
+        \PYG{n}{composition} \PYG{o}{=} \PYG{n}{c}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{word} \PYG{o}{+} \PYG{n}{sentence} \PYG{o}{+} \PYG{n}{composition}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{void} \PYG{n+nf}{report}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"Chinese exam score: "} \PYG{o}{+} \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{score}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+        \PYG{k+kd}{super}\PYG{o}{.}\PYG{n+na}{report}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Demo} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{argv}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{ChineseExam} \PYG{n}{cc} \PYG{o}{=} \PYG{k}{new} \PYG{n}{ChineseExam}\PYG{o}{(}\PYG{l+m+mi}{35}\PYG{o}{,} \PYG{l+m+mi}{35}\PYG{o}{,} \PYG{l+m+mi}{18}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{cc}\PYG{o}{.}\PYG{n+na}{report}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{EnglishExam} \PYG{n}{ee} \PYG{o}{=} \PYG{k}{new} \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{l+m+mi}{30}\PYG{o}{,} \PYG{l+m+mi}{20}\PYG{o}{,} \PYG{l+m+mi}{26}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{ee}\PYG{o}{.}\PYG{n+na}{report}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+當使用 super 呼叫一個方法（report）時，
+Java 會忽略定義在目前類別（EnglishExam 或 ChineseExam）的同名的 report 方法，
+而會從目前類別的父類別（Exam）開始往上搜尋，
+找到後，便呼叫那個方法。以上例而言，就是定義在 Exam 中的 report 方法。
+
+
+\section{抽象類別}
+\label{java_abstract:id4}
+還有一個寫這個程式的方式是使用抽象類別（abstract class）。
+抽象類別的功用是為它的子類別們提供共用的變數與方法。
+在抽象類別中可以宣告抽象方法（abstract method），
+抽象方法沒有程式碼的具體定義，它只有方法的名稱及型態的宣告。
+在一個抽象類別中宣告一個抽象方法，
+便必需要在這個抽象類別的直接子類別（direct subclass）定義與這個抽象方法同名、
+同型態的方法，要不然會發生編譯錯誤。
+
+如果要在 Exam 的子類別強迫定義 score 方法，
+並且只用 Exam 的 report 印出 score、time 及 examName 的資料。
+那麼這個程式可以改寫成以下這個沒有重複程式碼的版本：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{abstract} \PYG{k+kd}{class} \PYG{n+nc}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{private} \PYG{k+kt}{int} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{k+kd}{private} \PYG{n}{String} \PYG{n}{examName}\PYG{o}{;}
+  \PYG{n}{Exam}\PYG{o}{(}\PYG{n}{String} \PYG{n}{n}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{m}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{examName} \PYG{o}{=} \PYG{n}{n}\PYG{o}{;}
+        \PYG{n}{minutes} \PYG{o}{=} \PYG{n}{m}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{minutes}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{n}{String} \PYG{n+nf}{getExamName}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{examName}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{void} \PYG{n+nf}{report}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{k}{this}\PYG{o}{.}\PYG{n+na}{getExamName}\PYG{o}{(}\PYG{o}{)} \PYG{o}{+} \PYG{l+s}{"score: "} \PYG{o}{+}
+        \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{+} \PYG{l+s}{" Exam time: "} \PYG{o}{+} \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{getMinutes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{+} \PYG{l+s}{" minutes"}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{abstract} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{class} \PYG{n+nc}{EnglishExam} \PYG{k+kd}{extends} \PYG{n}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{vocab}\PYG{o}{,} \PYG{n}{grammar}\PYG{o}{,} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{v}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{g}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{l}\PYG{o}{,} \PYG{n}{String} \PYG{n}{n}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k+kd}{super}\PYG{o}{(}\PYG{n}{n}\PYG{o}{,} \PYG{l+m+mi}{60}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{vocab} \PYG{o}{=} \PYG{n}{v}\PYG{o}{;}
+        \PYG{n}{grammar} \PYG{o}{=} \PYG{n}{g}\PYG{o}{;}
+        \PYG{n}{listen} \PYG{o}{=} \PYG{n}{l}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{vocab} \PYG{o}{+} \PYG{n}{grammar} \PYG{o}{+} \PYG{n}{listen}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{class} \PYG{n+nc}{ChineseExam} \PYG{k+kd}{extends} \PYG{n}{Exam} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n}{word}\PYG{o}{,} \PYG{n}{sentence}\PYG{o}{,} \PYG{n}{composition}\PYG{o}{;}
+  \PYG{n}{ChineseExam}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{w}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{s}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{c}\PYG{o}{,} \PYG{n}{String} \PYG{n}{n}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k+kd}{super}\PYG{o}{(}\PYG{n}{n}\PYG{o}{,} \PYG{l+m+mi}{75}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{word} \PYG{o}{=} \PYG{n}{w}\PYG{o}{;}
+        \PYG{n}{sentence} \PYG{o}{=} \PYG{n}{s}\PYG{o}{;}
+        \PYG{n}{composition} \PYG{o}{=} \PYG{n}{c}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+  \PYG{k+kd}{public} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n}{word} \PYG{o}{+} \PYG{n}{sentence} \PYG{o}{+} \PYG{n}{composition}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Demo} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{argv}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{Exam} \PYG{n}{ex}\PYG{o}{;}
+        \PYG{n}{ex} \PYG{o}{=} \PYG{k}{new} \PYG{n}{ChineseExam}\PYG{o}{(}\PYG{l+m+mi}{35}\PYG{o}{,} \PYG{l+m+mi}{35}\PYG{o}{,} \PYG{l+m+mi}{18}\PYG{o}{,} \PYG{l+s}{"Chinese exam"}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{ex}\PYG{o}{.}\PYG{n+na}{report}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{ex} \PYG{o}{=} \PYG{k}{new} \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{l+m+mi}{30}\PYG{o}{,} \PYG{l+m+mi}{20}\PYG{o}{,} \PYG{l+m+mi}{26}\PYG{o}{,} \PYG{l+s}{"English exam"}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{ex}\PYG{o}{.}\PYG{n+na}{report}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+在 Exam 類別內的 report 方法所用到的 this 可以有兩種可能的實例與之對應：
+ChineseExam 的實例與 EnglishExam 的實例。
+而呼叫在 main 中的 ex.report() 會繼續呼叫到 this.score()，
+這時實際上被呼叫的 score 方法有兩種可能：
+\begin{enumerate}
+\item {} 
+呼叫到定義在 ChineseExam 中的 score，如果 ex 的值是一個 ChineseExam 的實例。
+
+\item {} 
+呼叫到定義在 EnglishExam 中的 score，如果 ex 的值是一個 EnglishExam 的實例。
+
+\end{enumerate}
+
+因此 this 的意義不是指出現 this 這個字的類別（Exam），
+而是指用於呼叫方法（score）的實例，
+這個實例就是 this。
+以上例而言是 ex，而 ex 的值可以是一個 ChineseExam 的實例，
+也可以是一個 EnglishExam 的實例，
+而 ChineseExam 與 EnglishExam 都是 Exam 的子類別，
+所以 this.score() 實際上 \textbf{可能呼叫到自己的子孫所定義的方法} 。
+
+一個抽象類別的主要功用是為它的子類別提供共用的變數與方法。
+抽象類別內可以宣告抽象方法。
+但是抽象類別不能產生實例，所以以下的程式碼會產生編譯錯誤：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{Exam} \PYG{n}{ex} \PYG{o}{=} \PYG{k}{new} \PYG{n}{Exam}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+\end{Verbatim}
+
+抽象類別的抽象方法強制其直接子類別必須定義同名、同型態的實體方法，
+而 Java 的編譯器可以檢查這個規定是否被達成，
+因此可以減輕程式設計師自行檢查某個類別是否符合設計需求的負擔。
+
+雖然抽象類別不能產生實例，但是卻可以用於宣告實例變數的型態。例如：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Demo} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{argv}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{Exam} \PYG{n}{ex}\PYG{o}{;}
+        \PYG{n}{ex} \PYG{o}{=} \PYG{k}{new} \PYG{n}{ChineseExam}\PYG{o}{(}\PYG{l+m+mi}{35}\PYG{o}{,} \PYG{l+m+mi}{35}\PYG{o}{,} \PYG{l+m+mi}{18}\PYG{o}{,} \PYG{l+s}{"Chinese exam"}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{ex}\PYG{o}{.}\PYG{n+na}{report}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{ex} \PYG{o}{=} \PYG{k}{new} \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{l+m+mi}{30}\PYG{o}{,} \PYG{l+m+mi}{20}\PYG{o}{,} \PYG{l+m+mi}{26}\PYG{o}{,} \PYG{l+s}{"English exam"}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{ex}\PYG{o}{.}\PYG{n+na}{report}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+ex 這個變數的型態是 Exam，因為 ChineseExam 與 EnglishExam 都是一種 Exam，
+所以 ex 可以儲存 ChineseExam 的實例，
+也可以儲存 EnglishExam 的實例，
+因為 ChineseExam 與 EnglishExam 不但是 Exam 的子類別，
+也是 Exam 的 \textbf{子型態（subtype）} 。
+這便是 ChineseExam 與 Exam 有 \textbf{is-a} 的關係，
+也就是一個 ChineseExam 是一個（is-a）Exam；
+而一個 EnglishExam 也是一個 Exam。
+
+但是型態被宣告為 Exam 的變數，只能用於呼叫宣告在 Exam 內的方法。
+假設 ChineseExam 內有一個 getWord 的方法，
+但是在 Exam 中沒有這個方法，
+那麼 ex.getWord() 將會產生編譯錯誤，
+因為 ex 實例的型態沒有這個方法。
+
+如果確實有需要呼叫 getWord 方法，則可使用轉型的方式進行呼叫。例如：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Demo} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{argv}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{Exam} \PYG{n}{ex}\PYG{o}{;}
+        \PYG{n}{ex} \PYG{o}{=} \PYG{k}{new} \PYG{n}{ChineseExam}\PYG{o}{(}\PYG{l+m+mi}{35}\PYG{o}{,} \PYG{l+m+mi}{35}\PYG{o}{,} \PYG{l+m+mi}{18}\PYG{o}{,} \PYG{l+s}{"Chinese exam"}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"Word score: "} \PYG{o}{+} \PYG{o}{(}\PYG{n}{ChineseExam}\PYG{o}{)}\PYG{n}{ex}\PYG{o}{.}\PYG{n+na}{getWord}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+抽象類別有一個特性，它不可能是在一個類別繼承結構的最下層。
+如果需要，程式設計師可以宣告一個最下層的類別為 final，
+一個 final 的類別不能被其他類別繼承。
+
+
+\section{物件導向程式的設計原則}
+\label{java_abstract:id5}
+如同前面的範例所展示的，一個問題可能有好幾種不同的解法。
+到底哪一種方法比較好？在什麼狀況用哪種解法呢？
+以下是設計物件導向程式的幾個參考原則：
+\begin{enumerate}
+\item {} 
+類別的結構與實際一致。
+
+\item {} 
+高層次的類別歸納一般化的屬性（general properties），例如：Exam或生物；而低層次類別的屬性則比較特殊化（specialize），例如：EnglishExam或人類。
+
+\item {} 
+沒有重複的程式碼。
+
+\item {} 
+直接存取常用的資訊，避免反覆的透過計算得到。
+
+\item {} 
+將其他類別不需要用的或不需要知道的變數與方法以 private 或 protected 隱藏起來。
+
+\item {} 
+is-a 與 has-a 的適當設計：
+以前例而言，ChineseExam 與 EnglishExam 都是一種（is-a）Exam。
+所以這時將它們設計成父類別與子類別的關係便很正確。
+但是，一個考生（a Student）的資料卻不能因為所有的 Exam 都有考生，
+而將 Student 設計成 EnglishExam 與 ChineseExam 的父類別。
+然而，將 Student 設計成一個單一的類別，
+並在 Exam 中宣告一個能夠存放考生實例的實例變數，卻很恰當。
+因為一份考卷 has-a 考生。
+這種在類別中宣告實例變數，以儲存其他類別所產生的實例，
+稱為（ \textbf{has-a} ）的關係。
+
+\end{enumerate}
+
+
+\section{圖形與動畫的範例}
+\label{java_abstract:id6}
+到目前為止，我們已經闡述了四種呼叫 Java 方法的方式，這四種方式是：
+\begin{enumerate}
+\item {} 
+呼叫類別方法
+
+\item {} 
+以實例來呼叫實例方法
+
+\item {} 
+以 this 來呼叫實例方法
+
+\item {} 
+以 super 來呼叫實例方法
+
+\end{enumerate}
+
+在這四種方式中最單純的是呼叫類別方法，
+因為呼叫一個類別方法可以藉由看靜態（static）的程式碼即可確定是哪一個類別方法被呼叫到。
+
+以 super 來呼叫實例方法也很單純，
+其判斷的方式是以程式碼的繼承關係來決定。
+例如在 C 類別中呼叫 super.m() 則可以從 C 的父類別開始依序向上（祖先們）搜尋，
+而搜尋到的第一個 m 即為被呼叫的方法。
+
+「以實例來呼叫實例方法」及「以 this 來呼叫實例方法」則不能單單的看靜態的程式碼，
+而必須要依照程式在動態執行時所使用的實例是哪一個類別的實例才能決定。
+為了能明確說明，Java 決定哪一個實例方法被執行的的機制
+（這個機制稱為動態搜尋或 dynamic lookup），
+在這一節我們使用了幾個能夠動態顯現的圖形與動畫，
+並將實例以一層包含一層的方式及將類別以樹狀階層圖的方式對照，
+來明確的解說程式執行時的實例或 this 到底是哪一個類別的實例，以決定是那個方法被執行。
+
+如果一個程式有以下幾個類別：
+
+\begin{Verbatim}[commandchars=@\[\]]
+Class A{}
+Class B extends A{}
+Class C extends A{}
+Class D extends B{}
+Class E extends B{}
+\end{Verbatim}
+
+那麼它們之間的繼承與所產生的實例有以下的關係。
+其中繼承是以樹狀階層圖表示，而實例則以對應的多層次的同心圓來表示，
+同心圓的最內層對應最 super 的類別，而同心圓的最外層則對應這個實例所屬的類別：
+
+Image:inheritance.jpg
+
+以下是另一個圖形與動畫的範例。
+這個範例說明了父類別之物件不可以使用子類別之方法，
+但子類別之物件可以使用父類別之方法。程式碼如下：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{Make\PYGZus{}counter} \PYG{o}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{count}\PYG{o}{;}
+        \PYG{k+kt}{void} \PYG{n+nf}{add1}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{n}{count} \PYG{o}{=} \PYG{n}{count} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+        \PYG{k+kt}{void} \PYG{n+nf}{add3}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{n}{add1}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{add1}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{add1}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+        \PYG{k+kt}{int} \PYG{n+nf}{getCount}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{k}{return} \PYG{n}{count}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{class} \PYG{n+nc}{Make\PYGZus{}counter2} \PYG{k+kd}{extends} \PYG{n}{Make\PYGZus{}counter} \PYG{o}{\PYGZob{}}
+        \PYG{k+kt}{void} \PYG{n+nf}{add2}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{n}{add1}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{add1}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Ex6} \PYG{o}{\PYGZob{}}
+        \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{argv}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{n}{Make\PYGZus{}counter2} \PYG{n}{c2} \PYG{o}{=} \PYG{k}{new} \PYG{n}{Make\PYGZus{}counter2}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{c2}\PYG{o}{.}\PYG{n+na}{add2}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{c2}\PYG{o}{.}\PYG{n+na}{add3}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"count:"} \PYG{o}{+} \PYG{n}{c2}\PYG{o}{.}\PYG{n+na}{getCount}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{Make\PYGZus{}counter} \PYG{n}{c1} \PYG{o}{=} \PYG{k}{new} \PYG{n}{Make\PYGZus{}counter}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+                \PYG{c+c1}{// c1.add2(); =\textgreater{} error}
+        \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+執行結果：
+
+\begin{Verbatim}[commandchars=@\[\]]
+count:5
+\end{Verbatim}
+
+Media:Ex6.swf\textbar{}觀看執行動畫
+
+
+\section{Super, this, abstract class的動畫範例}
+\label{java_abstract:super-this-abstract-class}
+以下的這個範例使用有層次的實例與動畫，說明this, super的特性:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{Father} \PYG{o}{\PYGZob{}}
+        \PYG{n}{String} \PYG{n}{a} \PYG{o}{=} \PYG{l+s}{"father"}\PYG{o}{;}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{class} \PYG{n+nc}{Son} \PYG{k+kd}{extends} \PYG{n}{Father} \PYG{o}{\PYGZob{}}
+        \PYG{n}{String} \PYG{n}{a} \PYG{o}{=} \PYG{l+s}{"son"}\PYG{o}{;}
+        \PYG{n}{String} \PYG{n+nf}{get\PYGZus{}null}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{k}{return} \PYG{n}{a}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+        \PYG{n}{String} \PYG{n+nf}{get\PYGZus{}this}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{k}{return} \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{a}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+        \PYG{n}{String} \PYG{n+nf}{get\PYGZus{}super}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{k}{return} \PYG{k+kd}{super}\PYG{o}{.}\PYG{n+na}{a}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Ex7} \PYG{o}{\PYGZob{}}
+        \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{argv}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{n}{Son} \PYG{n}{s} \PYG{o}{=} \PYG{k}{new} \PYG{n}{Son}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"a:"} \PYG{o}{+} \PYG{n}{s}\PYG{o}{.}\PYG{n+na}{get\PYGZus{}null}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"this.a:"} \PYG{o}{+} \PYG{n}{s}\PYG{o}{.}\PYG{n+na}{get\PYGZus{}this}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"super.a:"} \PYG{o}{+} \PYG{n}{s}\PYG{o}{.}\PYG{n+na}{get\PYGZus{}super}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+執行結果:
+
+\begin{Verbatim}[commandchars=@\[\]]
+a:son
+this.a:son
+super.a:father
+\end{Verbatim}
+
+這個範例中的 s 是一個 Son 的實例，而 Son 的父類別是 Father，
+因此 s 實例有兩層，外層是宣告於 Son 中的實例變數與方法，
+而內層是宣告於 Father 的實例變數與方法。
+get\_this 方法中的 this 即是 s；
+而 get\_super 中的 super 指的是 s 的內層相對於 Father 的部分。
+
+Media:Ex7.swf\textbar{}觀看執行動畫
+
+以下這個範例說明類別間有同名而且型態也相同的方法（overwrite）的特性:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{GrandParent} \PYG{o}{\PYGZob{}}
+        \PYG{n}{String} \PYG{n+nf}{eyes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{k}{return} \PYG{l+s}{"blue"}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{class} \PYG{n+nc}{Parent} \PYG{k+kd}{extends} \PYG{n}{GrandParent} \PYG{o}{\PYGZob{}}
+        \PYG{n}{String} \PYG{n+nf}{eyes}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{k}{return} \PYG{l+s}{"green"}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Ex8} \PYG{o}{\PYGZob{}}
+        \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{args}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{n}{GrandParent} \PYG{n}{gail} \PYG{o}{=} \PYG{k}{new} \PYG{n}{GrandParent}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{Parent} \PYG{n}{sue} \PYG{o}{=} \PYG{k}{new} \PYG{n}{Parent}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"當子類別擁有與父類別同方法名稱時稱為overwrite"}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"gail.eyes():"} \PYG{o}{+} \PYG{n}{gail}\PYG{o}{.}\PYG{n+na}{eyes}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"sue.eyes():"} \PYG{o}{+} \PYG{n}{sue}\PYG{o}{.}\PYG{n+na}{eyes}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+執行結果:
+\begin{quote}
+
+當子類別擁有與父類別同方法名稱時稱為overwrite
+gail.eyes():blue
+sue.eyes():green
+\end{quote}
+
+GrandParent 由於沒有父類別（除了 Object 以外），
+所以 gail 的實例只有一層；然而，sue 的實例卻有兩層，
+外層對應 Parent，內層對應 GrandParent。
+
+Media:Ex8.swf\textbar{}觀看執行動畫
+
+以下這個範例將透過宣告在數個不同類別的實例方法的呼叫，
+更深入的闡釋 super 與 this 的特性:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{A} \PYG{o}{\PYGZob{}}
+        \PYG{n}{String} \PYG{n+nf}{color}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{k}{return} \PYG{l+s}{"blue"}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+        \PYG{n}{String} \PYG{n+nf}{getColor}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{k}{return} \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{color}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{class} \PYG{n+nc}{B} \PYG{k+kd}{extends} \PYG{n}{A} \PYG{o}{\PYGZob{}}
+        \PYG{n}{String} \PYG{n+nf}{color}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{k}{return} \PYG{l+s}{"green"}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+        \PYG{n}{String} \PYG{n+nf}{getColor1}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{k}{return} \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{color}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+        \PYG{n}{String} \PYG{n+nf}{getColor2}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{k}{return} \PYG{k+kd}{super}\PYG{o}{.}\PYG{n+na}{color}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{class} \PYG{n+nc}{C} \PYG{k+kd}{extends} \PYG{n}{B} \PYG{o}{\PYGZob{}}
+        \PYG{n}{String} \PYG{n+nf}{color}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{k}{return} \PYG{l+s}{"red"}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+        \PYG{n}{String} \PYG{n+nf}{getColor3}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{k}{return} \PYG{k}{this}\PYG{o}{.}\PYG{n+na}{color}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+        \PYG{n}{String} \PYG{n+nf}{getColor4}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{k}{return} \PYG{k+kd}{super}\PYG{o}{.}\PYG{n+na}{color}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Ex10} \PYG{o}{\PYGZob{}}
+        \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{args}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{n}{A} \PYG{n}{a} \PYG{o}{=} \PYG{k}{new} \PYG{n}{A}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{B} \PYG{n}{b} \PYG{o}{=} \PYG{k}{new} \PYG{n}{B}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{C} \PYG{n}{c} \PYG{o}{=} \PYG{k}{new} \PYG{n}{C}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"a.color():"} \PYG{o}{+} \PYG{n}{a}\PYG{o}{.}\PYG{n+na}{color}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"a.getColor():"} \PYG{o}{+} \PYG{n}{a}\PYG{o}{.}\PYG{n+na}{getColor}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"b.color():"} \PYG{o}{+} \PYG{n}{b}\PYG{o}{.}\PYG{n+na}{color}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"b.getColor1():"} \PYG{o}{+} \PYG{n}{b}\PYG{o}{.}\PYG{n+na}{getColor1}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"b.getColor2():"} \PYG{o}{+} \PYG{n}{b}\PYG{o}{.}\PYG{n+na}{getColor2}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"c.color():"} \PYG{o}{+} \PYG{n}{c}\PYG{o}{.}\PYG{n+na}{color}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"c.getColor():"} \PYG{o}{+} \PYG{n}{c}\PYG{o}{.}\PYG{n+na}{getColor}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"c.getColor1():"} \PYG{o}{+} \PYG{n}{c}\PYG{o}{.}\PYG{n+na}{getColor1}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"c.getColor2():"} \PYG{o}{+} \PYG{n}{c}\PYG{o}{.}\PYG{n+na}{getColor2}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"c.getColor3():"} \PYG{o}{+} \PYG{n}{c}\PYG{o}{.}\PYG{n+na}{getColor3}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"c.getColor4():"} \PYG{o}{+} \PYG{n}{c}\PYG{o}{.}\PYG{n+na}{getColor4}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+執行結果:
+
+\begin{Verbatim}[commandchars=@\[\]]
+a.color():blue
+a.getColor():blue
+b.color():green
+b.getColor1():green
+b.getColor2():blue
+c.color():red
+c.getColor():red
+c.getColor1():red
+c.getColor2():blue
+c.getColor3():red
+c.getColor4():green
+\end{Verbatim}
+
+這個程式最讓人訝異的是呼叫 c.getColor() 的結果是 red。
+因為 c.getColor 會呼叫宣告在 A 之內的 getColor；
+而 getColor 內的 this 指的是 c，不是 A；而 c 的 getColor 會傳回 red。
+
+Media:Ex10.swf\textbar{}觀看執行動畫
+
+以下的範例將使用「寵物(Pet)」類別及「狗(Dog)」及「貓(Cat)」兩個子類別。
+狗及貓都擁有「聲音(sound)」這個方法，
+但狗跟貓的叫聲卻是不同的，此時我們可以利用抽象類別來實作這個例子。
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{abstract} \PYG{k+kd}{class} \PYG{n+nc}{Pet} \PYG{o}{\PYGZob{}}
+        \PYG{k+kd}{abstract} \PYG{n}{String} \PYG{n+nf}{sound}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{class} \PYG{n+nc}{Dog} \PYG{k+kd}{extends} \PYG{n}{Pet} \PYG{o}{\PYGZob{}}
+        \PYG{n}{String} \PYG{n+nf}{sound}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{k}{return} \PYG{l+s}{"汪汪"}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{class} \PYG{n+nc}{Cat} \PYG{k+kd}{extends} \PYG{n}{Pet} \PYG{o}{\PYGZob{}}
+        \PYG{n}{String} \PYG{n+nf}{sound}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{k}{return} \PYG{l+s}{"喵喵"}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Ex11} \PYG{o}{\PYGZob{}}
+        \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{args}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{n}{Dog} \PYG{n}{d} \PYG{o}{=} \PYG{k}{new} \PYG{n}{Dog}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{Cat} \PYG{n}{c} \PYG{o}{=} \PYG{k}{new} \PYG{n}{Cat}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"d.sound():"} \PYG{o}{+} \PYG{n}{d}\PYG{o}{.}\PYG{n+na}{sound}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+                \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"c.sound():"} \PYG{o}{+} \PYG{n}{c}\PYG{o}{.}\PYG{n+na}{sound}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+執行結果:
+
+\begin{Verbatim}[commandchars=@\[\]]
+d.sound():汪汪
+c.sound():喵喵
+\end{Verbatim}
+
+上例中 d 與 c 兩個變數若宣告成 Pet 型態，則答案仍然會一樣。
+
+Media:Ex11.swf\textbar{}觀看執行動畫
+
+以下這個範例是一個整合了 abstract class, super, this, array 的應用。
+這個範例的特色是宣告了 Area 這個 abstract class 及 getArea 這個抽象方法，
+讓 Square 及 Triangle 來繼承，
+而 whichBig 這個方法則可以比較任何兩個 Area 實例
+（Square 及 Triangle 的實例都是 Area 的實例），
+何者的面積較大。此外，在 main 中的 a 陣列，
+也可以存放任何的 Area 的實例，
+因此 a 可以存放 Square 的實例，
+也可以存放 Triangle 的實例：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{abstract} \PYG{k+kd}{class} \PYG{n+nc}{Area} \PYG{o}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{high}\PYG{o}{,} \PYG{n}{weight}\PYG{o}{;}
+        \PYG{n}{Area}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{a}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{b}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{n}{high} \PYG{o}{=} \PYG{n}{a}\PYG{o}{;}
+                \PYG{n}{weight} \PYG{o}{=} \PYG{n}{b}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+        \PYG{k+kd}{abstract} \PYG{k+kt}{int} \PYG{n+nf}{getArea}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+        \PYG{k+kt}{boolean} \PYG{n+nf}{whichBig}\PYG{o}{(}\PYG{n}{Area} \PYG{n}{p}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{k}{return} \PYG{o}{(}\PYG{k}{this}\PYG{o}{.}\PYG{n+na}{getArea}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\textgreater{}} \PYG{n}{p}\PYG{o}{.}\PYG{n+na}{getArea}\PYG{o}{(}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{class} \PYG{n+nc}{Square} \PYG{k+kd}{extends} \PYG{n}{Area} \PYG{o}{\PYGZob{}}
+        \PYG{n}{Square}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{a}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{b}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{k+kd}{super}\PYG{o}{(}\PYG{n}{a}\PYG{o}{,} \PYG{n}{b}\PYG{o}{)}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+        \PYG{k+kt}{int} \PYG{n+nf}{getArea}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{k}{return} \PYG{n}{high} \PYG{o}{*} \PYG{n}{weight}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{class} \PYG{n+nc}{Triangle} \PYG{k+kd}{extends} \PYG{n}{Area} \PYG{o}{\PYGZob{}}
+        \PYG{n}{Triangle}\PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{a}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{b}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{k+kd}{super}\PYG{o}{(}\PYG{n}{a}\PYG{o}{,} \PYG{n}{b}\PYG{o}{)}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+        \PYG{k+kt}{int} \PYG{n+nf}{getArea}\PYG{o}{(}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{k}{return} \PYG{o}{(}\PYG{n}{high} \PYG{o}{*} \PYG{n}{weight}\PYG{o}{)} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Ex12} \PYG{o}{\PYGZob{}}
+        \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{args}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                \PYG{k+kt}{int} \PYG{n}{total} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{o}{;}
+                \PYG{n}{Area}\PYG{o}{[}\PYG{o}{]} \PYG{n}{a} \PYG{o}{=} \PYG{o}{\PYGZob{}} \PYG{k}{new} \PYG{n}{Square}\PYG{o}{(}\PYG{l+m+mi}{6}\PYG{o}{,} \PYG{l+m+mi}{6}\PYG{o}{)}\PYG{o}{,} \PYG{k}{new} \PYG{n}{Triangle}\PYG{o}{(}\PYG{l+m+mi}{10}\PYG{o}{,} \PYG{l+m+mi}{10}\PYG{o}{)} \PYG{o}{\PYGZcb{}}\PYG{o}{;}
+                \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"Is a[0] bigger than a[1]?"} \PYG{o}{+} \PYG{n}{a}\PYG{o}{[}\PYG{l+m+mi}{0}\PYG{o}{]}\PYG{o}{.}\PYG{n+na}{whichBig}\PYG{o}{(}\PYG{n}{a}\PYG{o}{[}\PYG{l+m+mi}{1}\PYG{o}{]}\PYG{o}{)}\PYG{o}{)}\PYG{o}{;}
+                \PYG{k}{for} \PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{o}{;} \PYG{n}{i} \PYG{o}{\&}\PYG{n}{lt}\PYG{o}{;} \PYG{n}{a}\PYG{o}{.}\PYG{n+na}{length}\PYG{o}{;} \PYG{n}{i}\PYG{o}{+}\PYG{o}{+}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+                        \PYG{n}{total} \PYG{o}{=} \PYG{n}{total} \PYG{o}{+} \PYG{n}{a}\PYG{o}{[}\PYG{n}{i}\PYG{o}{]}\PYG{o}{.}\PYG{n+na}{getArea}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+                \PYG{o}{\PYGZcb{}}
+                \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{"total:"} \PYG{o}{+} \PYG{n}{total}\PYG{o}{)}\PYG{o}{;}
+        \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+執行結果:
+
+\begin{Verbatim}[commandchars=@\[\]]
+Is a@PYGZlb[]0@PYGZrb[] bigger than a@PYGZlb[]1@PYGZrb[]?false
+total:86
+\end{Verbatim}
+
+Media:Ex13new.swf\textbar{}觀看執行動畫及詳細解說
+
+
+\chapter{介面}
+\label{java_interface::doc}\label{java_interface:id1}
+前一個單元，介紹了以抽象類別內的抽象方法，
+來將需求強制加在抽象類別的直接子類別上。
+這種功能提供了程式設計師必需先想、先設計，
+然後才開始寫程式的好習慣。
+這個功能還提供了程式設計師以下的可能：
+\begin{enumerate}
+\item {} 
+將額外的註解放入抽象方法中，讓程式碼有更容易瞭解；
+
+\item {} 
+可以將一個類別交給其他人來寫；
+
+\item {} 
+如果某個程式設計師忘了按照需求定義抽象方法所強制的名稱與類別，
+編譯器可以自動產生錯誤信息。
+
+\end{enumerate}
+
+除了抽象類別能宣告抽象方法之外，
+Java 還提供了 \textbf{介面（interface）} 來宣告抽象方法。
+不同於抽象類別：
+\begin{enumerate}
+\item {} 
+介面只提供抽象方法或常數宣告，而不能定義變數或一般的方法。
+
+\item {} 
+一個子類別只能繼承一個父類別，但卻可以 \textbf{實作（implements）} 許多個介面。
+因此，介面模擬了 \textbf{多重繼承（multiple inheritance）} 的功能，
+但是卻可以避免一個類別繼承了多個父類別，
+但卻可能同時繼承了多個同名的變數或方法而造成混淆。
+
+\end{enumerate}
+
+假設在設計 Exam 這個程式時，
+你已經想過要提供一個 score 方法給 ChineseExam 與 EnglishExam。
+這時你可以先將 ScoreInterface 設計如下：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{public} \PYG{k+kd}{interface} \PYG{n+nc}{ScoreInterface} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kd}{abstract} \PYG{k+kt}{int} \PYG{n+nf}{score}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+而 ChineseExam 與 EnglishExam 則 implements 這個 interface:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{ChineseExam} \PYG{k+kd}{extends} \PYG{n}{Exam} \PYG{k+kd}{implements} \PYG{n}{ScoreInterface} \PYG{o}{\PYGZob{}}
+  \PYG{c+c1}{//...}
+\PYG{o}{\PYGZcb{}}
+\PYG{k+kd}{class} \PYG{n+nc}{EnglishExam} \PYG{k+kd}{extends} \PYG{n}{Exam} \PYG{k+kd}{implements} \PYG{n}{ScoreInterface} \PYG{o}{\PYGZob{}}
+  \PYG{c+c1}{//...}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+這時 ChineseExam 與 EnglishExam 便必須提供 score 方法，
+而且要有同樣的輸出入參數的型態，要不然 Java 的編譯器便會產生錯誤信息。
+因此使用 interface 的一大好處是讓 Java 的編譯器，
+也可以幫助維持程式的一致性；
+而不用透過人工，這個容易出錯的方式來維持。
+
+Interface 也可以成為一個變數的型態，
+而所宣告的變數可以用來呼叫這個 interface 內宣告的方法。例如：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// ...}
+
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Demo} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{argv}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{ScoreInterface} \PYG{n}{ex}\PYG{o}{;}
+        \PYG{n}{ex} \PYG{o}{=} \PYG{k}{new} \PYG{n}{ChineseExam}\PYG{o}{(}\PYG{l+m+mi}{35}\PYG{o}{,} \PYG{l+m+mi}{35}\PYG{o}{,} \PYG{l+m+mi}{18}\PYG{o}{,} \PYG{l+s}{"Chinese exam"}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{ex}\PYG{o}{.}\PYG{n+na}{score}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{ex} \PYG{o}{=} \PYG{k}{new} \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{l+m+mi}{30}\PYG{o}{,} \PYG{l+m+mi}{20}\PYG{o}{,} \PYG{l+m+mi}{26}\PYG{o}{,} \PYG{l+s}{"English exam"}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{ex}\PYG{o}{.}\PYG{n+na}{score}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+然而，如果上例的 ChineseExam 與 EnglishExam 類別中定義了 report 方法，
+而 ScoreInterface 中卻沒有宣告。
+這時下列的程式碼便會在編譯時產生型態錯誤：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// ...}
+
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Demo} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{argv}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{ScoreInterface} \PYG{n}{ex}\PYG{o}{;}
+        \PYG{n}{ex} \PYG{o}{=} \PYG{k}{new} \PYG{n}{ChineseExam}\PYG{o}{(}\PYG{l+m+mi}{35}\PYG{o}{,} \PYG{l+m+mi}{35}\PYG{o}{,} \PYG{l+m+mi}{18}\PYG{o}{,} \PYG{l+s}{"Chinese exam"}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{ex}\PYG{o}{.}\PYG{n+na}{report}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{ex} \PYG{o}{=} \PYG{k}{new} \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{l+m+mi}{30}\PYG{o}{,} \PYG{l+m+mi}{20}\PYG{o}{,} \PYG{l+m+mi}{26}\PYG{o}{,} \PYG{l+s}{"English exam"}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{ex}\PYG{o}{.}\PYG{n+na}{report}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
+
+改正的方式是透過轉型：
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// ...}
+
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{Demo} \PYG{o}{\PYGZob{}}
+  \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String} \PYG{n}{argv}\PYG{o}{[}\PYG{o}{]}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{n}{ScoreInterface} \PYG{n}{ex}\PYG{o}{;}
+        \PYG{n}{ex} \PYG{o}{=} \PYG{k}{new} \PYG{n}{ChineseExam}\PYG{o}{(}\PYG{l+m+mi}{35}\PYG{o}{,} \PYG{l+m+mi}{35}\PYG{o}{,} \PYG{l+m+mi}{18}\PYG{o}{,} \PYG{l+s}{"Chinese exam"}\PYG{o}{)}\PYG{o}{;}
+        \PYG{o}{(}\PYG{o}{(}\PYG{n}{ChineseExam}\PYG{o}{)}\PYG{n}{ex}\PYG{o}{)}\PYG{o}{.}\PYG{n+na}{report}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+        \PYG{n}{ex} \PYG{o}{=} \PYG{k}{new} \PYG{n}{EnglishExam}\PYG{o}{(}\PYG{l+m+mi}{30}\PYG{o}{,} \PYG{l+m+mi}{20}\PYG{o}{,} \PYG{l+m+mi}{26}\PYG{o}{,} \PYG{l+s}{"English exam"}\PYG{o}{)}\PYG{o}{;}
+        \PYG{o}{(}\PYG{o}{(}\PYG{n}{EnglishExam}\PYG{o}{)}\PYG{n}{ex}\PYG{o}{)}\PYG{o}{.}\PYG{n+na}{report}\PYG{o}{(}\PYG{o}{)}\PYG{o}{;}
+  \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
 \end{Verbatim}
 
 

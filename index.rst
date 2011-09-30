@@ -31,3 +31,4 @@ Java Steps
    java_object
    java_encap
    java_abstract
+   java_interface
