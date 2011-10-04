@@ -4,38 +4,64 @@
 Java 程式語言的特色
 -----------------
 
-Java 程式語言起源於 1991 年，
-Green Team 軟體開發團隊用它來開發 Star 7 機器上的應用程式，
-當時設計此語言的 James Gosling 因為看見窗外的「橡樹（oak）」，
-決定將新語言命名為 Oak 。
-但是由於工程師們喜歡邊喝咖啡邊討論，
-隨後又將名稱改為 Java（一種咖啡的名稱），
+追溯至 1990 年 12 月，
+Sun (昇陽電腦) 公司成立 Green Team 團隊，
+主要成員有 Patrick Naughton、Mike Sheridan 及 James Gosling。
+他們開始著手一項新專案「Green Project」，
+目標是發展一種系統架構，
+使程式能夠在電腦以外的消費性電子產品平台運作（例如手機、資訊家電等）。
+[#JavaHistory]_
+
+.. [#JavaHistory] http://en.wikibooks.org/wiki/Java_Programming/History
+
+Green Team 在 1992 年 9 月，
+發表一款名為 Star Seven 的機器，
+和後來市面上的 PDA 裝置類似，
+Star 7 在當時已具有先進的無線通訊功能。
+Java 程式語言的前身 Oak 在此時誕生，
+用來開發 Star 7 的軟體程式；
+當時 James Gosling 因為看見窗外的「橡樹（oak）」，
+決定將新程式語言命名為 Oak 。
+
+當時 Oak 要註冊商標時，
+發現這個名字已經被別家公司先用。
+由於工程師們喜歡在討論時喝杯咖啡，
+就將程式語言名稱改為 Java（一種咖啡的名稱），
 這個名稱就一直沿用到現在。
 
-Java 原本是為了控制冰箱、冷氣、微波爐等家電用品而設計的程式語言。
-由於家電用品相當多樣，因此 Java 選用了一個與傳統的程式語言不一樣的執行模式：
+.. Java 原本是為了控制冰箱、冷氣、微波爐等家電用品而設計的程式語言。
+.. 由於家電用品相當多樣，因此 Java 選用了一個與傳統的程式語言不一樣的執行模式：
+
+Java 有別於許多傳統程式語言：
 
 * 傳統的程式語言在編譯後會產生 machince code（機器碼），
   然後直接在硬體上執行；
-* Java 在編譯後則會產生 Byte Code 並間接的在 Java Virtual Machine（JVM）上執行。
-  這個 JVM（Java虛擬機器）其實是一個軟體，其功用是解譯並執行 Byte Code，而 JVM 仍然是在硬體上執行。
+* Java 在編譯後則會產生 Byte Code，
+  並間接的在 Java Virtual Machine （JVM）上執行。
+  這個 JVM （Java 虛擬機器）其實是一個軟體，
+  其功用是解譯並執行 Byte Code，
+  而 JVM 仍然是在硬體上執行。
 
-因為 JVM 是軟體，所以 Java 也有跨平台的特性：
+因為 JVM 是軟體，
+所以 Java 程式具有跨平台的特性：
 只要為不同的處理器或作業系統設計其專屬的 JVM，
-Java 的程式便可以不需改寫的在這些處理器或作業系統上執行。
-這便是「Write once, runs everywhere或一次編譯、到處執行」的由來。
+Java 程式便可以不需改寫，
+就能在這些不同的處理器或作業系統上執行。
+這便是「Write once, runs everywhere （一次編譯、到處執行）」的由來。
 
 Java 也支援物件導向程式設計（Object-Oriented Programming），
-所謂「物件」，簡單的說有「屬性」也有「方法」，
+所謂「物件」，
+簡單的說有「屬性」也有「方法」，
 例如冷氣機的「屬性」可以包括：「開關」及「溫度」；
 而「方法」則可以包括：「開機」、「關機」及「設定溫度」等。
-為了讓程式設計師，可以比較容易的使用物件撰寫模擬、控制與
+為了讓程式設計師，
+可以比較容易的使用物件撰寫模擬、控制與
 應用電腦本身（如滑鼠與鍵盤等也是物件）和我們生活周遭的物件的程式，
 因此便有研究人員發明了支援物件導向程式設計的語言。
 
 Java 的設計搭上了全球資訊網的順風車，
 原因是 Java 的設計團隊可以寫一個能夠在瀏覽器中執行的 JVM，
-而讓 Java 的程式可以透過網路下載至瀏覽器中執行。
+而讓 Java Applet 程式可以透過網路下載至瀏覽器中執行。
 這個「網路」＋「物件導向」的特性讓 Java 瞬間爆紅。
 
 除了跨平台、物件導向、可透過網路動態的載入及執行程式等功能之外，
@@ -44,19 +70,20 @@ Java 還支援多執行緒、例外狀態處理與自動記憶體回收的功能
 * 多執行緒讓一個程式可以執行數個工作；
 * 例外狀態處理讓處理例外的程式碼也能夠物件化；
 * 自動記憶體回收則讓程式設計師免除了使用低階的指標（pointers）來設計資料結構及管理記憶體的負擔。
-  這個特色成了 C 語言程式設計師的福音，因為它可以為程式設計師減少許多不容易 debug 的錯誤。
+  這個特色成了 C 與 C++ 語言程式設計師的福音，
+  因為它可以為程式設計師減少許多不容易 debug 的錯誤。
 
 安裝JDK
 -------
 
 在編譯與執行 Java 程式前，你的電腦必須先安裝 JDK（Java Development Kit）：
 
-* 可以從這裡下載新版的JDK `<http://java.sun.com/javase/downloads/index.jsp>`_
+* 下載新版的JDK `<http://java.sun.com/javase/downloads/index.jsp>`_
 
-在安裝完成後，也需要完成 path 及 classpath 的設定： ::
+在安裝完成後，也需要完成 PATH 及 CLASSPATH 的設定： ::
 
-	path=C:\Program Files\Java\jdk1.6.0\bin;....
-	classpath=.;C:\Program Files\Java\jdk1.6.0\lib;....
+	PATH=C:\Program Files\Java\jdk1.6.0\bin;....
+	CLASSPATH=.;C:\Program Files\Java\jdk1.6.0\lib;....
 
 請注意：以上路徑中的 jdk1.6.0 會因版本的不同而異。
 此外，在設定 classpath 時要特別注意在 ＝ 號的右邊要輸入這個 **「.」** 。
