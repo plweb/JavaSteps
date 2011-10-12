@@ -1,11 +1,12 @@
 區域變數與基本資料型態
 ===================
 
+.. highlight:: java
+   :linenothreshold: 5
+
 區域變數是一個方法的參數或是宣告在一個方法的區塊中。
 以下是宣告區域變數的幾個範例，其中 int 代表整數，而 double 代表倍精準浮點數，
-宣告的意義是告訴編譯器一個變數的型態是什麼：
-
-.. code-block:: java
+宣告的意義是告訴編譯器一個變數的型態是什麼： ::
 
 	public class EnglishExam {                     
 		public static void main(String argv[]) {
@@ -22,6 +23,7 @@
 多個變數的宣告，可以合併在一行：
 
 .. code-block:: java
+   :emphasize-lines: 2,3
 
 	public class EnglishExam {                     
 		public static void main(String argv[]) {
@@ -30,6 +32,15 @@
 			...
 		}                                        
 	}
+
+.. code-block:: python
+   :emphasize-lines: 3,5
+
+   def some_function():
+       interesting = False
+       print 'This line is highlighted.'
+       print 'This one is not...'
+       print '...but this one is.'
 
 宣告變數時，也可以同時指定數值：
 
