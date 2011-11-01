@@ -5,27 +5,24 @@ Java 程式語言的特色
 -----------------
 
 追溯至 1990 年 12 月，
-Sun (昇陽電腦) 公司成立 Green Team 團隊，
+Sun（昇陽電腦）公司成立 Green Team 團隊，
 主要成員有 Patrick Naughton、Mike Sheridan 及 James Gosling。
-他們開始著手一項新專案「Green Project」，
+他們開始著手一項名為「Green Project」的新專案，
 目標是發展一種系統架構，
-使程式能夠在電腦以外的消費性電子產品平台運作（例如手機、資訊家電等）。
-[#JavaHistory]_
-
-.. [#JavaHistory] http://en.wikibooks.org/wiki/Java_Programming/History
+使程式能夠在電腦以外的消費性電子產品平台運作（例如手機、資訊家電等）。 [#JavaHistory]_
 
 Green Team 在 1992 年 9 月，
-發表一款名為 Star Seven 的機器，
-和後來市面上的 PDA 裝置類似，
+發表一款名為 Star Seven（簡稱 Star 7 或 *7）的機器，
+它和 PDA 裝置類似，
 Star 7 在當時已具有先進的無線通訊功能。
 Java 程式語言的前身 Oak 在此時誕生，
 用來開發 Star 7 的軟體程式；
 當時 James Gosling 因為看見窗外的「橡樹（oak）」，
 決定將新程式語言命名為 Oak 。
 
-當時 Oak 要註冊商標時，
-發現這個名字已經被別家公司先用。
-由於工程師們喜歡在討論時喝杯咖啡，
+當 Oak 要註冊成商標時，
+才發現這個名字已經被別家公司註冊。
+由於工程師們喜歡在討論時喝咖啡，
 就將程式語言名稱改為 Java（一種咖啡的名稱），
 這個名稱就一直沿用到現在。
 
@@ -37,8 +34,8 @@ Java 有別於許多傳統程式語言：
 * 傳統的程式語言在編譯後會產生 machince code（機器碼），
   然後直接在硬體上執行；
 * Java 在編譯後則會產生 Byte Code，
-  並間接的在 Java Virtual Machine （JVM）上執行。
-  這個 JVM （Java 虛擬機器）其實是一個軟體，
+  並間接的在 Java Virtual Machine（JVM）上執行。
+  這個 JVM（Java 虛擬機器）其實是一個軟體，
   其功用是解譯並執行 Byte Code，
   而 JVM 仍然是在硬體上執行。
 
@@ -73,44 +70,73 @@ Java 還支援多執行緒、例外狀態處理與自動記憶體回收的功能
   這個特色成了 C 與 C++ 語言程式設計師的福音，
   因為它可以為程式設計師減少許多不容易 debug 的錯誤。
 
-安裝JDK
--------
+安裝 JDK
+--------
 
-在編譯與執行 Java 程式前，你的電腦必須先安裝 JDK（Java Development Kit）：
+在編譯與執行 Java 程式前，你的電腦必須先安裝 JDK（Java Development Kit）。 [#DownloadJavaSDK]_
 
-* 下載新版的JDK `<http://java.sun.com/javase/downloads/index.jsp>`_
+安裝 JDK 的步驟為：
 
-在安裝完成後，也需要完成 PATH 及 CLASSPATH 的設定： ::
+1. 下載與作業系統版本相符的 JDK 安裝程式。
+2. 執行安裝程式，並依步驟完成。
+3. 設定 PATH 及 CLASSPATH 環境變數。
 
-	PATH=C:\Program Files\Java\jdk1.6.0\bin;....
-	CLASSPATH=.;C:\Program Files\Java\jdk1.6.0\lib;....
+Windows
+^^^^^^^
 
-請注意：以上路徑中的 jdk1.6.0 會因版本的不同而異。
-此外，在設定 classpath 時要特別注意在 ＝ 號的右邊要輸入這個 **「.」** 。
+Windows 適用的 JDK 有 32位元（i586） 及 64位元（x64） 兩種版本，
+需要下載的檔案名稱分別如下：
+
+* 32位元 jdk-6u29-windows-i586.exe
+* 64位元 jdk-6u29-windows-x64.exe
+
+在安裝完成後，
+預設的情況下會將 JDK 安裝在「C:\Program Files\Java」資料夾下。
+需要完成 PATH 及 CLASSPATH 的環境變數設定，
+以下是設定範例：
+
+* PATH=C:\\Program Files\\Java\\jdk1.6.0_29\\bin;...
+* CLASSPATH=.;C:\\Program Files\\Java\\jdk1.6.0_29\\lib
+
+請注意：以上路徑中的 **jdk1.6.0_29** 會因版本的不同而異。
+此外，在設定 classpath 時要特別注意在 = 號的右邊要輸入這個 **「.」** 。
 這個點的意義是目前的目錄（current directory），也是執行 Java 程式時用來搜尋執行檔的目錄。
 
-編譯及執行Java程式
-----------------
+驗證安裝結果
+^^^^^^^^^^^^
+
+打開終端機程式（命令提示字元），分別輸入以下指令： ::
+
+	java -version
+	javac -version
+
+如果安裝及設定正確，則會出現以下的版本訊息： ::
+
+	java version "1.6.0_26"
+
+編譯及執行 Java 程式
+--------------------
 
 有兩種方式可以編譯及執行一個 Java 程式。
-第一種是使用程式開發環境（program development environment），
-例如： `Eclipse <http://eclipse.org/>`_ ；
-另一種則是使用一般的程式編輯器。
-以下是使用「記事本」寫 Java 程式時所需要進行的三個步驟：
+第一種是使用整合開發環境（integrated development environment），
+例如： Eclipse [#EclipseHomepage]_ 、NetBeans [#NetBeansHomePage]_ 、Geany [#GeanyHomepage]_ 及 JCreator [#JCreatorHomepage]_ 等；
+另一種則是使用一般的文字編輯器，
+例如記事本、Notepad++ [#NotepadPlusPlusHomepage]_ 及 UltraEdit 等。
 
-1. 使用「記事本」輸入以下的程式並將檔案命名為 EnglishExam.java
-   （注意：附檔名必須是 .java 而不是 .txt，
-   **而這個檔案的主檔名必須與 public class 後面的 EnglishExam 相同** ）：
+以下是使用一般文字編輯器撰寫 Java 程式時，所需要進行的三個步驟：
 
-.. code-block:: java
+1. 建立新檔案，並命名為 **EnglishExam.java** 。
+   請注意：副檔名是 .java 而不是 .txt，
+   主檔名必須是 EnglishExam 而不能更改為其它（必須和 public class 後面的名稱相同）： ::
 
-	public class EnglishExam {                     
-		public static void main(String argv[]) {        
-			System.out.println("Your score is 97.");      
-  		}
-  	}
+	public class EnglishExam {
+	  public static void main(String argv[]) {
+		System.out.println("Your score is 97.");
+	  }
+	}
 
-2. 執行「命令提示字元」並將目錄切換至儲存 EnglishExam.java 的目錄，然後執行： ::
+2. 執行終端機程式（命令提示字元），
+   並將工作路徑切換至儲存 **EnglishExam.java** 的位置，然後執行： ::
 
 	javac EnglishExam.java
 
@@ -121,24 +147,40 @@ Java 還支援多執行緒、例外狀態處理與自動記憶體回收的功能
 
     java EnglishExam
 
-   執行後 Your score is 97。便會顯示在螢幕上。
+   執行後，「Your score is 97」訊息會顯示在螢幕上。
 
 在開發 Java 程式的過程中，有可能發生編譯錯誤（compile-time error）。
 這時便需要再次的使用編輯器修改錯誤，直到沒有任何的編譯錯誤為止。
 編譯完畢之後，在程式執行時也有可能發生 run-time error。
 同樣的，這時也需要使用編輯器修改、編譯、執行、除錯，直到沒有錯誤為止。
 
+認識 Java 程式
+--------------
+
 一般的 Java 程式都是由一或多個類別（class）所組成，
-**其中的一個類別至少要有一個命名為 public static void main 的方法（method），
-而這個程式就是由 main 開始執行** 。
+其中的一個類別至少要有一個命名為 public static void main 的方法（method），
+而這個程式就是由 **main** 開始執行 。
 （透過網路瀏覽器執行的 Java applet 不適用此規則。）
+
+我們再次回顧上一節練習的程式碼， **EnglishExam** 是一個類別（class）：
+
+.. code-block:: java
+
+	public class EnglishExam {
+	  public static void main(String argv[]) {
+		System.out.println("Your score is 97.");
+	  }
+	}
 
 上例中的 public class EnglishExam 是指定 EnglishExam 這個類別是 public 是公用的，
 也就是可以被程式中其他的類別引用。而 public static void main(String argv[]) 的意義是：
 
 1. public：指定 main 為一個可以被其他類別使用的 public method；
+
 2. static：指定 main 為一個類別方法（static method），一個類別方法隸屬於一個 class；
+
 3. void：代表 main 執行完畢後回傳的型態，因為 main 沒有回傳任何數值，因此它的回傳型態是 void；
+
 4. String argv[]：指這個方法的輸入參數是 argv[] 而 String 則是它的型態。
    main 的輸入參數 String argv[] 可以在執行一個 Java 程式時將字串（String）資料輸入這個程式。
    例如在編譯以下的程式之後：
@@ -162,17 +204,63 @@ Java 還支援多執行緒、例外狀態處理與自動記憶體回收的功能
 這個程式的 argv[] 代表 argv 這個變數是一個陣列，
 而 argv[0]、argv[1] 則取用 argv 內第0、1個儲存格的內容。
 
-Java 程式中 **用大刮號 { } 標示的 Block（區塊）** 是用來組織程式層次關係的語法。
+Java 程式中用大刮號 **{ }** 標示的內容稱為 Block（區塊），
+是用來組織程式層次關係的語法。
 
 例如上例的程式就有兩個區塊，一組用來標示 class 的區塊，
 另一組則用來標示 main 的區域。區塊中可以包含其他的區塊，
 在撰寫程式時也應注意要把區塊的內容往右縮排。
 一組用來標示類別的區塊內，可以有數個變數與方法。
-而一組用來標示方法的區塊內可以有一或多句以「；」結束的程式碼。這些程式碼共同構成了這個方法的 body。
+而一組用來標示方法的區塊內可以有一或多句以「；」結束的程式碼。
+這些程式碼共同構成了這個方法的 body。
 
-為 Java 程式中使用的名字命名，有一個不成文的規定：
-**類別名稱的第一個字母要用大寫** 。
-**方法或變數的第一個字母則是小寫** ，
-若有數個字合併時則 **後續的字的第一個字母也習慣用大寫** 。
+Java 程式中使用的命名方式，有個不成文的慣例：
+類別名稱的第一個字母使用大寫；方法或變數的第一個字母則是小寫，
+若有多個單字合併時，則每個單字的第一個字母也慣用大寫。
 
-`動手練習：修正程式碼的錯誤 <http://v2.plweb.org/webstart.groovy?mode=student&course_id=158&lesson_id=2&class_id=2011100006>`_
+例如，以下是一段依循 Java 慣例撰寫的程式碼：
+
+.. code-block:: java
+
+	public class HelloSomeone {
+	  public static void main(String argv[]) {
+	    String yourName = "John";
+	    System.out.println("Hello " + yourName);
+  	  }
+	}
+
+如果不依循慣例，可能寫出如下的程式碼：
+
+.. code-block:: java
+
+	public class hello_someone {
+	  public static void main(String argv[]) {
+	    String YourName = "John";
+	    System.out.println("Hello " + YourName);
+  	  }
+	}
+
+但這段程式碼可能會給其他人帶來困擾，
+因為熟悉 Java 命名慣例的程式設計師，
+無法從名稱分辨一個類別、方法或變數。
+
+除此之外，命名時也必須避開以下的 Java 關鍵字。 ::
+
+	abstract  continue  for         new         switch
+	assert    default   goto        package     synchronized
+	boolean   do        if          private     this
+	break     double    implements  protected   throw
+	byte      else      import      public      throws
+	case      enum      instanceof  return      transient
+	catch     extends   int         short       try
+	char      final     interface   static      void
+	class     finally   long        strictfp    volatile
+	const     float     native      super       while
+
+.. [#JavaHistory] Java 程式語言的發展歷史 http://en.wikibooks.org/wiki/Java_Programming/History
+.. [#DownloadJavaSDK] 下載新版的JDK http://java.sun.com/javase/downloads/index.jsp
+.. [#EclipseHomepage] Eclipse http://www.eclipse.org/
+.. [#NetBeansHomePage] NetBeans http://netbeans.org/
+.. [#JCreatorHomepage] JCreator http://www.jcreator.com/
+.. [#GeanyHomepage] Geany http://www.geany.org/
+.. [#NotepadPlusPlusHomepage] Notepad++ http://notepad-plus-plus.org/
