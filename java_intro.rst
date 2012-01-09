@@ -1,8 +1,9 @@
+####
 簡介
-====
+####
 
 Java 程式語言的特色
------------------
+=================
 
 追溯至 1990 年 12 月，
 Sun (昇陽電腦) 公司成立 Green Team 團隊，
@@ -73,24 +74,24 @@ Java 還支援多執行緒、例外狀態處理與自動記憶體回收的功能
   這個特色成了 C 與 C++ 語言程式設計師的福音，
   因為它可以為程式設計師減少許多不容易 debug 的錯誤。
 
-安裝JDK
--------
+安裝 JDK
+========
 
 在編譯與執行 Java 程式前，你的電腦必須先安裝 JDK（Java Development Kit）：
 
 * 下載新版的JDK `<http://java.sun.com/javase/downloads/index.jsp>`_
 
-在安裝完成後，也需要完成 PATH 及 CLASSPATH 的設定： ::
+在安裝完成後，也需要完成 PATH 及 CLASSPATH 的設定：
 
-	PATH=C:\Program Files\Java\jdk1.6.0\bin;....
-	CLASSPATH=.;C:\Program Files\Java\jdk1.6.0\lib;....
+* ``PATH=C:\Program Files\Java\jdk1.6.0\bin;...``
+* ``CLASSPATH=.;C:\Program Files\Java\jdk1.6.0\lib;...``
 
 請注意：以上路徑中的 jdk1.6.0 會因版本的不同而異。
 此外，在設定 classpath 時要特別注意在 ＝ 號的右邊要輸入這個 **「.」** 。
 這個點的意義是目前的目錄（current directory），也是執行 Java 程式時用來搜尋執行檔的目錄。
 
-編譯及執行Java程式
-----------------
+編譯及執行 Java 程式
+==================
 
 有兩種方式可以編譯及執行一個 Java 程式。
 第一種是使用程式開發環境（program development environment），
@@ -102,13 +103,7 @@ Java 還支援多執行緒、例外狀態處理與自動記憶體回收的功能
    （注意：附檔名必須是 .java 而不是 .txt，
    **而這個檔案的主檔名必須與 public class 後面的 EnglishExam 相同** ）：
 
-.. code-block:: java
-
-	public class EnglishExam {                     
-		public static void main(String argv[]) {        
-			System.out.println("Your score is 97.");      
-  		}
-  	}
+.. literalinclude:: src/java/EnglishExam.java
 
 2. 執行「命令提示字元」並將目錄切換至儲存 EnglishExam.java 的目錄，然後執行： ::
 
