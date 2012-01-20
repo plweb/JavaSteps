@@ -1,30 +1,27 @@
-.. Java Steps
-   @project: JavaSteps
+.. settings
    @title: Java Steps
-   @authors: 2011, 董少桓、林彥宏
+   @authors: 董少桓、林彥宏
+   @basename: JavaSteps
+   @latex_paper_size: b5
+   @latex_font_size: 11pt
    @latex_logo: img/logo.eps
+   @epub_theme: epub_simple
+   @mobi_theme: mobi_simple
+   @pdf_cover: images/cover.pdf
+   @epub_cover: _static/cover.png
+   @language: zh_CN
 
-##########
-Java Steps
-##########
+.. raw:: latex
+
+   \renewcommand{\chaptername}{}
+
+#####################################
+Java Steps 啟動物件導向程式設計思考力
+#####################################
 
 .. toctree::
    :maxdepth: 3
 
-   java_intro
+   part1
+   part2
 
-.. remain
-   java_basis
-   java_vartype
-   java_stdio
-   java_expr
-   java_static
-   java_cond
-   java_loop
-   java_array
-   java_object
-   java_encap
-   java_abstract
-   java_interface
-   java_generic
-   java_exception
