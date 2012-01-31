@@ -4,15 +4,19 @@ Java 的變數、方法與型態
 
 一個電腦程式，基本上是由兩個部分組成：
 
-.. topic::
+.. topic:: 電腦程式
 
-   .. centered:: 資料 + 處理 = 程式
+   資料 + 處理 = 程式
 
-1. **資料**\ ：這部分的程式碼要為所處理的資料命名、指定其型態、並存放於記憶體中。 ::
+1. **資料**\ ：
+   
+   這部分的程式碼要為所處理的資料命名、指定其型態、並存放於記憶體中。 ::
 
     int a = 3, b = 4, c = 5
 
-2. **處理**\ ：這部分的程式碼要使用撰寫在方法（method）中的運算式、條件判斷式、迴圈，\
+2. **處理**\ ：
+   
+   這部分的程式碼要使用撰寫在方法（method）中的運算式、條件判斷式、迴圈，\
    來存取資料、計算結果、然後輸出。 ::
 
     System.out.println(a + b * c);
@@ -87,7 +91,7 @@ Java 如何分區呢？主要是使用大刮號，例如：
 程式語言的句子與一般說話的語言，\
 一樣是由基本的字詞（names）組合而成。\
 Java 為這些字詞命名的規定是：\
-一個字詞可以包含一個或多個英文字母、數字、_ 及 $ 所組成的字元，\
+一個字詞可以包含一個或多個英文字母、數字、_及$所組成的字元，\
 而第一個字元不可以是數字。
 
 以下是正確的使用範例：
@@ -103,13 +107,16 @@ Java 為這些字詞命名的規定是：\
 
 * 0school
 
-Java 語言有 public, class, void, if, while, for 等保留字 [#JavaKeywords]_ 。\
-除了開始認識這些保留字的意義與用法之外，程式設計師所要學習的第一件事，\
+Java 語言有 public, class, void, if, while, for 等保留字\ [#JavaKeywords]_\ 。\
+除了開始認識這些保留字的意義與用法之外，\
+程式設計師所要學習的第一件事，\
 就是為儲存資料的\ **變數**\ 與執行處理的\ **方法**\ 命名。
 
-**變數（variable）**\ 是程式中的一種字詞。\
-一個變數有一個\ **名字（name）**\ 、一個\ **資料值（value）**\ 、\
-一塊儲存資料值的\ **記憶體**\ 以及這個資料值的\ **型態（type）**\ （如 int、double 等）。
+**變數**\（variable）是程式中的一種字詞。\
+一個變數有一個\ **名字**\ （name）、\
+一個\ **資料值**\（value）、\
+一塊儲存資料值的\ **記憶體**\ ，\
+以及這個資料值的\ **型態**\ （type）（如 int、double 等）。\
 由於一個變數的型態，\
 定義了這個變數的值所需要的記憶體的大小，\
 所以一個 Java 程式在編譯時，\
@@ -120,36 +127,33 @@ Java 語言有 public, class, void, if, while, for 等保留字 [#JavaKeywords]_
 
 Java 的變數主要有三種類型：
 
-1. **區域變數**\ （local variable）：
+1. 區域變數（local variable）：
    
    宣告在方法內或參數部分的變數；
-
-2. **類別變數**\ （class variable or static field）：
+2. 類別變數（class variable or static field）：
    
    在一個類別中以 static 宣告的變數；
-
-3. **實例變數**\ （instance variable or non-static field）：
+3. 實例變數（instance variable or non-static field）：
    
    在一個類別中沒有使用 static 宣告的變數。
 
 Java 也有兩種方法：
 
-1. **類別方法**\ （class method or static method）：
+1. 類別方法（class method or static method）：
    
    這種方法以 static 宣告。\
    呼叫的方式是 ``ClassName.methodName(...)``\ ，\
-   其中 ClassName 是類別名稱，\
-   methodName 是類別方法名稱，\
+   其中 ``ClassName`` 是類別名稱，\
+   ``methodName`` 是類別方法名稱，\
    ... 則是傳入的參數（可以沒有、一個或是多個參數）。
-
-2. **實例方法**\ （instance method or non-static method）：
+2. 實例方法（instance method or non-static method）：
    
-   這種方法不以 static 宣告，\
-   隸屬於一個類別所產生的實例。
-   呼叫的方式是 o.m(...)，\
-   其中 o 是這個類別或其子類別的實例，\
-   而 m 是其方法名稱，\
-   ... 則是0至多個傳入的參數。
+   這種方法不以 ``static`` 宣告，\
+   隸屬於一個類別所產生的實例。\
+   呼叫的方式是 ``o.m(...)``\ ，\
+   其中 ``o`` 是這個類別或其子類別的實例，\
+   而 ``m`` 是其方法名稱，\
+   ``...`` 則是傳入的參數（零或多個）。
 
 Java 之所以有種類這麼多的變數與方法，\
 是因為 Java 同時支援結構化（例如：C 與 Basic）\
@@ -157,7 +161,8 @@ Java 之所以有種類這麼多的變數與方法，\
 撰寫結構化程式時需要使用類別變數與類別方法。\
 類別變數在概念上與結構化程式語言的全域變數（global variable）一致；\
 而類別方法在概念上則與結構化程式語言的函式（function）或程序（procedure）一致。\
-實例變數、實例方法，則屬物件導向程式設計的功能。\
+實例變數、實例方法，\
+則屬物件導向程式設計的功能。\
 一般的 Java 程式可以同時使用結構化與物件導向並存的方式設計程式。
 
 這本書的前半部介紹 Java 結構化程式設計的語法及語意，\
@@ -165,24 +170,33 @@ Java 之所以有種類這麼多的變數與方法，\
 
 此外，Java 變數的型態也有兩大類：
 
+1. primitive type
+   
+   包括：int、double、boolean、char [#JavaDataTypes]_ 等。
+2. reference type
+   
+   包括：
 
-test
-
-1. **primitive type**\ ，包括：int、double、boolean、char [#JavaDataTypes]_ 等。
-
-2. **reference type**\ ，包括：
-	1. 類別型態：經由類別（class）的宣告而得到。如果 Car 是一個類別，而 aCar 是一個這個類別的變數，則 Car 便是 aCar 的型態（type）。之所以稱為 reference type，是因為 aCar 這個變數在記憶體中的位置，實際上是存著指向（reference）一個 Car 實例的地址。
-	2. 介面型態：經由介面（interface）的宣告而得到。
-	3. 陣列（array）型態。
-	4. enum 型態：一種特別的類別宣告方式，用於宣告月份、一週的七天等。
-
-refer [test01]_
-refer [董少桓79]_
+   1. 類別型態
+      
+      經由類別（class）的宣告而得到。\
+      如果 Car 是一個類別，\
+      而 aCar 是一個這個類別的變數，\
+      則 Car 便是 aCar 的型態（type）。\
+      之所以稱為 reference type，\
+      是因為 aCar 這個變數在記憶體中的位置，\
+      實際上是存著指向（reference）一個 Car 實例的地址。
+   2. 介面型態
+      
+      經由介面（interface）的宣告而得到。
+   3. 陣列（array）型態。
+   4. enum 型態
+      
+      一種特別的型別宣告方式，可賦予常數可讀（readable）的意義，\
+      例如用於宣告月份、一週的七天等。
 
 .. rubric:: Footnotes
 
 .. [#JavaKeywords] http://docs.oracle.com/javase/tutorial/java/nutsandbolts/_keywords.html
 .. [#JavaDataTypes] http://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html
 
-.. [test01] test01
-.. [董少桓79] 測試

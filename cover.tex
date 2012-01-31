@@ -1,0 +1,73 @@
+\documentclass[b5paper,12pt]{article}
+\usepackage[margin=0in]{geometry}
+
+\usepackage[cm-default]{fontspec}
+%% \usepackage{xunicode}
+\usepackage{xcolor}
+\usepackage{fontspec}
+\usepackage[slantfont,boldfont,CJKaddspaces,CJKchecksingle,CJKnumber,fallback]{xeCJK}
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt
+\defaultfontfeatures{Mapping=tex-text}
+\setCJKmainfont[BoldFont={Adobe Heiti Std},ItalicFont={Adobe Fangsong Std},BoldItalicFont={Adobe Kaiti Std}]{Adobe Song Std}
+\setCJKsansfont[BoldFont={Adobe Fan Heiti Std},ItalicFont={Adobe Fangsong Std},BoldItalicFont={Adobe Kaiti Std}]{Adobe Song Std}
+\setCJKmonofont{Adobe Ming Std} 
+\setCJKromanfont[BoldFont={Adobe Heiti Std},ItalicFont={Adobe Fangsong Std},BoldItalicFont={Adobe Kaiti Std}]{Adobe Song Std}
+\setmainfont[BoldFont={Myriad Pro}]{Adobe Garamond Pro}
+\setsansfont[BoldFont={Myriad Pro}]{Adobe Garamond Pro}
+\setmonofont{Courier Std}
+\setromanfont[BoldFont={Myriad Pro}]{Adobe Garamond Pro}
+
+\usepackage{graphicx}
+\usepackage{pstricks}
+\definecolor{pink}{rgb}{1,0.7,0.7}
+\definecolor{main}{RGB}{216,222,226}
+\definecolor{bottom}{RGB}{143,17,23}
+\let\psgrid\relax
+
+\begin{document}
+\thispagestyle{empty}
+
+\noindent
+\begin{pspicture}(\linewidth,\pdfpageheight)
+  \psgrid
+
+  \psline[linewidth=3mm,linecolor=bottom](0,0.99\pdfpageheight)(\linewidth,0.99\pdfpageheight)
+
+  \rput(0.5\linewidth,0.96\pdfpageheight){\textsf{\textbf{\fontsize{14pt}{14pt}\selectfont 學習程式語言的最佳數位教材}}}
+
+  \rput(\linewidth,\pdfpageheight)
+    {\pspolygon*(-3.6,0)(-1.4,0)(0,-1.4)(0,-3.6)}
+  \rput(\linewidth,\pdfpageheight)
+    {\rput{-45}(-1,-1){\Large\textbf{\white 免費}}}
+  \rput(\linewidth,\pdfpageheight)
+    {\rput{-45}(-1.5,-1.5){\Large\textbf{\white 線上題庫}}}
+  
+  \rput[b](0.5\linewidth,16)
+    {\includegraphics[scale=0.6]{images/tree}}
+  
+  \psframe[linecolor=main,fillcolor=main,fillstyle=solid](0,2)(\linewidth,0.5\pdfpageheight)
+  \psframe[linecolor=bottom,fillcolor=bottom,fillstyle=solid](0,0)(\linewidth,2)
+  %%\rput[rb](0.95\linewidth,15){\textsl{\fontsize{30pt}{30pt}\selectfont Activate Thinking in Java}}
+  \rput[rb](0.95\linewidth,12){\fontsize{90pt}{90pt}\selectfont Java Steps}
+  
+  \rput[rb](0.95\linewidth,9){\textsf{\textbf{\fontsize{36pt}{36pt}\selectfont
+  手腦並用學Java
+  }}}
+ 
+  \rput[b](0.18\linewidth,7)
+    {\includegraphics[scale=2.5]{images/professional}}
+ 
+  \rput[rb](0.95\linewidth,5){
+    \minipage{\linewidth}\raggedleft\huge{\textsf{\textbf{\fontsize{14pt}{28pt}\selectfont
+    線上題庫：提供超過 180 題程式碼實作練習\\
+    教學平台：效果絕佳的程式設計練習系統，超過 3,000 人次的肯定\\
+    課程服務：免維護管理的雲端架構，專人協助您使用教材
+    }}}\endminipage}
+
+  \rput[lb](0.05\linewidth,0.7){\textbf{\fontsize{26pt}{26pt}\selectfont\white ContPub}}
+  \rput[rb](0.95\linewidth,0.7){\textbf{\fontsize{18pt}{18pt}\selectfont\white PLWeb Consulting}}
+
+\end{pspicture}
+
+\end{document}
