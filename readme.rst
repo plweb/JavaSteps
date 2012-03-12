@@ -60,7 +60,7 @@ http://contpub.org/download/JavaSteps.zip
 致謝
 ====
 
-Thanks God!
+Thank God!
 
 .. raw:: latex
 
