@@ -8,6 +8,7 @@
    @latex_font_size: 11pt
    @latex_logo: img/logo.eps
    @latex_contentsname: 目錄
+   @html_theme: nature
    @epub_theme: epub_simple
    @mobi_theme: mobi_simple
    @pdf_cover: cover.tex
@@ -27,12 +28,12 @@ Java Steps 啟動物件導向程式設計思考力
 .. toctree::
    :maxdepth: 3
 
-   readme
-   part1
+   part2
    bibliography
-   
-.. hide
 
+.. full
+
+   readme
    part1
    part2
 

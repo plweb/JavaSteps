@@ -1,5 +1,6 @@
+**************
 例外狀態的處理
-============
+**************
 
 一個程式在執行時，可能會有許多不正常或例外的狀態需要處理。
 例如：網路突然斷線、插入了錯誤的光碟、使用 0 為除數或陣列的 index 值超出了範圍等等。
@@ -95,14 +96,15 @@ try 之後，可以 catch 許多的例外。例如：
 	  }
 	}
 
-由以上的範例可以看出，try 與 catch 之間是程式的正常邏輯。
-當在讀取檔案時發生例外時，
-程式的執行則自動的跳到 catch 中執行。
-至於是跳到那個 catch，
+由以上的範例可以看出，\
+``try`` 與 ``catch`` 之間是程式的正常邏輯。\
+當在讀取檔案時發生例外時，\
+程式的執行則自動的跳到 catch 中執行。\
+至於是跳到那個 catch，\
 則要看是 FileNotFoundException 還是其他的 IOException 而定。
 
-以下則是一個將 while 放在 try、catch 之外
-並且利用一個 tryAgain 的變數讓一個程式可以不斷的請使用者放入磁片，
+以下則是一個將 while 放在 try、catch 之外，\
+並且利用一個 tryAgain 的變數讓一個程式可以不斷的請使用者放入磁片，\
 直到放正確才繼續處理的程式。
 
 	import java.io.*;
@@ -128,9 +130,9 @@ try 之後，可以 catch 許多的例外。例如：
 	  } 
 	}
 
-其他常見的 Exception 類別還有：
-ArrayIndexOutOfBoundsException, ArithmeticException 等。
-當 Exception 發生時，也可以使用 System.exit(0) 結束程式的執行。
+其他常見的 Exception 類別還有：\
+ArrayIndexOutOfBoundsException, ArithmeticException 等。\
+當 Exception 發生時，也可以使用 System.exit(0) 結束程式的執行。\
 例如：
 
 .. code-block:: java
@@ -139,7 +141,7 @@ ArrayIndexOutOfBoundsException, ArithmeticException 等。
 	  System.exit(0); 
 	}
 
-除了 try, catch 外，finaly 子句是用來寫在例外或沒有例外發生時都需要執行的程式碼。
+除了 try, catch 外，finaly 子句是用來寫在例外或沒有例外發生時都需要執行的程式碼。\
 其語法如下：
 
 .. code-block:: java
@@ -154,8 +156,8 @@ ArrayIndexOutOfBoundsException, ArithmeticException 等。
 	  // ...
 	}
 
-除了使用 Java 內建的數個 Exception 類別。
-程式設計師也可以依據程式的需要，
+除了使用 Java 內建的數個 Exception 類別。\
+程式設計師也可以依據程式的需要，\
 自行定義 Exception 的子類別：
 
 .. code-block:: java
@@ -163,7 +165,7 @@ ArrayIndexOutOfBoundsException, ArithmeticException 等。
 	public class StrangeDataException extends Exception { 
 	}
 
-以上的 StrangeDataException 是一個 Exception 的子類別。
+以上的 StrangeDataException 是一個 Exception 的子類別。\
 定義好之後，便可以在 try 子句內使用 new 與 throw 來產生一個 exception:
 
 .. code-block:: java
@@ -183,7 +185,7 @@ ArrayIndexOutOfBoundsException, ArithmeticException 等。
 	  //
 	}
 
-以下這個範例則是在產生 StrangeDataException 物件時
+以下這個範例則是在產生 StrangeDataException 物件時，\
 透過有參數的 constructor 將例外處理時所需要的資料傳入的範例：
 
 .. code-block:: java

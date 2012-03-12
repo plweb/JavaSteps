@@ -1,5 +1,6 @@
+**************
 繼承、抽象類別
-============
+**************
 
 假設我們要將前面的 EnglishExam 及 ChineseExam 增加一個 minutes 的實例變數。
 那麼一個不好的方式是將這個實例變數分別的放入這兩個類別中：
@@ -107,7 +108,7 @@ Exam 也有一個父類別，這個類別是 Java 內建的 Object 類別。
 除了減少重複不必要的程式碼以外，類別的繼承還有以下兩個好處：
 
 1. 讓父類別的程式碼可以在完全除錯後，才被子類別繼承。這樣可以讓程式的偵錯更為容易。
-2. 可以購買軟體廠商已經開發好的類別，再透過繼承擴充其功能。
+2. 可以使用其它廠商已經開發好的函式庫，再透過類別的繼承擴充其功能。
 
 一個子類別的實例，含有自己類別的實例變數與方法，以及所有父類別的實例變數與方法。例如：ee 這個實例便有自己定義的 vocab, grammar, listen 及繼承而來的 minutes 四個實例變數及 score 及 getMinutes 兩個方法。
 
@@ -237,7 +238,7 @@ GREEnglishExam 的 score 方法遮蔽了 EnglishExam 的 score 方法，
 會呼叫 GREEnglishExam 的 score 方法。如果 GREEnglishExam 沒有定義被呼叫的方法，例如：gre.getMinutes()，這時則會呼叫其父類別的方法，如果父類別中也沒有定義，則會呼叫祖父類別的方法，依此類推。所以 gre.getMinutes()會呼叫到 Exam 的 getMinutes 方法。
 
 private 與 protected 變數與方法
-------------------------------
+===============================
 
 在討論 getter, setter 方法時，我們談到資料抽象化的好處。
 但是如果那個實例變數本身（例如：minutes）仍然是定義成 public 那麼將失去強制性，
@@ -337,7 +338,7 @@ Java 的習慣是將 private 的變數或方法宣告在 public 的變數或方�
 同時也只有 Exam 的子類別及位於相同 package 中的類別能夠透過 getMinutes 及 setMinutes 間接的存取 minutes。
 
 建構子之間的呼叫
---------------
+================
 
 如果在建構一個 EnglishExam 實例時要同時傳入四個參數值給 vocab, grammar, listen, minutes 四個實例變數，並將其初始化。而且也要能夠只傳入三個參數值給 vocab, grammar, listen，
 那麼一種寫這些建構子的方式是：
@@ -443,7 +444,7 @@ Java 的習慣是將 private 的變數或方法宣告在 public 的變數或方�
 	 }
 
 實例方法間的呼叫
---------------
+================
 
 如果你需要擴充 Exam、EnglishExam 與 ChineseExam，使它們能夠產出一份，
 包括考試時間、分數的考試資料。例如： ::
@@ -602,7 +603,7 @@ Java 會忽略定義在目前類別（EnglishExam 或 ChineseExam）的同名的
 找到後，便呼叫那個方法。以上例而言，就是定義在 Exam 中的 report 方法。
 
 抽象類別
--------
+========
 
 還有一個寫這個程式的方式是使用抽象類別（abstract class）。
 抽象類別的功用是為它的子類別們提供共用的變數與方法。
@@ -748,7 +749,7 @@ ex 這個變數的型態是 Exam，因為 ChineseExam 與 EnglishExam 都是一�
 一個 final 的類別不能被其他類別繼承。
 
 物件導向程式的設計原則
--------------------
+======================
 
 如同前面的範例所展示的，一個問題可能有好幾種不同的解法。
 到底哪一種方法比較好？在什麼狀況用哪種解法呢？
@@ -771,7 +772,7 @@ ex 這個變數的型態是 Exam，因為 ChineseExam 與 EnglishExam 都是一�
    稱為（ **has-a** ）的關係。
 
 圖形與動畫的範例
---------------
+================
 
 到目前為止，我們已經闡述了四種呼叫 Java 方法的方式，這四種方式是：
 
@@ -853,10 +854,10 @@ Image:inheritance.jpg
 
 	count:5
 
-Media:Ex6.swf|觀看執行動畫
+`觀看執行過程及詳細解說 <https://github.com/plweb/JavaSteps/raw/master/images/Ex6.swf>`_
 
-Super, this, abstract class的動畫範例
-------------------------------------
+Super, this, abstract class 的動畫範例
+======================================
 
 以下的這個範例使用有層次的實例與動畫，說明this, super的特性:
 
@@ -898,7 +899,7 @@ Super, this, abstract class的動畫範例
 get_this 方法中的 this 即是 s；
 而 get_super 中的 super 指的是 s 的內層相對於 Father 的部分。
 
-Media:Ex7.swf|觀看執行動畫
+`觀看執行過程及詳細解說 <https://github.com/plweb/JavaSteps/raw/master/images/Ex7.swf>`_
 
 以下這個範例說明類別間有同名而且型態也相同的方法（overwrite）的特性:
 
@@ -934,7 +935,7 @@ GrandParent 由於沒有父類別（除了 Object 以外），
 所以 gail 的實例只有一層；然而，sue 的實例卻有兩層，
 外層對應 Parent，內層對應 GrandParent。
 
-Media:Ex8.swf|觀看執行動畫
+`觀看執行過程及詳細解說 <https://github.com/plweb/JavaSteps/raw/master/images/Ex8.swf>`_
 
 以下這個範例將透過宣告在數個不同類別的實例方法的呼叫，
 更深入的闡釋 super 與 this 的特性:
@@ -1008,7 +1009,7 @@ Media:Ex8.swf|觀看執行動畫
 因為 c.getColor 會呼叫宣告在 A 之內的 getColor；
 而 getColor 內的 this 指的是 c，不是 A；而 c 的 getColor 會傳回 red。
 
-Media:Ex10.swf|觀看執行動畫
+`觀看執行過程及詳細解說 <https://github.com/plweb/JavaSteps/raw/master/images/Ex10.swf>`_
 
 以下的範例將使用「寵物(Pet)」類別及「狗(Dog)」及「貓(Cat)」兩個子類別。
 狗及貓都擁有「聲音(sound)」這個方法，
@@ -1045,7 +1046,7 @@ Media:Ex10.swf|觀看執行動畫
 
 上例中 d 與 c 兩個變數若宣告成 Pet 型態，則答案仍然會一樣。
 
-Media:Ex11.swf|觀看執行動畫
+`觀看執行過程及詳細解說 <https://github.com/plweb/JavaSteps/raw/master/images/Ex11.swf>`_
 
 以下這個範例是一個整合了 abstract class, super, this, array 的應用。
 這個範例的特色是宣告了 Area 這個 abstract class 及 getArea 這個抽象方法，
@@ -1103,4 +1104,4 @@ Media:Ex11.swf|觀看執行動畫
 	Is a[0] bigger than a[1]?false
 	total:86
 
-Media:Ex13new.swf|觀看執行動畫及詳細解說
+`觀看執行過程及詳細解說 <https://github.com/plweb/JavaSteps/raw/master/images/Ex13new.swf>`_

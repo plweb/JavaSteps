@@ -1,5 +1,6 @@
+******************
 類別變數與類別方法
-==================
+******************
 
 非物件導向程式語言（例如：C語言），\
 程式設計師主要是使用函式（function）、全域變數與區域變數，\
@@ -331,4 +332,5 @@ displayScore 這個方法將字串顯示在螢幕上，不需要傳回值，\
 
 	Money:700
 
-Media:Ex1new.swf 觀看執行過程
+`連結：觀看執行過程 <https://github.com/plweb/JavaSteps/raw/master/images/ex1new.swf>`_
+
