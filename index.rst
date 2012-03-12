@@ -21,19 +21,28 @@
    %% \renewcommand{\sectionmark}[1]{\markright{~\thesection~~#1~}{}}
    \renewcommand\bibname{參考資料}
 
-#####################################
-Java Steps 啟動物件導向程式設計思考力
-#####################################
+################
+手腦並用學 Java
+################
 
 .. toctree::
    :maxdepth: 3
 
-   part2
-   bibliography
-
-.. full
-
    readme
-   part1
-   part2
+   java_intro
+   java_basis
+   java_vartype
+   java_stdio
+   java_expr
+   java_static
+   java_cond
+   java_loop
+   java_array
+   java_object
+   java_encap
+   java_abstract
+   java_interface
+   java_generic
+   java_exception
+   bibliography
 
