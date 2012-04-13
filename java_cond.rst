@@ -387,7 +387,7 @@ Example 4：請使用 switch 來設計一個 Java 程式，讓使用者自行輸
 
 Example 5：請寫一個判斷使用者輸入的數是否是2或3或6的倍數，或者都不是他們倍數的java程式。
 
-.. image:: images/nested_if.png
+.. image:: images/Nested_if.png
 
 .. literalinclude:: src/main/java/Times.java
    :language: java
